@@ -1,0 +1,44 @@
+.sider-menu {
+  width: 100%;
+  height: 100%;
+  background: pink;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.sider-menu :global {
+  .header {
+    height: 50px;
+    text-align: right;
+    padding: 10px;
+    font-size: 25px;
+  }
+  .menu-box {
+    margin: 120px 0 0;
+    flex: 1;
+    .info {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .info-avatar {
+        width: 120px;
+        height: 120px;
+        border: 1px dashed red;
+        border-radius: 50%;
+      }
+      .info-name {
+        margin-top: 10px;
+      }
+    }
+    .options-bar {
+      margin-top: 50px;
+      text-align: center;
+      > div {
+        height: 50px;
+        line-height: 50px;
+        border: 1px solid black;
+      }
+    }
+  }
+}
