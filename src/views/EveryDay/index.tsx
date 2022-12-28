@@ -1,6 +1,14 @@
 import React from 'react';
-import style from './index.module.scss';
+
+import variables from '@/styles/variables.module.scss';
+
+import { EveryDayContainer } from './Styles';
+import { EachModule } from './EachModule';
 
 export function EveryDay() {
-  return <div className={style['every-day']}>111</div>;
+  return (
+    <EveryDayContainer>
+      <EachModule bgColor={variables.mainRed} />
+    </EveryDayContainer>
+  );
 }

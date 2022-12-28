@@ -3,6 +3,7 @@ import { Layout } from 'antd';
 
 import { SiderMenu } from './views/SiderMenu';
 import { ToolsBar } from './views/ToolsBar';
+import { EveryDay } from './views/EveryDay';
 
 const { Sider, Header, Content } = Layout;
 
@@ -16,7 +17,9 @@ function App() {
         <Header style={{ background: '#c3aed6' }}>
           <ToolsBar />
         </Header>
-        <Content>Content</Content>
+        <Content>
+          <EveryDay />
+        </Content>
       </Layout>
     </Layout>
   );
