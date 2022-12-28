@@ -16,10 +16,7 @@
     "isolatedModules": true,
     "noEmit": false,
     "jsx": "preserve",
-    "baseUrl": "./",
-    "paths": {
-      "@": ["src/"]
-    }
   },
-  "include": ["./src/**/*"]
+  "include": ["./src/**/*"],
+  "extends": "./paths.json"
 }
