@@ -1,10 +1,17 @@
+/*
+ * @Description: 
+ * @Author: Huang.zq
+ * @Date: 2022-12-29 21:28:09
+ * @LastEditors: Huang.zq
+ * @LastEditTime: 2022-12-29 23:28:05
+ */
 import styled from 'styled-components';
 
 export const SiderMenuContainer = styled.div`
   width: 100%;
   height: 100%;
-  background: pink;
   overflow: hidden;
+  background-color:white;
   display: flex;
   flex-direction: column;
 `;
