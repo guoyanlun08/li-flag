@@ -1,27 +1,18 @@
-/*
- * @Description: 
- * @Author: Huang.zq
- * @Date: 2022-12-28 00:18:29
- * @LastEditors: Huang.zq
- * @LastEditTime: 2022-12-29 23:28:15
- */
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 
 import { SiderMenuContainer, Header, MenuBox, Info, OptionsBar } from './Styles';
 
-export function SiderMenu(props:any) {
-  const {getClose} = props
-  const [colpased, setColpased] = useState(false)
+export function SiderMenu(props: any) {
+  const { getClose } = props;
+  const [colpased, setColpased] = useState(false);
   const triggle = () => {
-    setColpased(!colpased)
-    getClose(colpased)
-  }
+    setColpased(!colpased);
+    getClose(colpased);
+  };
   return (
     <SiderMenuContainer>
-      <Header>
-        {colpased ? <MenuFoldOutlined onClick={() => triggle()} /> : <MenuUnfoldOutlined onClick={() => triggle()} />}
-      </Header>
+      <Header>{colpased ? <MenuFoldOutlined onClick={() => triggle()} /> : <MenuUnfoldOutlined onClick={() => triggle()} />}</Header>
 
       <MenuBox>
         <Info>

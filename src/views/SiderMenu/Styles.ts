@@ -1,10 +1,4 @@
-/*
- * @Description: 
- * @Author: Huang.zq
- * @Date: 2022-12-29 21:28:09
- * @LastEditors: Huang.zq
- * @LastEditTime: 2022-12-29 23:28:05
- */
+
 import styled from 'styled-components';
 
 export const SiderMenuContainer = styled.div`
