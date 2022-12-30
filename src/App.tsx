@@ -18,10 +18,10 @@ function App() {
         <SiderMenu getClose={getClose} />
       </Sider>
       <Layout>
-        <Header style={{ background: '#c3aed6' }}>
+        <Header style={{ background: 'white' }}>
           <ToolsBar />
         </Header>
-        <Content>
+        <Content style={{margin: '10px'}}>
           <EveryDay />
         </Content>
       </Layout>

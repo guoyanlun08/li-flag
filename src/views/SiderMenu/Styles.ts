@@ -1,5 +1,6 @@
 
 import styled from 'styled-components';
+import mainColor from '@/styles/variables.module.scss'
 
 export const SiderMenuContainer = styled.div`
   width: 100%;
@@ -27,8 +28,8 @@ export const Info = styled.div`
   flex-direction: column;
   align-items: center;
   .info-avatar {
-    width: 120px;
-    height: 120px;
+    width: 50px;
+    height: 50px;
     border: 1px dashed red;
     border-radius: 50%;
   }
@@ -42,6 +43,12 @@ export const OptionsBar = styled.div`
   > div {
     height: 50px;
     line-height: 50px;
-    border: 1px solid black;
+    margin: 0 5px 0 0;
+    border-left: 2px solid transparent;
+    cursor: pointer;
+    &:hover{
+      border-left: 2px solid ${mainColor.activeTab};
+      
+    }
   }
 `;

@@ -20,9 +20,9 @@ export function SiderMenu(props: any) {
           <div className="info-name">立 Flag</div>
         </Info>
         <OptionsBar>
-          <div>每日计划</div>
-          <div>option2</div>
-          <div>option3</div>
+          <div><span>每日计划</span></div>
+          <div><span>option2</span></div>
+          <div><span>option3</span></div>
         </OptionsBar>
       </MenuBox>
     </SiderMenuContainer>
