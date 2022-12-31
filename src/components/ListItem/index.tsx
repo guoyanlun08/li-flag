@@ -1,31 +1,32 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 
 import { Checkbox } from 'antd';
 import { Item, ItemContent } from './Styles';
 
 interface PropsType {
+  id: number;
   text: string;
   completed: boolean;
+  selectedId: number;
+  setSelectedId: (v: number) => void;
 }
 
 export function ListItem(props: PropsType) {
-  const [selected, setSelected] = useState(false); // 选中行
   const [completed, setCompleted] = useState(props.completed); // item状态
   const [textValue, setTextValue] = useState(props.text);
 
-  const focusFn = () => {
-    setSelected(true);
-  };
+  // 是否选中当前 Item
+  const isSelected = useMemo(() => props.selectedId === props.id, [props.selectedId, props.id]);
 
-  const blurFn = () => {
-    setSelected(false);
+  const clickItemFn = () => {
+    props.setSelectedId(props.id);
   };
 
   return (
-    <Item selected={selected}>
+    <Item selected={isSelected} onClick={clickItemFn}>
       <Checkbox checked={completed} onChange={() => setCompleted(!completed)} />
-      <ItemContent selected={selected} completed={completed}>
-        <input type="text" onFocus={focusFn} onBlur={blurFn} value={textValue} onChange={(e) => setTextValue(e.target.value)} />
+      <ItemContent selected={isSelected} completed={completed}>
+        <input type="text" value={textValue} onChange={(e) => setTextValue(e.target.value)} />
       </ItemContent>
     </Item>
   );
