@@ -9,36 +9,63 @@ export const SiderMenuContainer = styled.div`
   background-color:white;
   display: flex;
   flex-direction: column;
+  .side-footer {
+    width: 100%;
+    height: 50px;
+    padding: 10px 0;
+    color: #bfbcbca8;
+    text-align: center;
+    font-size: 25px;
+  }
 `;
 
-export const Header = styled.div`
-  height: 50px;
-  text-align: right;
+export const Header = styled.div<{ fold:boolean}>`
+  height: 54px;
+  text-align: center;
   padding: 10px;
   font-size: 25px;
+  display: ${(props) => props.fold ? 'block': 'none'};
 `;
 
 export const MenuBox = styled.div`
-  margin: 120px 0 0;
+  margin: 10px 0 0;
   flex: 1;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  scrollbar-width: none; /* firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+  &::-webkit-scrollbar{
+    display: none;
+  }
 `;
 
-export const Info = styled.div`
+export const Info = styled.div<{ fold: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: center;
+  transition: all .3 ease-in-out;
   .info-avatar {
-    width: 50px;
-    height: 50px;
+    width: ${(props) => props.fold ? '100px': '50px'};
+    height: ${(props) => props.fold ? '100px': '50px'};
     border: 1px dashed red;
     border-radius: 50%;
+    transition-property: width height;
+    transition-duration: .3s;
+    transition-timing-function: ease-in-out;
+    img{
+      width: 100%;
+      height: 100%;
+    }
   }
   .info-name {
     margin-top: 10px;
+    color: ${mainColor.mainGray};
+    display: ${(props) => props.fold ? 'block': 'none'};
   }
 `;
+
 export const OptionsBar = styled.div`
-  margin-top: 50px;
+  margin-top: 10px;
   text-align: center;
   > div {
     height: 50px;
@@ -48,6 +75,8 @@ export const OptionsBar = styled.div`
     cursor: pointer;
     &:hover{
       border-left: 2px solid ${mainColor.activeTab};
+      color: ${mainColor.activeTab};
+      font-weight: bold;
       
     }
   }

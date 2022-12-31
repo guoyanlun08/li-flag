@@ -21,7 +21,7 @@ function App() {
         <Header style={{ background: 'white' }}>
           <ToolsBar />
         </Header>
-        <Content style={{margin: '10px'}}>
+        <Content className='hiddenScroll' style={{margin: '10px'}}>
           <EveryDay />
         </Content>
       </Layout>

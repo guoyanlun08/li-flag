@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
+import { MenuOutlined } from '@ant-design/icons';
 
 import { SiderMenuContainer, Header, MenuBox, Info, OptionsBar } from './Styles';
 
@@ -11,13 +11,16 @@ export function SiderMenu(props: any) {
     getClose(colpased);
   };
   return (
-    <SiderMenuContainer>
-      <Header>{colpased ? <MenuFoldOutlined onClick={() => triggle()} /> : <MenuUnfoldOutlined onClick={() => triggle()} />}</Header>
-
+    <SiderMenuContainer> 
+      <Header fold={colpased}>
+        <span style={{fontFamily: 'fantasy'}}>FLAG</span>
+      </Header>
       <MenuBox>
-        <Info>
-          <div className="info-avatar"></div>
-          <div className="info-name">立 Flag</div>
+        <Info fold={colpased}>
+          <div className="info-avatar">
+            <img src={require('../../assets/imgs/1_user5.png')} alt="" />
+          </div>
+          <div className="info-name">FlagUser</div>
         </Info>
         <OptionsBar>
           <div><span>每日计划</span></div>
@@ -25,6 +28,9 @@ export function SiderMenu(props: any) {
           <div><span>option3</span></div>
         </OptionsBar>
       </MenuBox>
+      <div className='side-footer'>
+        {colpased? <MenuOutlined onClick={() => triggle()}/>: <MenuOutlined rotate={90} onClick={() => triggle()}/>}
+      </div>
     </SiderMenuContainer>
   );
 }
