@@ -121,12 +121,19 @@ function reorderList(list: listItem[], startIndex: number, endIndex: number) {
 }
 
 export function EveryDay() {
+  const [dragStatus, setDragStatus] = useState(false)
   const [selectedId, setSelectedId] = useState<number>(-1);
   const [eachModuleData, setEachModuleData] = useState(initData); // 每个模块的数据
   const [moduleArr, setModuleArr] = useState(initModuleArr) // 遍历每个模块
 
+  const onBeforeDragStart = () => {
+    setDragStatus(true)
+  }
+
   const onDragEnd = (result: DropResult) => {
     const { draggableId, source, destination, type } = result;
+
+    setDragStatus(false)
 
     if (!destination) {
       return
@@ -161,12 +168,12 @@ export function EveryDay() {
   }
 
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
+    <DragDropContext onBeforeDragStart={onBeforeDragStart} onDragEnd={onDragEnd}>
       <EveryDayContainer>
         {moduleArr.map((module) => {
           const item = eachModuleData[module]
           return (
-            <EachModule key={item.title} bgColor={item.bgColor} title={item.title} listData={item.listData}
+            <EachModule key={item.title} {...item} dragStatus={dragStatus}
               selectedId={selectedId} setSelectedId={setSelectedId} />
           );
         })}

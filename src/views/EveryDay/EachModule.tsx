@@ -10,27 +10,26 @@ interface propsType {
   bgColor: string;
   title: string;
   listData: listItem[];
+  dragStatus: boolean;
   selectedId: number;
   setSelectedId: (v: number) => void;
 }
 
 export function EachModule(props: propsType) {
-
   return (
     <EachModuleContainer bgColor={props.bgColor}>
       <Title>{props.title}</Title>
       <Droppable droppableId={`droppable-list-${props.title}`} type="listType">
         {
-          (provided) => (
+          (provided, snapshot) => (
             <ListBox ref={provided.innerRef} {...provided.droppableProps}>
               {
                 props.listData.map((item, index) => (
                   <ListItem
+                    {...item}
                     key={item.id}
-                    id={item.id}
+                    dragStatus={props.dragStatus}
                     index={index}
-                    text={item.text}
-                    completed={item.completed}
                     selectedId={props.selectedId}
                     setSelectedId={props.setSelectedId}
                   />))

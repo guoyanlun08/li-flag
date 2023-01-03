@@ -2,6 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { Item, ItemContent } from './Styles';
 
 import { Checkbox } from 'antd';
+import { MenuOutlined } from '@ant-design/icons';
 import { Draggable } from 'react-beautiful-dnd';
 
 interface PropsType {
@@ -9,13 +10,16 @@ interface PropsType {
   index: number;
   text: string;
   completed: boolean;
+  dragStatus: boolean;
   selectedId: number;
   setSelectedId: (v: number) => void;
 }
 
 export function ListItem(props: PropsType) {
+
   const [completed, setCompleted] = useState(props.completed); // item状态
   const [textValue, setTextValue] = useState(props.text);
+  const [isHover, setIsHover] = useState(false)
 
   // 是否选中当前 Item
   const isSelected = useMemo(() => props.selectedId === props.id, [props.selectedId, props.id]);
@@ -24,14 +28,25 @@ export function ListItem(props: PropsType) {
     props.setSelectedId(props.id);
   };
 
+  const mouseEnterItemFn = () => {
+    if (props.dragStatus) return
+    setIsHover(true)
+  }
+  const mouseLeaveItemFn = () => {
+    if (props.dragStatus) return
+    setIsHover(false)
+  }
+
   return (
     <Draggable draggableId={props.id.toString()} index={props.index}>
       {
         (provided) => (
-          <Item ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}
-            selected={isSelected} onClick={clickItemFn}>
+          <Item ref={provided.innerRef} {...provided.draggableProps}
+            selected={isSelected} isHover={isHover}
+            onClick={clickItemFn} onMouseEnter={mouseEnterItemFn} onMouseLeave={mouseLeaveItemFn}>
+            <MenuOutlined style={{ display: isHover ? 'block' : 'none' }} className='drag-handle' {...provided.dragHandleProps} />
             <Checkbox checked={completed} onChange={() => setCompleted(!completed)} />
-            <ItemContent selected={isSelected} completed={completed}>
+            <ItemContent selected={isSelected} completed={completed} isHover={isHover}>
               <input type="text" value={textValue} onChange={(e) => setTextValue(e.target.value)} />
             </ItemContent>
           </Item>
