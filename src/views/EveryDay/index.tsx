@@ -6,16 +6,23 @@ import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 import { EveryDayContainer } from './Styles';
 import { EachModule } from './EachModule';
 
-// todo: 类型写 any 临时处理，后面写接口
-
-interface listItem {
+// todo: 后续这些类型应该需要抽出来，等后台确定先
+interface eachModuleType {
+  [property: string]: moduleData
+}
+interface moduleData {
+  title: string,
+  bgColor: string,
+  listData: listItem[]
+}
+export interface listItem {
   id: number,
   text: string,
   completed: boolean
 }
 
 // 测试数据 -- 后续删除
-const initData: any = {
+const initData: eachModuleType = {
   'droppable-list-A': {
     title: 'A',
     bgColor: variables.mainRed,
@@ -130,7 +137,7 @@ export function EveryDay() {
       const beforeDragModule = eachModuleData[source.droppableId]
       const afterDragModule = reorderList(beforeDragModule.listData, source.index, destination.index)
 
-      setEachModuleData((pre: any) => {
+      setEachModuleData(pre => {
         const newState = { ...pre }
         newState[source.droppableId].listData = afterDragModule
 
@@ -143,7 +150,7 @@ export function EveryDay() {
     const sourceModule = eachModuleData[source.droppableId]
     const dragItem = sourceModule.listData[source.index]
 
-    setEachModuleData((pre: any) => {
+    setEachModuleData(pre => {
       const newState = { ...pre }
       newState[source.droppableId].listData.splice(source.index, 1)
       newState[destination.droppableId].listData.splice(destination.index, 0, dragItem)

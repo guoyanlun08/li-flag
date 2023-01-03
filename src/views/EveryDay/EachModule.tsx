@@ -4,10 +4,12 @@ import { Droppable } from 'react-beautiful-dnd';
 
 import { ListItem } from '@/components/ListItem';
 
+import { listItem } from './index'
+
 interface propsType {
   bgColor: string;
   title: string;
-  listData: any[]; // todo: 这里的 any 后面需要重写接口。
+  listData: listItem[];
   selectedId: number;
   setSelectedId: (v: number) => void;
 }
