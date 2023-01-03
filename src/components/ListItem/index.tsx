@@ -1,10 +1,12 @@
 import React, { useMemo, useState } from 'react';
+import { Item, ItemContent } from './Styles';
 
 import { Checkbox } from 'antd';
-import { Item, ItemContent } from './Styles';
+import { Draggable } from 'react-beautiful-dnd';
 
 interface PropsType {
   id: number;
+  index: number;
   text: string;
   completed: boolean;
   selectedId: number;
@@ -23,11 +25,18 @@ export function ListItem(props: PropsType) {
   };
 
   return (
-    <Item selected={isSelected} onClick={clickItemFn}>
-      <Checkbox checked={completed} onChange={() => setCompleted(!completed)} />
-      <ItemContent selected={isSelected} completed={completed}>
-        <input type="text" value={textValue} onChange={(e) => setTextValue(e.target.value)} />
-      </ItemContent>
-    </Item>
+    <Draggable draggableId={props.id.toString()} index={props.index}>
+      {
+        (provided) => (
+          <Item ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}
+            selected={isSelected} onClick={clickItemFn}>
+            <Checkbox checked={completed} onChange={() => setCompleted(!completed)} />
+            <ItemContent selected={isSelected} completed={completed}>
+              <input type="text" value={textValue} onChange={(e) => setTextValue(e.target.value)} />
+            </ItemContent>
+          </Item>
+        )
+      }
+    </Draggable>
   );
 }
