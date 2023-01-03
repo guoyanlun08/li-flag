@@ -10,10 +10,12 @@ export const EveryDayContainer = styled.div`
 
 // EachModule
 export const EachModuleContainer = styled.div<{ bgColor: string }>`
+  background: ${props => props.bgColor};
   width: 50%;
   height: 50%;
   border-radius: 20px;
-  background: ${props => props.bgColor};
+  display: flex;
+  flex-direction: column;
 `;
 
 export const Title = styled.div`
@@ -21,5 +23,6 @@ export const Title = styled.div`
 `
 
 export const ListBox = styled.div`
+  flex: 1;
   padding: 0 15px;
 `
