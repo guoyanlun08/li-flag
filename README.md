@@ -21,3 +21,7 @@ refactor: 重构
 
 vscode: 下载 vscode-styled-components 这个插件有高亮提示\
 https://juejin.cn/post/7074600131126886437
+
+# react-beautiful-dnd 拖拽库
+中文文档: https://github.com/chinanf-boy/react-beautiful-dnd-zh
+ts项目参考：https://github1s.com/cowienduckie/react-beautiful-dnd-sample/blob/HEAD/src/App.tsx#L14
