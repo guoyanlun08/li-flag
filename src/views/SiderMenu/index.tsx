@@ -28,8 +28,8 @@ export function SiderMenu(props: any) {
           <div><span>option3</span></div>
         </OptionsBar>
       </MenuBox>
-      <div className='side-footer'>
-        {colpased? <MenuOutlined onClick={() => triggle()}/>: <MenuOutlined rotate={90} onClick={() => triggle()}/>}
+      <div className='side-footer' onClick={() => triggle()}>
+        {colpased? <MenuOutlined />: <MenuOutlined rotate={90} />}
       </div>
     </SiderMenuContainer>
   );
