@@ -5,21 +5,21 @@ import { Collapse } from 'antd';
 
 import { EachList } from './EachList';
 
-const {Panel} = Collapse
+const { Panel } = Collapse;
 
 // todo: 后续这些类型应该需要抽出来，等后台确定先
 interface eachModuleType {
-  [property: string]: moduleData
+  [property: string]: moduleData;
 }
 interface moduleData {
-  title: string,
-  bgColor: string,
-  listData: listItem[]
+  title: string;
+  bgColor: string;
+  listData: listItem[];
 }
 export interface listItem {
-  id: number,
-  text: string,
-  completed: boolean
+  id: number;
+  text: string;
+  completed: boolean;
 }
 
 // 测试数据 -- 后续删除
@@ -111,7 +111,7 @@ const initData: eachModuleType = {
 };
 
 // droppable-list 对应 initData 的下标 todo: 后面改为枚举
-const initModuleArr = ['droppable-list-A', 'droppable-list-B', 'droppable-list-C', 'droppable-list-D']
+const initModuleArr = ['droppable-list-A', 'droppable-list-B', 'droppable-list-C', 'droppable-list-D'];
 
 function reorderList(list: listItem[], startIndex: number, endIndex: number) {
   const result = Array.from(list);
@@ -122,60 +122,57 @@ function reorderList(list: listItem[], startIndex: number, endIndex: number) {
 }
 
 export function DailyList() {
-  const [dragStatus, setDragStatus] = useState(false)
+  const [dragStatus, setDragStatus] = useState(false);
   const [selectedId, setSelectedId] = useState<number>(-1);
   const [eachModuleData, setEachModuleData] = useState(initData); // 每个模块的数据
-  const [moduleArr] = useState(initModuleArr) // 遍历每个模块
+  const [moduleArr] = useState(initModuleArr); // 遍历每个模块
 
   const onBeforeDragStart = () => {
-    setDragStatus(true)
-  }
+    setDragStatus(true);
+  };
   const onDragEnd = (result: DropResult) => {
     const { source, destination } = result;
-    setDragStatus(false)
+    setDragStatus(false);
     if (!destination) {
-      return
+      return;
     }
 
     // 是同一 Droppable内的拖拽
     if (source.droppableId === destination.droppableId) {
-      const beforeDragModule = eachModuleData[source.droppableId]
-      const afterDragModule = reorderList(beforeDragModule.listData, source.index, destination.index)
+      const beforeDragModule = eachModuleData[source.droppableId];
+      const afterDragModule = reorderList(beforeDragModule.listData, source.index, destination.index);
 
-      setEachModuleData(pre => {
-        const newState = { ...pre }
-        newState[source.droppableId].listData = afterDragModule
+      setEachModuleData((pre) => {
+        const newState = { ...pre };
+        newState[source.droppableId].listData = afterDragModule;
 
-        return newState
-      })
-      return
+        return newState;
+      });
+      return;
     }
 
     // 两个不同的模块之间的拖拽
-    const sourceModule = eachModuleData[source.droppableId]
-    const dragItem = sourceModule.listData[source.index]
+    const sourceModule = eachModuleData[source.droppableId];
+    const dragItem = sourceModule.listData[source.index];
 
-    setEachModuleData(pre => {
-      const newState = { ...pre }
-      newState[source.droppableId].listData.splice(source.index, 1)
-      newState[destination.droppableId].listData.splice(destination.index, 0, dragItem)
+    setEachModuleData((pre) => {
+      const newState = { ...pre };
+      newState[source.droppableId].listData.splice(source.index, 1);
+      newState[destination.droppableId].listData.splice(destination.index, 0, dragItem);
 
-      return newState
-    })
-
-  }
+      return newState;
+    });
+  };
 
   return (
     <DragDropContext onBeforeDragStart={onBeforeDragStart} onDragEnd={onDragEnd}>
       <Collapse>
         {moduleArr.map((module) => {
-          const item = eachModuleData[module]
+          const item = eachModuleData[module];
           return (
             <Panel header={item.title} key={item.title}>
-                <EachList key={item.title} {...item} dragStatus={dragStatus}
-                    selectedId={selectedId} setSelectedId={setSelectedId} />
+              <EachList key={item.title} {...item} dragStatus={dragStatus} selectedId={selectedId} setSelectedId={setSelectedId} />
             </Panel>
-            
           );
         })}
       </Collapse>

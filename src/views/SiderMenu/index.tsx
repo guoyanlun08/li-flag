@@ -11,9 +11,9 @@ export function SiderMenu(props: any) {
     getClose(colpased);
   };
   return (
-    <SiderMenuContainer> 
+    <SiderMenuContainer>
       <Header fold={colpased}>
-        <span style={{fontFamily: 'fantasy'}}>FLAG</span>
+        <span style={{ fontFamily: 'fantasy' }}>FLAG</span>
       </Header>
       <MenuBox>
         <Info fold={colpased}>
@@ -23,13 +23,19 @@ export function SiderMenu(props: any) {
           <div className="info-name">FlagUser</div>
         </Info>
         <OptionsBar>
-          <div><span>每日计划</span></div>
-          <div><span>option2</span></div>
-          <div><span>option3</span></div>
+          <div>
+            <span>每日计划</span>
+          </div>
+          <div>
+            <span>option2</span>
+          </div>
+          <div>
+            <span>option3</span>
+          </div>
         </OptionsBar>
       </MenuBox>
-      <div className='side-footer' onClick={() => triggle()}>
-        {colpased? <MenuOutlined />: <MenuOutlined rotate={90} />}
+      <div className="side-footer" onClick={() => triggle()}>
+        {colpased ? <MenuOutlined /> : <MenuOutlined rotate={90} />}
       </div>
     </SiderMenuContainer>
   );
