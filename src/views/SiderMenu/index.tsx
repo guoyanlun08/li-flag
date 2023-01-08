@@ -3,6 +3,26 @@ import { MenuOutlined } from '@ant-design/icons';
 
 import { SiderMenuContainer, Header, MenuBox, Info, OptionsBar } from './Styles';
 
+function OptionItem(props: any) {
+  return (
+    <div>
+      <span title={props.title}>{props.title}</span>
+    </div>
+  )
+}
+//dev mock data
+const devData = [
+  {
+    title: '每日模块'
+  },
+  {
+    title: 'Option1'
+  },
+  {
+    title: 'Option2'
+  },
+]
+
 export function SiderMenu(props: any) {
   const { getClose } = props;
   const [colpased, setColpased] = useState(false);
@@ -13,7 +33,7 @@ export function SiderMenu(props: any) {
   return (
     <SiderMenuContainer>
       <Header fold={colpased}>
-        <span style={{ fontFamily: 'fantasy' }}>FLAG</span>
+        <span>Li-FLAG</span>
       </Header>
       <MenuBox>
         <Info fold={colpased}>
@@ -23,15 +43,9 @@ export function SiderMenu(props: any) {
           <div className="info-name">FlagUser</div>
         </Info>
         <OptionsBar>
-          <div>
-            <span>每日计划</span>
-          </div>
-          <div>
-            <span>option2</span>
-          </div>
-          <div>
-            <span>option3</span>
-          </div>
+          {devData.map((item) => {
+            return <OptionItem title={item.title} />
+          })}
         </OptionsBar>
       </MenuBox>
       <div className="side-footer" onClick={() => triggle()}>

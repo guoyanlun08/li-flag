@@ -24,6 +24,10 @@ export const Header = styled.div<{ fold: boolean }>`
   padding: 10px;
   font-size: 25px;
   display: ${(props) => (props.fold ? 'block' : 'none')};
+  
+  font-family: fantasy;
+  white-space: nowrap;
+  text-overflow: clip;
 `;
 
 export const MenuBox = styled.div`
@@ -72,6 +76,8 @@ export const OptionsBar = styled.div`
     margin: 0 5px 0 0;
     border-left: 2px solid transparent;
     cursor: pointer;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     &:hover {
       border-left: 2px solid ${mainColor.activeTab};
       color: ${mainColor.activeTab};
