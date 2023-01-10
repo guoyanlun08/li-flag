@@ -4,18 +4,18 @@ import { Droppable } from 'react-beautiful-dnd';
 
 import { ListItem } from '@/components/ListItem';
 
-import { listItem } from './index';
+import { listItemType } from '@/types/todoType';
 
 interface propsType {
   bgColor: string;
   title: string;
-  listData: listItem[];
+  listData: listItemType[];
   dragStatus: boolean;
   selectedId: number;
   setSelectedId: (v: number) => void;
 }
 
-export function EachModule(props: propsType) {
+export function EachCard(props: propsType) {
   return (
     <EachModuleContainer bgColor={props.bgColor}>
       <Title>{props.title}</Title>

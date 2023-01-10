@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { Layout } from 'antd';
 
-import { SiderMenu } from './views/SiderMenu';
-import { ToolsBar } from './views/ToolsBar';
-import { EveryDay } from './views/EveryDay';
-import { DailyList } from './views/DailyList';
+import SiderMenu from '@/views/SiderMenu';
+import ToolsBar from '@/views/ToolsBar';
+import EveryDay from '@/views/EveryDay';
 
 const { Sider, Header, Content } = Layout;
 
@@ -27,7 +26,7 @@ function App() {
           <ToolsBar getSwitch={getSwitch} />
         </Header>
         <Content className="hiddenScroll" style={{ margin: '10px' }}>
-          {switchList ? <DailyList /> : <EveryDay />}
+          <EveryDay switchList={switchList} />
         </Content>
       </Layout>
     </Layout>

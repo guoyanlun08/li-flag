@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
-import { Collapse } from 'antd';
 
+import { EveryDayContainer } from './Styles';
 import { useAppSelector, useAppDispatch } from '@/app/hooks';
 import { onBeforeDragStart, onDragEnd } from '@/views/EveryDay/common';
 
-import { EachList } from './EachList';
+import { EachCard } from './EachCard';
 
-const { Panel } = Collapse;
-
-function DailyList() {
+function DailyCard() {
   const { eachModule, eachModuleOrder } = useAppSelector((state) => state.todo);
   const dispatch = useAppDispatch();
 
@@ -20,18 +18,14 @@ function DailyList() {
     <DragDropContext
       onBeforeDragStart={() => onBeforeDragStart(setDragStatus)}
       onDragEnd={(result) => onDragEnd(result, setDragStatus, eachModule, dispatch)}>
-      <Collapse>
+      <EveryDayContainer>
         {eachModuleOrder.map((module) => {
           const item = eachModule[module];
-          return (
-            <Panel header={item.title} key={item.title}>
-              <EachList key={item.title} {...item} dragStatus={dragStatus} selectedId={selectedId} setSelectedId={setSelectedId} />
-            </Panel>
-          );
+          return <EachCard key={item.title} {...item} dragStatus={dragStatus} selectedId={selectedId} setSelectedId={setSelectedId} />;
         })}
-      </Collapse>
+      </EveryDayContainer>
     </DragDropContext>
   );
 }
 
-export default DailyList;
+export default DailyCard;

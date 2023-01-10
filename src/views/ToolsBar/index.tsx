@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { ToolBarContainer, ToolItem } from './Styles';
 
-export function ToolsBar(props: any) {
+function ToolsBar(props: any) {
   const { getSwitch } = props;
   const [showList, setShowList] = useState(true);
   function switchToList() {
@@ -18,3 +18,5 @@ export function ToolsBar(props: any) {
     </ToolBarContainer>
   );
 }
+
+export default ToolsBar;

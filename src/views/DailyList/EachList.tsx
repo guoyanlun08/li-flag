@@ -3,12 +3,11 @@ import { ListBox, ListItemBox, DailyListContainer } from './Styles';
 import { Droppable } from 'react-beautiful-dnd';
 import { ListItem } from '@/components/ListItem';
 
-import { listItem } from './index';
-
+import { listItemType } from '@/types/todoType';
 interface propsType {
   bgColor: string;
   title: string;
-  listData: listItem[];
+  listData: listItemType[];
   dragStatus: boolean;
   selectedId: number;
   setSelectedId: (v: number) => void;
@@ -21,10 +20,9 @@ export function EachList(props: propsType) {
         {(provided) => (
           <ListBox ref={provided.innerRef} {...provided.droppableProps}>
             {props.listData.map((item, index) => (
-              <ListItemBox>
+              <ListItemBox key={item.id}>
                 <ListItem
                   {...item}
-                  key={item.id}
                   index={index}
                   dragStatus={props.dragStatus}
                   selectedId={props.selectedId}

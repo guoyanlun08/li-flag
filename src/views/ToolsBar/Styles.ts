@@ -4,7 +4,6 @@ export const ToolBarContainer = styled.div`
   height: 100%;
   display: flex;
   align-items: center;
-  cursor: pointer;
 `;
 
 export const ToolItem = styled.div`
@@ -14,4 +13,5 @@ export const ToolItem = styled.div`
   border-radius: 10px;
   background: #6b5cba;
   color: #d0d8d9;
+  cursor: pointer;
 `;

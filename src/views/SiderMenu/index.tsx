@@ -8,7 +8,7 @@ function OptionItem(props: any) {
     <div>
       <span title={props.title}>{props.title}</span>
     </div>
-  )
+  );
 }
 //dev mock data
 const devData = [
@@ -20,10 +20,10 @@ const devData = [
   },
   {
     title: 'Option2'
-  },
-]
+  }
+];
 
-export function SiderMenu(props: any) {
+function SiderMenu(props: any) {
   const { getClose } = props;
   const [colpased, setColpased] = useState(false);
   const triggle = () => {
@@ -44,7 +44,7 @@ export function SiderMenu(props: any) {
         </Info>
         <OptionsBar>
           {devData.map((item, index) => {
-            return <OptionItem title={item.title} key={item.title + String(index)}/>
+            return <OptionItem title={item.title} key={item.title + String(index)} />;
           })}
         </OptionsBar>
       </MenuBox>
@@ -54,3 +54,5 @@ export function SiderMenu(props: any) {
     </SiderMenuContainer>
   );
 }
+
+export default SiderMenu;
