@@ -32,3 +32,8 @@ https://juejin.cn/post/7074600131126886437
 
 中文文档: https://github.com/chinanf-boy/react-beautiful-dnd-zh
 ts 项目参考：https://github1s.com/cowienduckie/react-beautiful-dnd-sample/blob/HEAD/src/App.tsx#L14
+
+# redux react-redux redux-toolkit 文档
+redux: https://www.redux.org.cn/docs/basics/Actions.html\
+react-redux: https://cn.react-redux.js.org/tutorials/typescript-quick-start\
+redux-toolkit: https://cn.redux.js.org/redux-toolkit/overview/#%E5%8C%85%E5%90%AB%E4%BA%86%E4%BB%80%E4%B9%88
