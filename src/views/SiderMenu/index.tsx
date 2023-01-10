@@ -43,8 +43,8 @@ export function SiderMenu(props: any) {
           <div className="info-name">FlagUser</div>
         </Info>
         <OptionsBar>
-          {devData.map((item) => {
-            return <OptionItem title={item.title} />
+          {devData.map((item, index) => {
+            return <OptionItem title={item.title} key={item.title + String(index)}/>
           })}
         </OptionsBar>
       </MenuBox>
