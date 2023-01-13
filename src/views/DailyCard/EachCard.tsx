@@ -32,6 +32,7 @@ export function EachCard(props: propsType) {
                 setSelectedId={props.setSelectedId}
               />
             ))}
+
             {provided.placeholder}
           </ListBox>
         )}

@@ -1,5 +1,5 @@
-import React, { useMemo, useState } from 'react';
-import { Item, ItemContent } from './Styles';
+import React, { useEffect, useMemo, useState } from 'react';
+import { Item, ItemContent, EditNode } from './Styles';
 
 import { Checkbox } from 'antd';
 import { MenuOutlined } from '@ant-design/icons';
@@ -43,15 +43,13 @@ export function ListItem(props: PropsType) {
           ref={provided.innerRef}
           {...provided.draggableProps}
           selected={isSelected}
-          isHover={isHover}
           onClick={clickItemFn}
           onMouseEnter={mouseEnterItemFn}
-          onMouseLeave={mouseLeaveItemFn}
-        >
+          onMouseLeave={mouseLeaveItemFn}>
           <MenuOutlined style={{ display: isHover ? 'block' : 'none' }} className="drag-handle" {...provided.dragHandleProps} />
           <Checkbox checked={completed} onChange={() => setCompleted(!completed)} />
-          <ItemContent selected={isSelected} completed={completed} isHover={isHover}>
-            <input type="text" value={textValue} onChange={(e) => setTextValue(e.target.value)} />
+          <ItemContent selected={isSelected} completed={completed}>
+            <EditNode contentEditable={true} dangerouslySetInnerHTML={{ __html: textValue }} />
           </ItemContent>
         </Item>
       )}

@@ -14,17 +14,17 @@ const initialState: allModuleType = {
       listData: [
         {
           id: 1,
-          text: 'A-111',
+          text: '<p>A-111</p>',
           completed: false
         },
         {
           id: 2,
-          text: 'A-222',
+          text: '<p>A-222</p>',
           completed: true
         },
         {
           id: 3,
-          text: 'A-333',
+          text: '<p>A-333</p>',
           completed: false
         }
       ]
@@ -35,17 +35,17 @@ const initialState: allModuleType = {
       listData: [
         {
           id: 4,
-          text: 'B-111',
+          text: '<p>B-111</p>',
           completed: false
         },
         {
           id: 5,
-          text: 'B-222',
+          text: '<p>B-222</p>',
           completed: true
         },
         {
           id: 6,
-          text: 'B-333',
+          text: '<p>B-333</p>',
           completed: false
         }
       ]
@@ -56,17 +56,17 @@ const initialState: allModuleType = {
       listData: [
         {
           id: 7,
-          text: 'C-111',
+          text: '<p>C-111</p>',
           completed: false
         },
         {
           id: 8,
-          text: 'C-222',
+          text: '<p>C-222</p>',
           completed: true
         },
         {
           id: 9,
-          text: 'C-333',
+          text: '<p>C-333</p>',
           completed: false
         }
       ]
@@ -77,17 +77,17 @@ const initialState: allModuleType = {
       listData: [
         {
           id: 10,
-          text: 'D-111',
+          text: '<p>D-111</p>',
           completed: false
         },
         {
           id: 11,
-          text: 'D-222',
+          text: '<p>D-222</p>',
           completed: true
         },
         {
           id: 12,
-          text: 'D-333',
+          text: '<p>D-333</p>',
           completed: false
         }
       ]
@@ -104,7 +104,10 @@ export const todoSlice = createSlice({
       const { moduleId, afterDragModule } = action.payload;
       state.eachModule[moduleId].listData = afterDragModule;
     },
-    differentModuleItemDrag: (state, action: PayloadAction<{ source: DraggableLocation; destination: DraggableLocation; dragItem: listItemType }>) => {
+    differentModuleItemDrag: (
+      state,
+      action: PayloadAction<{ source: DraggableLocation; destination: DraggableLocation; dragItem: listItemType }>
+    ) => {
       const { source, destination, dragItem } = action.payload;
       state.eachModule[source.droppableId].listData.splice(source.index, 1);
       state.eachModule[destination.droppableId].listData.splice(destination.index, 0, dragItem);
