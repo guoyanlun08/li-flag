@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Item, ItemContent, EditNode } from './Styles';
 
 import { Checkbox } from 'antd';
@@ -6,6 +6,7 @@ import { MenuOutlined } from '@ant-design/icons';
 import { Draggable } from 'react-beautiful-dnd';
 
 interface PropsType {
+  module: string;
   id: number;
   index: number;
   text: string;
@@ -36,6 +37,10 @@ export function ListItem(props: PropsType) {
     setIsHover(false);
   };
 
+  const inputChange = (e: any) => {
+    console.log('e', e);
+  };
+
   return (
     <Draggable draggableId={props.id.toString()} index={props.index}>
       {(provided) => (
@@ -49,7 +54,14 @@ export function ListItem(props: PropsType) {
           <MenuOutlined style={{ display: isHover ? 'block' : 'none' }} className="drag-handle" {...provided.dragHandleProps} />
           <Checkbox checked={completed} onChange={() => setCompleted(!completed)} />
           <ItemContent selected={isSelected} completed={completed}>
-            <EditNode contentEditable={true} dangerouslySetInnerHTML={{ __html: textValue }} />
+            <EditNode
+              id="contentEditableContainer"
+              contentEditable={true}
+              data-module={props.module}
+              data-id={props.id}
+              dangerouslySetInnerHTML={{ __html: textValue }}
+              onInput={inputChange}
+            />
           </ItemContent>
         </Item>
       )}

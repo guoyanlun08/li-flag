@@ -44,4 +44,5 @@ export const TooltipContainer = styled.div`
   color: #fff;
   padding: 8px 12px;
   border-radius: 6px;
+  z-index: 10006;
 `;

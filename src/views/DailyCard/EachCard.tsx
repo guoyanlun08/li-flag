@@ -16,20 +16,23 @@ interface propsType {
 }
 
 export function EachCard(props: propsType) {
+  const { bgColor, title, listData, dragStatus, selectedId, setSelectedId } = props;
+
   return (
-    <EachModuleContainer bgColor={props.bgColor}>
-      <Title>{props.title}</Title>
-      <Droppable droppableId={`droppable-list-${props.title}`} type="listType">
+    <EachModuleContainer bgColor={bgColor}>
+      <Title>{title}</Title>
+      <Droppable droppableId={`droppable-list-${title}`} type="listType">
         {(provided, snapshot) => (
           <ListBox ref={provided.innerRef} {...provided.droppableProps}>
-            {props.listData.map((item, index) => (
+            {listData.map((item, index) => (
               <ListItem
                 {...item}
+                module={`droppable-list-${title}`}
                 key={item.id}
-                dragStatus={props.dragStatus}
+                dragStatus={dragStatus}
                 index={index}
-                selectedId={props.selectedId}
-                setSelectedId={props.setSelectedId}
+                selectedId={selectedId}
+                setSelectedId={setSelectedId}
               />
             ))}
 
