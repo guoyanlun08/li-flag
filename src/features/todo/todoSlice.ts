@@ -5,6 +5,9 @@ import variables from '@/styles/variables.module.scss';
 import { allModuleType, listItemType } from '@/types/todoType';
 import { DraggableLocation } from 'react-beautiful-dnd';
 
+// todo: 临时处理，这里出现的 bug，可以忽略 后期 id 会是唯一的
+let idNum = 1000;
+
 // todo: 先写死
 const initialState: allModuleType = {
   eachModule: {
@@ -111,12 +114,20 @@ export const todoSlice = createSlice({
       const { source, destination, dragItem } = action.payload;
       state.eachModule[source.droppableId].listData.splice(source.index, 1);
       state.eachModule[destination.droppableId].listData.splice(destination.index, 0, dragItem);
+    },
+    addTodoItem: (state, action: PayloadAction<{ moduleId: string }>) => {
+      const { moduleId } = action.payload;
+      state.eachModule[moduleId].listData.push({
+        id: idNum++,
+        text: '<p>新加变量</p>',
+        completed: false
+      });
     }
   }
 });
 
 // 导出 分发动作
-export const { sameModuleItemDrag, differentModuleItemDrag } = todoSlice.actions;
+export const { sameModuleItemDrag, differentModuleItemDrag, addTodoItem } = todoSlice.actions;
 
 // 导出 todo 的 state值, 用 useAppSelector 也行
 export const selectTodo = (state: RootState) => state.todo;

@@ -20,6 +20,7 @@ export const EachModuleContainer = styled.div<{ bgColor: string }>`
 
 export const Title = styled.div`
   padding: 10px;
+  user-select: none;
 `;
 
 export const ListBox = styled.div`
