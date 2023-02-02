@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { DraggableLocation } from 'react-beautiful-dnd';
 
 import { RootState } from '@/app/store';
 import variables from '@/styles/variables.module.scss';
 import { allModuleType, listItemType } from '@/types/todoType';
-import { DraggableLocation } from 'react-beautiful-dnd';
 
 // todo: 临时处理，这里出现的 bug，可以忽略 后期 id 会是唯一的
 let idNum = 1000;
@@ -115,13 +115,22 @@ export const todoSlice = createSlice({
       state.eachModule[source.droppableId].listData.splice(source.index, 1);
       state.eachModule[destination.droppableId].listData.splice(destination.index, 0, dragItem);
     },
-    addTodoItem: (state, action: PayloadAction<{ moduleId: string }>) => {
-      const { moduleId } = action.payload;
-      state.eachModule[moduleId].listData.push({
+    addTodoItem: (state, action: PayloadAction<{ moduleId: string; type: string; insertIndex?: number }>) => {
+      const { moduleId, type, insertIndex } = action.payload;
+      const templateItem = {
         id: idNum++,
         text: '<p>新加变量</p>',
         completed: false
-      });
+      };
+      if (type === 'tail') {
+        state.eachModule[moduleId].listData.push(templateItem);
+      } else {
+        if (typeof insertIndex === 'undefined') {
+          throw Error('type 为 interval, insertIndex 是必需');
+        } else {
+          state.eachModule[moduleId].listData.splice(insertIndex + 1, 0, templateItem);
+        }
+      }
     }
   }
 });

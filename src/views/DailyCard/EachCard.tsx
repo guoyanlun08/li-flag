@@ -24,7 +24,7 @@ export function EachCard(props: propsType) {
   const doubleAddItem = (e: MouseEvent) => {
     // todo: 数据结构定下来，这里都需要改 临时处理
     const moduleId = `droppable-list-${title}`;
-    dispatch(addTodoItem({ moduleId }));
+    dispatch(addTodoItem({ moduleId, type: 'tail' }));
   };
 
   return (

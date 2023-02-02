@@ -1,9 +1,11 @@
 import React, { useMemo, useState } from 'react';
-import { Item, ItemContent, EditNode } from './Styles';
-
 import { Checkbox } from 'antd';
 import { MenuOutlined } from '@ant-design/icons';
 import { Draggable } from 'react-beautiful-dnd';
+
+import { Item, ItemContent, EditNode } from './Styles';
+import { useAppSelector, useAppDispatch } from '@/app/hooks';
+import { addTodoItem } from '@/features/todo/todoSlice';
 
 interface PropsType {
   module: string;
@@ -17,6 +19,9 @@ interface PropsType {
 }
 
 export function ListItem(props: PropsType) {
+  const { eachModule, eachModuleOrder } = useAppSelector((state) => state.todo);
+  const dispatch = useAppDispatch();
+
   const [completed, setCompleted] = useState(props.completed); // item状态
   const [textValue, setTextValue] = useState(props.text);
   const [isHover, setIsHover] = useState(false);
@@ -39,9 +44,20 @@ export function ListItem(props: PropsType) {
 
   const inputChange = (e: any) => {};
 
-  const keyDownFn = (e: any) => {
+  const onKeyDownFn = (e: any) => {
+    // 回退尽头
     if (e.target.innerHTML === '<p><br></p>' && e.code === 'Backspace') {
-      e.nativeEvent.returnValue = false;
+      e.preventDefault();
+    }
+    // 回车
+    if (e.code === 'Enter') {
+      // 末尾新增
+      if (eachModule[props.module].listData.length - 1 === props.index) {
+        dispatch(addTodoItem({ moduleId: props.module, type: 'tail' }));
+      } else {
+        console.log(props.index);
+        dispatch(addTodoItem({ moduleId: props.module, type: 'interval', insertIndex: props.index }));
+      }
     }
   };
 
@@ -66,7 +82,7 @@ export function ListItem(props: PropsType) {
               data-id={props.id}
               dangerouslySetInnerHTML={{ __html: textValue }}
               onInput={inputChange}
-              onKeyDown={keyDownFn}
+              onKeyDown={onKeyDownFn}
             />
           </ItemContent>
         </Item>
