@@ -37,8 +37,12 @@ export function ListItem(props: PropsType) {
     setIsHover(false);
   };
 
-  const inputChange = (e: any) => {
-    console.log('e', e);
+  const inputChange = (e: any) => {};
+
+  const keyDownFn = (e: any) => {
+    if (e.target.innerHTML === '<p><br></p>' && e.code === 'Backspace') {
+      e.nativeEvent.returnValue = false;
+    }
   };
 
   return (
@@ -50,7 +54,8 @@ export function ListItem(props: PropsType) {
           selected={isSelected}
           onClick={clickItemFn}
           onMouseEnter={mouseEnterItemFn}
-          onMouseLeave={mouseLeaveItemFn}>
+          onMouseLeave={mouseLeaveItemFn}
+          onDoubleClick={(e) => e.stopPropagation()}>
           <MenuOutlined style={{ display: isHover ? 'block' : 'none' }} className="drag-handle" {...provided.dragHandleProps} />
           <Checkbox checked={completed} onChange={() => setCompleted(!completed)} />
           <ItemContent selected={isSelected} completed={completed}>
@@ -61,6 +66,7 @@ export function ListItem(props: PropsType) {
               data-id={props.id}
               dangerouslySetInnerHTML={{ __html: textValue }}
               onInput={inputChange}
+              onKeyDown={keyDownFn}
             />
           </ItemContent>
         </Item>
