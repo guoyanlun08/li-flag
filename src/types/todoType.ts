@@ -8,6 +8,7 @@ export interface eachModuleType {
 }
 
 export interface moduleDataType {
+  moduleId: string;
   title: string;
   bgColor: string;
   listData: listItemType[];

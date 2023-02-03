@@ -8,7 +8,7 @@ import { useAppSelector, useAppDispatch } from '@/app/hooks';
 import { addTodoItem } from '@/features/todo/todoSlice';
 
 interface PropsType {
-  module: string;
+  moduleId: string;
   id: number;
   index: number;
   text: string;
@@ -19,7 +19,7 @@ interface PropsType {
 }
 
 export function ListItem(props: PropsType) {
-  const { eachModule, eachModuleOrder } = useAppSelector((state) => state.todo);
+  const { eachModule } = useAppSelector((state) => state.todo);
   const dispatch = useAppDispatch();
 
   const [completed, setCompleted] = useState(props.completed); // item状态
@@ -52,11 +52,10 @@ export function ListItem(props: PropsType) {
     // 回车
     if (e.code === 'Enter') {
       // 末尾新增
-      if (eachModule[props.module].listData.length - 1 === props.index) {
-        dispatch(addTodoItem({ moduleId: props.module, type: 'tail' }));
+      if (eachModule[props.moduleId].listData.length - 1 === props.index) {
+        dispatch(addTodoItem({ moduleId: props.moduleId, type: 'tail' }));
       } else {
-        console.log(props.index);
-        dispatch(addTodoItem({ moduleId: props.module, type: 'interval', insertIndex: props.index }));
+        dispatch(addTodoItem({ moduleId: props.moduleId, type: 'interval', insertIndex: props.index }));
       }
     }
   };
@@ -78,8 +77,6 @@ export function ListItem(props: PropsType) {
             <EditNode
               id="contentEditableContainer"
               contentEditable={true}
-              data-module={props.module}
-              data-id={props.id}
               dangerouslySetInnerHTML={{ __html: textValue }}
               onInput={inputChange}
               onKeyDown={onKeyDownFn}

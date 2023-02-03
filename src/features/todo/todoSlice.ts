@@ -12,6 +12,7 @@ let idNum = 1000;
 const initialState: allModuleType = {
   eachModule: {
     'droppable-list-A': {
+      moduleId: 'droppable-list-A',
       title: 'A',
       bgColor: variables.mainRed,
       listData: [
@@ -33,6 +34,7 @@ const initialState: allModuleType = {
       ]
     },
     'droppable-list-B': {
+      moduleId: 'droppable-list-B',
       title: 'B',
       bgColor: variables.mainBlue,
       listData: [
@@ -54,6 +56,7 @@ const initialState: allModuleType = {
       ]
     },
     'droppable-list-C': {
+      moduleId: 'droppable-list-C',
       title: 'C',
       bgColor: variables.mainGreen,
       listData: [
@@ -75,6 +78,7 @@ const initialState: allModuleType = {
       ]
     },
     'droppable-list-D': {
+      moduleId: 'droppable-list-D',
       title: 'D',
       bgColor: variables.mainGray,
       listData: [

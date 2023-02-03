@@ -1,7 +1,7 @@
 import React from 'react';
 
-import DailyCard from '@/views/DailyCard';
-import DailyList from '@/views/DailyList';
+import DailyCard from './DailyCard';
+import DailyList from './DailyList';
 
 interface propsType {
   switchList: boolean;
