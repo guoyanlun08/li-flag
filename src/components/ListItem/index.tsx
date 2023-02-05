@@ -5,7 +5,7 @@ import { Draggable } from 'react-beautiful-dnd';
 
 import { Item, ItemContent, EditNode } from './Styles';
 import { useAppSelector, useAppDispatch } from '@/app/hooks';
-import { addTodoItem } from '@/features/todo/todoSlice';
+import { addTodoItem, toggleItemCompletedStatus } from '@/features/todo/todoSlice';
 
 interface PropsType {
   moduleId: string;
@@ -19,26 +19,26 @@ interface PropsType {
 }
 
 export function ListItem(props: PropsType) {
+  const { moduleId, id, index, text, completed, dragStatus, selectedId, setSelectedId } = props;
+
   const { eachModule } = useAppSelector((state) => state.todo);
   const dispatch = useAppDispatch();
 
-  const [completed, setCompleted] = useState(props.completed); // item状态
-  const [textValue, setTextValue] = useState(props.text);
   const [isHover, setIsHover] = useState(false);
 
   // 是否选中当前 Item
-  const isSelected = useMemo(() => props.selectedId === props.id, [props.selectedId, props.id]);
+  const isSelected = useMemo(() => selectedId === id, [selectedId, id]);
 
   const clickItemFn = () => {
-    props.setSelectedId(props.id);
+    setSelectedId(id);
   };
 
   const mouseEnterItemFn = () => {
-    if (props.dragStatus) return;
+    if (dragStatus) return;
     setIsHover(true);
   };
   const mouseLeaveItemFn = () => {
-    if (props.dragStatus) return;
+    if (dragStatus) return;
     setIsHover(false);
   };
 
@@ -52,16 +52,16 @@ export function ListItem(props: PropsType) {
     // 回车
     if (e.code === 'Enter') {
       // 末尾新增
-      if (eachModule[props.moduleId].listData.length - 1 === props.index) {
-        dispatch(addTodoItem({ moduleId: props.moduleId, type: 'tail' }));
+      if (eachModule[moduleId].listData.length - 1 === index) {
+        dispatch(addTodoItem({ moduleId: moduleId, type: 'tail' }));
       } else {
-        dispatch(addTodoItem({ moduleId: props.moduleId, type: 'interval', insertIndex: props.index }));
+        dispatch(addTodoItem({ moduleId: moduleId, type: 'interval', insertIndex: index }));
       }
     }
   };
 
   return (
-    <Draggable draggableId={props.id.toString()} index={props.index}>
+    <Draggable draggableId={id.toString()} index={index}>
       {(provided) => (
         <Item
           ref={provided.innerRef}
@@ -72,12 +72,12 @@ export function ListItem(props: PropsType) {
           onMouseLeave={mouseLeaveItemFn}
           onDoubleClick={(e) => e.stopPropagation()}>
           <MenuOutlined style={{ display: isHover ? 'block' : 'none' }} className="drag-handle" {...provided.dragHandleProps} />
-          <Checkbox checked={completed} onChange={() => setCompleted(!completed)} />
+          <Checkbox checked={completed} onChange={() => dispatch(toggleItemCompletedStatus({ moduleId: moduleId, itemIndex: index }))} />
           <ItemContent selected={isSelected} completed={completed}>
             <EditNode
               id="contentEditableContainer"
               contentEditable={true}
-              dangerouslySetInnerHTML={{ __html: textValue }}
+              dangerouslySetInnerHTML={{ __html: text }}
               onInput={inputChange}
               onKeyDown={onKeyDownFn}
             />

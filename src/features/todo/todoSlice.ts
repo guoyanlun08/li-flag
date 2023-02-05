@@ -107,10 +107,12 @@ export const todoSlice = createSlice({
   name: 'todo',
   initialState,
   reducers: {
+    // 同一个模块中 Item 拖拽
     sameModuleItemDrag: (state, action: PayloadAction<{ moduleId: string; afterDragModule: listItemType[] }>) => {
       const { moduleId, afterDragModule } = action.payload;
       state.eachModule[moduleId].listData = afterDragModule;
     },
+    // 不同模块中 Item 拖拽
     differentModuleItemDrag: (
       state,
       action: PayloadAction<{ source: DraggableLocation; destination: DraggableLocation; dragItem: listItemType }>
@@ -119,6 +121,7 @@ export const todoSlice = createSlice({
       state.eachModule[source.droppableId].listData.splice(source.index, 1);
       state.eachModule[destination.droppableId].listData.splice(destination.index, 0, dragItem);
     },
+    // 增加 Item 项
     addTodoItem: (state, action: PayloadAction<{ moduleId: string; type: string; insertIndex?: number }>) => {
       const { moduleId, type, insertIndex } = action.payload;
       const templateItem = {
@@ -135,12 +138,19 @@ export const todoSlice = createSlice({
           state.eachModule[moduleId].listData.splice(insertIndex + 1, 0, templateItem);
         }
       }
+    },
+    // Item 中完成状态改变
+    toggleItemCompletedStatus: (state, action: PayloadAction<{ moduleId: string; itemIndex: number }>) => {
+      const { moduleId, itemIndex } = action.payload;
+
+      const item = state.eachModule[moduleId].listData[itemIndex];
+      item.completed = !item.completed;
     }
   }
 });
 
 // 导出 分发动作
-export const { sameModuleItemDrag, differentModuleItemDrag, addTodoItem } = todoSlice.actions;
+export const { sameModuleItemDrag, differentModuleItemDrag, addTodoItem, toggleItemCompletedStatus } = todoSlice.actions;
 
 // 导出 todo 的 state值, 用 useAppSelector 也行
 export const selectTodo = (state: RootState) => state.todo;
