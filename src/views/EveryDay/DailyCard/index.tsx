@@ -1,19 +1,18 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useContext } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
 
 import { EveryDayContainer } from './Styles';
 import { useAppSelector, useAppDispatch } from '@/app/hooks';
 import { onBeforeDragStart, onDragEnd } from '@/views/EveryDay/common';
 
+import { EveryDayContext } from '../index';
 import { EachCard } from './EachCard';
 // import Tooltip from '@/components/ListItem/Tooltip';
 
 function DailyCard() {
+  const context = useContext(EveryDayContext);
   const { eachModule, eachModuleOrder } = useAppSelector((state) => state.todo);
   const dispatch = useAppDispatch();
-
-  const [dragStatus, setDragStatus] = useState(false);
-  const [selectedId, setSelectedId] = useState<number>(-1);
 
   // 暂时关闭功能
   // const [showTooltip, setShowTooltip] = useState(false);
@@ -72,12 +71,12 @@ function DailyCard() {
 
   return (
     <DragDropContext
-      onBeforeDragStart={() => onBeforeDragStart(setDragStatus)}
-      onDragEnd={(result) => onDragEnd(result, setDragStatus, eachModule, dispatch)}>
+      onBeforeDragStart={() => onBeforeDragStart(context.setDragStatus)}
+      onDragEnd={(result) => onDragEnd(result, context.setDragStatus, eachModule, dispatch)}>
       <EveryDayContainer>
         {eachModuleOrder.map((module) => {
           const item = eachModule[module];
-          return <EachCard key={item.title} {...item} dragStatus={dragStatus} selectedId={selectedId} setSelectedId={setSelectedId} />;
+          return <EachCard key={item.title} {...item} />;
         })}
       </EveryDayContainer>
       {/* todo: 暂时关闭功能 */}

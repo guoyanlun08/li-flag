@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useContext } from 'react';
 import { Checkbox } from 'antd';
 import { MenuOutlined } from '@ant-design/icons';
 import { Draggable } from 'react-beautiful-dnd';
@@ -6,6 +6,7 @@ import { Draggable } from 'react-beautiful-dnd';
 import { Item, ItemContent, EditNode } from './Styles';
 import { useAppSelector, useAppDispatch } from '@/app/hooks';
 import { addTodoItem, toggleItemCompletedStatus } from '@/features/todo/todoSlice';
+import { EveryDayContext } from '@/views/EveryDay';
 
 interface PropsType {
   moduleId: string;
@@ -13,32 +14,29 @@ interface PropsType {
   index: number;
   text: string;
   completed: boolean;
-  dragStatus: boolean;
-  selectedId: number;
-  setSelectedId: (v: number) => void;
 }
 
 export function ListItem(props: PropsType) {
-  const { moduleId, id, index, text, completed, dragStatus, selectedId, setSelectedId } = props;
-
+  const context = useContext(EveryDayContext);
   const { eachModule } = useAppSelector((state) => state.todo);
   const dispatch = useAppDispatch();
 
+  const { moduleId, id, index, text, completed } = props;
   const [isHover, setIsHover] = useState(false);
 
   // 是否选中当前 Item
-  const isSelected = useMemo(() => selectedId === id, [selectedId, id]);
+  const isSelected = useMemo(() => context.selectedId === id, [context.selectedId, id]);
 
   const clickItemFn = () => {
-    setSelectedId(id);
+    context.setSelectedId(id);
   };
 
   const mouseEnterItemFn = () => {
-    if (dragStatus) return;
+    if (context.dragStatus) return;
     setIsHover(true);
   };
   const mouseLeaveItemFn = () => {
-    if (dragStatus) return;
+    if (context.dragStatus) return;
     setIsHover(false);
   };
 

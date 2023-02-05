@@ -4,22 +4,18 @@ import { Droppable } from 'react-beautiful-dnd';
 
 import { useAppDispatch } from '@/app/hooks';
 import { addTodoItem } from '@/features/todo/todoSlice';
-import ListItemBox from '../ListItemBox';
-
 import { listItemType } from '@/types/todoType';
+import ListItemBox from '../ListItemBox';
 
 interface propsType {
   bgColor: string;
   moduleId: string;
   title: string;
   listData: listItemType[];
-  dragStatus: boolean;
-  selectedId: number;
-  setSelectedId: (v: number) => void;
 }
 
 export function EachCard(props: propsType) {
-  const { bgColor, moduleId, title, listData, dragStatus, selectedId, setSelectedId } = props;
+  const { bgColor, moduleId, title, listData } = props;
   const dispatch = useAppDispatch();
 
   const doubleAddItem = (e: MouseEvent) => {
@@ -32,13 +28,7 @@ export function EachCard(props: propsType) {
       <Droppable droppableId={moduleId} type="listType">
         {(provided, snapshot) => (
           <ListBox ref={provided.innerRef} {...provided.droppableProps}>
-            <ListItemBox
-              listData={listData}
-              moduleId={moduleId}
-              dragStatus={dragStatus}
-              selectedId={selectedId}
-              setSelectedId={setSelectedId}
-            />
+            <ListItemBox listData={listData} moduleId={moduleId} />
             {provided.placeholder}
           </ListBox>
         )}

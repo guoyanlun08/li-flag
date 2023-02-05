@@ -9,25 +9,16 @@ interface propsType {
   moduleId: string;
   title: string;
   listData: listItemType[];
-  dragStatus: boolean;
-  selectedId: number;
-  setSelectedId: (v: number) => void;
 }
 
 export function EachList(props: propsType) {
-  const { bgColor, moduleId, listData, dragStatus, selectedId, setSelectedId } = props;
+  const { bgColor, moduleId, listData } = props;
   return (
     <DailyListContainer bgColor={bgColor}>
       <Droppable droppableId={moduleId} type="listType">
         {(provided) => (
           <ListBox ref={provided.innerRef} {...provided.droppableProps}>
-            <ListItemBox
-              listData={listData}
-              moduleId={moduleId}
-              dragStatus={dragStatus}
-              selectedId={selectedId}
-              setSelectedId={setSelectedId}
-            />
+            <ListItemBox listData={listData} moduleId={moduleId} />
             {provided.placeholder}
           </ListBox>
         )}
