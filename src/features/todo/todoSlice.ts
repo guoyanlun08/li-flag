@@ -6,7 +6,7 @@ import variables from '@/styles/variables.module.scss';
 import { allModuleType, listItemType } from '@/types/todoType';
 
 // todo: 临时处理，这里出现的 bug，可以忽略 后期 id 会是唯一的
-let idNum = 1000;
+export let idNum = 1000;
 
 // todo: 先写死
 const initialState: allModuleType = {
@@ -126,7 +126,7 @@ export const todoSlice = createSlice({
       const { moduleId, type, insertIndex } = action.payload;
       const templateItem = {
         id: idNum++,
-        text: '<p>新加变量</p>',
+        text: '<p><br></p>',
         completed: false
       };
       if (type === 'tail') {

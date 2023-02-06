@@ -1,13 +1,12 @@
-import React, { useMemo, useState, useContext } from 'react';
+import React, { useMemo, useState, useContext, useRef, useEffect } from 'react';
 import { Checkbox } from 'antd';
 import { MenuOutlined } from '@ant-design/icons';
 import { Draggable } from 'react-beautiful-dnd';
 
 import { Item, ItemContent, EditNode } from './Styles';
 import { useAppSelector, useAppDispatch } from '@/app/hooks';
-import { addTodoItem, toggleItemCompletedStatus } from '@/features/todo/todoSlice';
+import { idNum, addTodoItem, toggleItemCompletedStatus } from '@/features/todo/todoSlice';
 import { EveryDayContext } from '@/views/EveryDay';
-
 interface PropsType {
   moduleId: string;
   id: number;
@@ -21,11 +20,21 @@ export function ListItem(props: PropsType) {
   const { eachModule } = useAppSelector((state) => state.todo);
   const dispatch = useAppDispatch();
 
+  const editRef = useRef<HTMLDivElement>(null);
+
   const { moduleId, id, index, text, completed } = props;
   const [isHover, setIsHover] = useState(false);
 
   // 是否选中当前 Item
   const isSelected = useMemo(() => context.selectedId === id, [context.selectedId, id]);
+
+  useEffect(() => {
+    if (editRef.current) {
+      if (isSelected) {
+        editRef.current.focus();
+      }
+    }
+  }, [isSelected]);
 
   const clickItemFn = () => {
     context.setSelectedId(id);
@@ -51,8 +60,10 @@ export function ListItem(props: PropsType) {
     if (e.code === 'Enter') {
       // 末尾新增
       if (eachModule[moduleId].listData.length - 1 === index) {
+        context.setSelectedId(idNum); // todo: 临时处理，有后端需要，新增接口应返回，新增 item的 id
         dispatch(addTodoItem({ moduleId: moduleId, type: 'tail' }));
       } else {
+        context.setSelectedId(idNum);
         dispatch(addTodoItem({ moduleId: moduleId, type: 'interval', insertIndex: index }));
       }
     }
@@ -73,8 +84,10 @@ export function ListItem(props: PropsType) {
           <Checkbox checked={completed} onChange={() => dispatch(toggleItemCompletedStatus({ moduleId: moduleId, itemIndex: index }))} />
           <ItemContent selected={isSelected} completed={completed}>
             <EditNode
+              ref={editRef}
               id="contentEditableContainer"
-              contentEditable={true}
+              contentEditable
+              tabIndex={-1}
               dangerouslySetInnerHTML={{ __html: text }}
               onInput={inputChange}
               onKeyDown={onKeyDownFn}
