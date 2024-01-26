@@ -35,14 +35,3 @@ export const EditNode = styled.div`
     outline: none;
   }
 `;
-
-// Tooltip
-export const TooltipContainer = styled.div`
-  position: fixed;
-  display: flex;
-  background: #242424;
-  color: #fff;
-  padding: 8px 12px;
-  border-radius: 6px;
-  z-index: 10006;
-`;
