@@ -47,10 +47,10 @@ redux-toolkit: https://cn.redux.js.org/redux-toolkit/overview/#%E5%8C%85%E5%90%A
 
 |  TODO项 (完成项, 在这用~~删除线~~横划, 不要删掉.)  | 提出人  | 处理人 |
 |  ----  | ----  | ---- |
-| 梳理一下, 接下来的模块  | allen | yellowB |
+| 梳理一下, 接下来的模块  | allen | yellowB, allen |
 | App.tsx 里的 函数名语义化一下, 不太明确  | allen | yellowB |
 | 登录界面(简约, 但不要像后台那样), 看看别的平台, 我们一起过一下, 再开发 | allen | yellowB |
 | 项目里使用 styled-com 的标签, 命名格式需要全部统一一下, 不然和组件混淆, 阅读困难, 有时间 yellowB 和 我对一下  | allen | yellowB,allen |
 | redux 没有发挥真正作用, 参数传递多层(爷->孙), 需要处理  | allen | allen |
-| Toolbar 组件工具样式处理一下, 熟悉一下 slate的使用  | allen | yellowB |
-| Toolbar 组件文本选中, 再点击同 ListItem其他区域(取消拖蓝), 会有 Toolbar会有闪现问题  | allen | allen |
+| Toolbar 组件工具样式需要增加, 熟悉一下 slate的使用  | allen | yellowB |
+| ~~Toolbar 组件文本选中, 再点击同 ListItem其他区域(取消拖蓝), 会有 Toolbar会有闪现问题~~  | allen | allen |

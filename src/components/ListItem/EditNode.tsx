@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef, useEffect } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 
 import { Editor, createEditor } from 'slate'; // 导入 Slate 编辑器工厂。
 import { Slate, Editable, withReact } from 'slate-react'; // 导入 Slate 组件和 React 插件。
@@ -27,18 +27,6 @@ export function EditNode(props: any) {
   const [toolbarLeft, setToolbarLeft] = useState(0);
   const [visiable, setVisable] = useState(false); // todo: visiable 确认写进 toolbar? 还是父组件上?
 
-  useEffect(() => {
-    if (editor.selection) {
-      const { focus, anchor } = editor.selection;
-      const rangelength = focus.offset - anchor.offset;
-      if (rangelength !== 0 && props.selected) {
-        setVisable(true);
-        return;
-      }
-    }
-    setVisable(false);
-  }, [props.selected, editor.selection]);
-
   const renderElement = useCallback((props: any) => {
     switch (props.element.type) {
       // todo: 链接
@@ -55,11 +43,16 @@ export function EditNode(props: any) {
 
   const handleSelect = (e: any) => {
     const selection: any = document.getSelection();
-    if (selection.rangeCount > 0 && editableContainer.current) {
+    console.log(props.selected);
+
+    if (selection.toString().length > 0 && editableContainer.current && props.selected) {
       const range = selection.getRangeAt(0);
       const rangeRect = range.getBoundingClientRect();
       const editableRect = editableContainer.current.getBoundingClientRect();
+      setVisable(true);
       setToolbarLeft(rangeRect.left - editableRect.left);
+    } else {
+      setVisable(false);
     }
   };
 
