@@ -43,8 +43,9 @@ redux-toolkit: https://cn.redux.js.org/redux-toolkit/overview/#%E5%8C%85%E5%90%A
 
 文档: https://docs.slatejs.org/
 
+# TODO
 
-|  TODO项 (完成项, 在这用删除线横划, 不要删掉. ~~删除线~~)  | 提出人  | 处理人 |
+|  TODO项 (完成项, 在这用~~删除线~~横划, 不要删掉.)  | 提出人  | 处理人 |
 |  ----  | ----  | ---- |
 | 梳理一下, 接下来的模块  | allen | yellowB |
 | App.tsx 里的 函数名语义化一下, 不太明确  | allen | yellowB |
