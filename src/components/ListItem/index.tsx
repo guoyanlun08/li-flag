@@ -37,7 +37,7 @@ export function ListItem(props: PropsType) {
     }
   }, [isSelected]);
 
-  const clickItemFn = () => {
+  const selectItemFn = () => {
     context.setSelectedId(id);
   };
 
@@ -57,7 +57,7 @@ export function ListItem(props: PropsType) {
           ref={provided.innerRef}
           {...provided.draggableProps}
           selected={isSelected}
-          onClick={clickItemFn}
+          onMouseDown={selectItemFn}
           onMouseEnter={mouseEnterItemFn}
           onMouseLeave={mouseLeaveItemFn}
           onDoubleClick={(e) => e.stopPropagation()}>
