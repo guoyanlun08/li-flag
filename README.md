@@ -54,3 +54,4 @@ redux-toolkit: https://cn.redux.js.org/redux-toolkit/overview/#%E5%8C%85%E5%90%A
 | redux 没有发挥真正作用, 参数传递多层(爷->孙), 需要处理  | allen | allen |
 | Toolbar 组件工具样式需要增加, 熟悉一下 slate的使用  | allen | yellowB |
 | ~~Toolbar 组件文本选中, 再点击同 ListItem其他区域(取消拖蓝), 会有 Toolbar会有闪现问题~~  | allen | allen |
+| ~~sideBar侧边栏展开收起控制移动到外层容器~~  | superB | superB |
