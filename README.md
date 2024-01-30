@@ -2,8 +2,10 @@
 
 # `npm start`
 
-# src
+# 在线文档地址
+https://docs.qq.com/desktop/mydoc/folder/IcgRghEPvVbH
 
+# src
 components 公共组件\
 styles 公共样式\
 utils 公用函数处理（时间，小数等等）\
@@ -48,7 +50,7 @@ Redux Toolkit 是编写 Redux 逻辑的推荐方式
 |  ----  | ----  | ---- |
 | 梳理一下, 接下来的模块  | allen | yellowB, allen |
 | App.tsx 里的 函数名语义化一下, 不太明确  | allen | yellowB |
-| 登录界面(简约, 但不要像后台那样), 看看别的平台, 我们一起过一下, 再开发 | allen | yellowB |
+| 登录界面，大致逻辑，在线文档里的流程图 | allen | yellowB |
 | 项目里使用 styled-com 的标签, 命名格式需要全部统一一下, 不然和组件混淆, 阅读困难, 有时间 yellowB 和 我对一下  | allen | yellowB,allen |
 | ~~redux 没有发挥真正作用, 参数传递多层(爷->孙), 需要处理~~(本身没什么问题, 原用useContent处理)  | allen | allen |
 | Toolbar 组件工具样式需要增加, 熟悉一下 slate的使用  | allen | yellowB |
