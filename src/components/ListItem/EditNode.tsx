@@ -36,6 +36,7 @@ export function EditNode(props: any) {
         return <DefaultElement {...props} />;
     }
   }, []);
+
   // Define a leaf rendering function that is memoized with `useCallback`.
   const renderLeaf = useCallback((props: any) => {
     return <Leaf {...props} />;
@@ -43,7 +44,6 @@ export function EditNode(props: any) {
 
   const handleSelect = (e: any) => {
     const selection: any = document.getSelection();
-    console.log(props.selected);
 
     if (selection.toString().length > 0 && editableContainer.current && props.selected) {
       const range = selection.getRangeAt(0);
@@ -59,7 +59,6 @@ export function EditNode(props: any) {
   return (
     <Slate editor={editor} initialValue={initialValue}>
       <div ref={editableContainer} style={{ position: 'relative', display: 'flex', alignItems: 'center', height: '100%' }}>
-        {/* todo: toolbar 组件抽离成单独文件 */}
         {visiable && <Toolbar left={toolbarLeft} />}
         <Editable
           style={styleEditable}
