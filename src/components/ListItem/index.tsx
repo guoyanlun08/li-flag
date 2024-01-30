@@ -26,8 +26,7 @@ export function ListItem(props: PropsType) {
   const { moduleId, id, index, text, completed } = props;
   const [isHover, setIsHover] = useState(false);
 
-  // 是否选中当前 Item
-  const isSelected = useMemo(() => context.selectedId === id, [context.selectedId, id]);
+  const isSelected = context.selectedId === id;
 
   useEffect(() => {
     if (editRef.current) {
@@ -64,13 +63,6 @@ export function ListItem(props: PropsType) {
           <MenuOutlined style={{ display: isHover ? 'block' : 'none' }} className="drag-handle" {...provided.dragHandleProps} />
           <Checkbox checked={completed} onChange={() => dispatch(toggleItemCompletedStatus({ moduleId: moduleId, itemIndex: index }))} />
           <ItemContent selected={isSelected} completed={completed}>
-            {/* <EditNode
-              ref={editRef}
-              id="contentEditableContainer"
-              contentEditable
-              tabIndex={-1}
-              dangerouslySetInnerHTML={{ __html: text }}
-            /> */}
             <EditNode selected={isSelected} />
           </ItemContent>
         </Item>

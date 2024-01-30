@@ -17,8 +17,8 @@ interface IEveryDayContext {
 export const EveryDayContext = React.createContext<IEveryDayContext>({} as any);
 
 function EveryDay(props: propsType) {
-  const [dragStatus, setDragStatus] = useState(false);
-  const [selectedId, setSelectedId] = useState<number>(-1);
+  const [dragStatus, setDragStatus] = useState(false); // 当前拖拽状态
+  const [selectedId, setSelectedId] = useState<number>(-1); // 当前选中 item
 
   return (
     <EveryDayContext.Provider value={{ dragStatus, setDragStatus, selectedId, setSelectedId }}>

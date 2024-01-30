@@ -7,7 +7,7 @@
 components 公共组件\
 styles 公共样式\
 utils 公用函数处理（时间，小数等等）\
-views 页面\
+views 页面
 
 # git commit 注释
 
@@ -30,14 +30,13 @@ https://juejin.cn/post/7074600131126886437
 
 # react-beautiful-dnd 拖拽库
 
-中文文档: https://github.com/chinanf-boy/react-beautiful-dnd-zh
+中文文档: https://github.com/chinanf-boy/react-beautiful-dnd-zh \
 ts 项目参考：https://github1s.com/cowienduckie/react-beautiful-dnd-sample/blob/HEAD/src/App.tsx#L14
 
-# redux react-redux redux-toolkit 文档
-
-redux: https://www.redux.org.cn/docs/basics/Actions.html\
-react-redux: https://cn.react-redux.js.org/tutorials/typescript-quick-start\
-redux-toolkit: https://cn.redux.js.org/redux-toolkit/overview/#%E5%8C%85%E5%90%AB%E4%BA%86%E4%BB%80%E4%B9%88
+# redux-toolkit 文档
+redux-toolkit: https://cn.redux.js.org/redux-toolkit/overview/#%E5%8C%85%E5%90%AB%E4%BA%86%E4%BB%80%E4%B9%88 \
+Redux 通常与 React-Redux 库一起使用，把 Redux 和 React 集成在一起
+Redux Toolkit 是编写 Redux 逻辑的推荐方式
 
 # slate.js 富文本编辑器, 项目里 ListItem 组件使用其模型控制字体
 
@@ -51,7 +50,7 @@ redux-toolkit: https://cn.redux.js.org/redux-toolkit/overview/#%E5%8C%85%E5%90%A
 | App.tsx 里的 函数名语义化一下, 不太明确  | allen | yellowB |
 | 登录界面(简约, 但不要像后台那样), 看看别的平台, 我们一起过一下, 再开发 | allen | yellowB |
 | 项目里使用 styled-com 的标签, 命名格式需要全部统一一下, 不然和组件混淆, 阅读困难, 有时间 yellowB 和 我对一下  | allen | yellowB,allen |
-| redux 没有发挥真正作用, 参数传递多层(爷->孙), 需要处理  | allen | allen |
+| ~~redux 没有发挥真正作用, 参数传递多层(爷->孙), 需要处理~~(本身没什么问题, 原用useContent处理)  | allen | allen |
 | Toolbar 组件工具样式需要增加, 熟悉一下 slate的使用  | allen | yellowB |
 | ~~Toolbar 组件文本选中, 再点击同 ListItem其他区域(取消拖蓝), 会有 Toolbar会有闪现问题~~  | allen | allen |
 | ~~sideBar侧边栏展开收起控制移动到外层容器~~  | superB | superB |
