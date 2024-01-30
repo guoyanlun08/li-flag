@@ -6,7 +6,7 @@ import { SiderMenuContainer, Header, MenuBox, Info, OptionsBar } from './Styles'
 function OptionItem(props: any) {
   return (
     <div>
-      <span title={props.title}>{props.title}</span>
+      <span onClick={(e) => {e.stopPropagation();console.log(props.title)}} title={props.title}>{props.title}</span>
     </div>
   );
 }
@@ -26,12 +26,12 @@ const devData = [
 function SiderMenu(props: any) {
   const { getClose } = props;
   const [colpased, setColpased] = useState(false);
-  const triggle = () => {
+  const triggle = ():void => {
     setColpased(!colpased);
     getClose(colpased);
   };
   return (
-    <SiderMenuContainer>
+    <SiderMenuContainer onClick={triggle}>
       <Header fold={colpased}>
         <span>Li-FLAG</span>
       </Header>
@@ -48,7 +48,7 @@ function SiderMenu(props: any) {
           })}
         </OptionsBar>
       </MenuBox>
-      <div className="side-footer" onClick={() => triggle()}>
+      <div className="side-footer">
         {colpased ? <MenuOutlined /> : <MenuOutlined rotate={90} />}
       </div>
     </SiderMenuContainer>
