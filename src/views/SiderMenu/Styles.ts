@@ -52,6 +52,7 @@ export const Info = styled.div<{ fold: boolean }>`
     height: ${(props) => (props.fold ? '100px' : '50px')};
     border: 1px dashed red;
     border-radius: 50%;
+    cursor: pointer;
     transition-property: width height;
     transition-duration: 0.3s;
     transition-timing-function: ease-in-out;
@@ -67,7 +68,7 @@ export const Info = styled.div<{ fold: boolean }>`
   }
 `;
 
-export const OptionsBar = styled.div`
+export const OptionsBar = styled.div<{ fold: boolean }>`
   margin-top: 10px;
   text-align: center;
   > div {
@@ -78,10 +79,23 @@ export const OptionsBar = styled.div`
     cursor: pointer;
     text-overflow: ellipsis;
     white-space: nowrap;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     &:hover {
       border-left: 2px solid ${mainColor.activeTab};
       color: ${mainColor.activeTab};
       font-weight: bold;
     }
+    & .ant-space-item{
+      display: flex;
+      align-items: center;
+    }
+    & .menuItemText{
+      display: ${(props) => (props.fold ? 'inline-block' : 'none')};
+    }
   }
+`;
+export const LoginBox = styled.div`
+  height: 400px;
 `;
