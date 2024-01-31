@@ -1,11 +1,11 @@
-import React, { useMemo, useState, useContext, useRef, useEffect } from 'react';
+import React, { useState, useContext, useRef, useEffect } from 'react';
 import { Checkbox } from 'antd';
 import { MenuOutlined } from '@ant-design/icons';
 import { Draggable } from 'react-beautiful-dnd';
 
 import { Item, ItemContent } from './Styles';
-import { useAppSelector, useAppDispatch } from '@/app/hooks';
-import { idNum, addTodoItem, toggleItemCompletedStatus } from '@/features/todo/todoSlice';
+import { useAppDispatch } from '@/app/hooks';
+import { toggleItemCompletedStatus } from '@/features/todo/todoSlice';
 import { EveryDayContext } from '@/views/EveryDay';
 import { EditNode } from './EditNode';
 interface PropsType {
@@ -18,7 +18,6 @@ interface PropsType {
 
 export function ListItem(props: PropsType) {
   const context = useContext(EveryDayContext);
-  const { eachModule } = useAppSelector((state) => state.todo);
   const dispatch = useAppDispatch();
 
   const editRef = useRef<HTMLDivElement>(null);
