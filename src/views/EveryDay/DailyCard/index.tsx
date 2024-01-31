@@ -1,29 +1,16 @@
-import React, { useEffect, useRef, useState, useContext } from 'react';
-import { DragDropContext } from 'react-beautiful-dnd';
+import React from 'react';
 
 import { EveryDayContainer } from './Styles';
-import { useAppSelector, useAppDispatch } from '@/app/hooks';
-import { onBeforeDragStart, onDragEnd } from '@/views/EveryDay/common';
-
-import { EveryDayContext } from '../index';
 import { EachCard } from './EachCard';
 
-function DailyCard() {
-  const context = useContext(EveryDayContext);
-  const { eachModule, eachModuleOrder } = useAppSelector((state) => state.todo);
-  const dispatch = useAppDispatch();
-
+function DailyCard(props: any) {
   return (
-    <DragDropContext
-      onBeforeDragStart={() => onBeforeDragStart(context.setDragStatus)}
-      onDragEnd={(result) => onDragEnd(result, context.setDragStatus, eachModule, dispatch)}>
-      <EveryDayContainer>
-        {eachModuleOrder.map((module) => {
-          const item = eachModule[module];
-          return <EachCard key={item.title} {...item} />;
-        })}
-      </EveryDayContainer>
-    </DragDropContext>
+    <EveryDayContainer>
+      {props.eachModuleOrder.map((module: string) => {
+        const item = props.eachModule[module];
+        return <EachCard key={item.title} {...item} />;
+      })}
+    </EveryDayContainer>
   );
 }
 
