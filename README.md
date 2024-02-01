@@ -3,7 +3,7 @@
 # `npm start`
 
 # 规范
-- 使用styled-components 用 **Styled_buttonBox** 来和普通组件区分
+- 使用styled-components 用 **Styled_ButtonBox** 来和普通组件区分
 
 # 在线文档地址
 https://docs.qq.com/desktop/mydoc/folder/IcgRghEPvVbH
