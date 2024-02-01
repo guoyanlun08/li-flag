@@ -1,14 +1,16 @@
 import React from 'react';
 
+import { ThemeBox, ConditionBox, ListBox } from './comp';
+import { Styled_Container } from './Styles';
+
+/** 近期完成模块 */
 function RecentlyCompleted() {
   return (
-    <div>
-      {/* 标题 近x天 */}
-      {/* 能切换显示今日已完成？？？ */}
-      {/* 选择器也可以手动输入筛选时间  */}
-      {/* switch 分页非分页 */}
-      {/* 已完成列表 */}
-    </div>
+    <Styled_Container>
+      <ThemeBox />
+      <ConditionBox />
+      <ListBox />
+    </Styled_Container>
   );
 }
 
