@@ -1,9 +1,9 @@
-import ThemeBox from './ThemeBox';
-import ConditionBox from './ConditionBox';
-import ListBox from './ListBox';
+import Theme from './Theme';
+import Condition from './Condition';
+import List from './List';
 
 export {
-  ThemeBox,
-  ConditionBox,
-  ListBox
+  Theme,
+  Condition,
+  List
 }
