@@ -61,3 +61,4 @@ Redux Toolkit 是编写 Redux 逻辑的推荐方式
 | ~~sideBar侧边栏展开收起控制移动到外层容器~~  | superB | superB |
 | bug: ListItem，的拖拽标签，快速拖拽时，标签不会消失，需要再去碰一次，才消失  | allen | xxx |
 | feat: 近期完成模块开发 | allen | allen |
+| ~~feat: 登录界面基本框架样式开发~~ | superB | superB |
