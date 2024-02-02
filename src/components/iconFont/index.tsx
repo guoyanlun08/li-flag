@@ -1,20 +1,17 @@
 import React from 'react';
 import { createFromIconfontCN } from '@ant-design/icons';
 import { Space } from 'antd';
+// iconfont图标的js在线链接
 const iconUrl = ['//at.alicdn.com/t/c/font_4429243_13a7lsv8ljt.js'];
 const CreateIcon = createFromIconfontCN({
   scriptUrl: iconUrl
 });
-interface IProps {
-  name: string;
-}
 
-export default function IconFont(props: IProps) {
+// 通过name传入iconfont图标名字，其他属性保持和antd的Icon一样的属性
+export default function IconFont({name = '', ...resetProps}) {
   return (
     <Space>
-      {/* todo: fontSize需要传参定义，不要写死 */}
-      {/* Readme 简单补充一下图标库信息 */}
-      <CreateIcon type={props.name} style={{ fontSize: '30px' }} />
+      <CreateIcon type={name} {...resetProps} />
     </Space>
   );
 }

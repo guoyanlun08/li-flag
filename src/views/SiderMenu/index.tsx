@@ -7,7 +7,7 @@ import { SiderMenuContainer, Header, MenuBox, Info, OptionsBar, LoginBox } from 
 function OptionItem(props: any) {
   return (
     <div onClick={(e) => {e.stopPropagation();console.log(props.title)}}>
-        <IconFont name={props.icon}/>
+        <IconFont name={props.icon} style={{ fontSize: '30px' }}/>
         <span className='menuItemText'>{props.title}</span>
     </div>
   );
