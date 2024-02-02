@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { MenuOutlined } from '@ant-design/icons';
-import { Button, Modal } from 'antd';
 import IconFont from '@/components/iconFont';
-import { SiderMenuContainer, Header, MenuBox, Info, OptionsBar, LoginBox } from './Styles';
+import LoginModal from '@/components/Login'
+import { SiderMenuContainer, Header, MenuBox, Info, OptionsBar } from './Styles';
 
 function OptionItem(props: any) {
   return (
@@ -63,18 +63,7 @@ function SiderMenu(props: any) {
           {colpased ? <MenuOutlined /> : <MenuOutlined rotate={90} />}
         </div>
       </SiderMenuContainer>
-      <Modal
-        style={{ top: 100 }}
-        width={600}
-        maskClosable={false}
-        footer={false}
-        open={loginVisible}
-        onCancel={() => setLoginVisible(false)}
-      >
-        <LoginBox>
-          
-        </LoginBox>
-      </Modal>
+      <LoginModal open={loginVisible} onCancel={() => setLoginVisible(false)}></LoginModal>
     </>
   );
 }
