@@ -47,6 +47,8 @@ export const Styled_ThemeToday = styled.div`
 // ConditionBox
 export const Styled_Condition = styled.div`
   background: rgba(200, 200, 255, 0.8);
+  border-radius: 20px;
+  padding-left: 20px;
   display: flex;
   align-items: center;
   height: 80px;
@@ -54,7 +56,7 @@ export const Styled_Condition = styled.div`
 `;
 
 // ListBox
-export const Styled_List = styled.div`
+export const Styled_CompletedList = styled.div`
   background: rgba(100, 200, 200, 0.8);
   flex: 1;
 `;

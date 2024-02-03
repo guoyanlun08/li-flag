@@ -1,9 +1,9 @@
 import Theme from './Theme';
 import Condition from './Condition';
-import List from './List';
+import CompletedList from './CompletedList';
 
 export {
   Theme,
   Condition,
-  List
+  CompletedList
 }
