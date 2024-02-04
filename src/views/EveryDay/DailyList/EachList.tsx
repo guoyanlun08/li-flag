@@ -3,12 +3,11 @@ import { ListBox, DailyListContainer } from './Styles';
 import { Droppable } from 'react-beautiful-dnd';
 import ListItemBox from '../ListItemBox';
 
-import { listItemType } from '@/types/todoType';
+import { todoListItemType } from '@/types/todoType';
 interface propsType {
   bgColor: string;
   moduleId: string;
-  title: string;
-  listData: listItemType[];
+  listData: todoListItemType[];
 }
 
 export function EachList(props: propsType) {

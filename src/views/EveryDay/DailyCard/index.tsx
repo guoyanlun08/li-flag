@@ -8,7 +8,7 @@ function DailyCard(props: any) {
     <EveryDayContainer>
       {props.eachModuleOrder.map((module: string) => {
         const item = props.eachModule[module];
-        return <EachCard key={item.title} {...item} />;
+        return <EachCard key={item.moduleId} {...item} />;
       })}
     </EveryDayContainer>
   );

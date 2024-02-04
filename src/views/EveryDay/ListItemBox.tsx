@@ -2,10 +2,10 @@ import React from 'react';
 
 import { ListItem } from '@/components/ListItem';
 
-import { listItemType } from '@/types/todoType';
+import { todoListItemType } from '@/types/todoType';
 
 interface propsType {
-  listData: listItemType[];
+  listData: todoListItemType[];
   moduleId: string;
 }
 
