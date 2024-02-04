@@ -22,7 +22,7 @@ export function ListItem(props: PropsType) {
 
   const editRef = useRef<HTMLDivElement>(null);
 
-  const { moduleId, id, index, text, completed } = props;
+  const { moduleId, id, index, completed } = props;
   const [isHover, setIsHover] = useState(false);
 
   const isSelected = context.selectedId === id;

@@ -9,13 +9,13 @@ export interface eachModuleType {
 
 export interface moduleDataType {
   moduleId: string;
-  title: string;
   bgColor: string;
-  listData: listItemType[];
+  listData: todoListItemType[];
 }
 
-export interface listItemType {
+export interface todoListItemType {
   id: number;
+  moduleId: string;
   text: string;
   completed: boolean;
 }

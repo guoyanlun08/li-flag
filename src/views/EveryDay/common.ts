@@ -1,9 +1,9 @@
 import { sameModuleItemDrag, differentModuleItemDrag } from '@/features/todo/todoSlice';
 // types
 import { DropResult } from 'react-beautiful-dnd';
-import { eachModuleType, listItemType } from '@/types/todoType';
+import { eachModuleType, todoListItemType } from '@/types/todoType';
 
-function reorderList(list: listItemType[], startIndex: number, endIndex: number) {
+function reorderList(list: todoListItemType[], startIndex: number, endIndex: number) {
   const result = Array.from(list);
   const [removed] = result.splice(startIndex, 1);
   result.splice(endIndex, 0, removed);
@@ -33,9 +33,13 @@ export const onDragEnd = (result: DropResult, setDragStatus: (value: boolean) =>
     return;
   }
 
+
   // 两个不同的模块之间的拖拽
   const sourceModule = eachModule[source.droppableId];
-  const dragItem = sourceModule.listData[source.index];
+  const dragItem = {
+    ...sourceModule.listData[source.index],
+    moduleId: destination.droppableId
+  };
 
   dispatch(differentModuleItemDrag({ source, destination, dragItem }));
 };

@@ -11,8 +11,8 @@ function DailyList(props: any) {
       {props.eachModuleOrder.map((module: string) => {
         const item = props.eachModule[module];
         return (
-          <Panel header={item.title} key={item.title}>
-            <EachList key={item.title} {...item} />
+          <Panel header={item.moduleId} key={item.moduleId}>
+            <EachList key={item.moduleId} {...item} />
           </Panel>
         );
       })}
