@@ -1,21 +1,27 @@
 import React from 'react';
-
-import { ListItem } from '@/components/ListItem';
+import { Draggable } from 'react-beautiful-dnd';
 
 import { todoListItemType } from '@/types/todoType';
 
+import { ListItem } from '@/components/ListItem';
+
 interface propsType {
   listData: todoListItemType[];
-  moduleId: string;
 }
 
 function ListItemBox(props: propsType) {
-  const { listData, moduleId } = props;
+  const { listData } = props;
 
   return (
     <div>
       {listData.map((item, index) => (
-        <ListItem key={item.id} {...item} moduleId={moduleId} index={index} />
+        <Draggable key={item.id} draggableId={item.id.toString()} index={index}>
+          {(provided: any) => (
+            <div ref={provided.innerRef} {...provided.draggableProps}>
+              <ListItem {...item} dragHandle={provided.dragHandleProps} index={index} />
+            </div>
+          )}
+        </Draggable>
       ))}
     </div>
   );
