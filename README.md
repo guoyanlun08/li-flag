@@ -5,6 +5,21 @@
 # 规范
 
 - 使用 styled-components 用 **Styled_ButtonBox** 来和普通组件区分
+- 组件头部引入顺序：a. 先外部依赖; b. 类型和方法; c. 组件 和 styled
+
+```js
+// 如
+import React, { useState, useContext } from 'react';
+import { Checkbox } from 'antd';
+import { MenuOutlined } from '@ant-design/icons';
+
+import { useAppDispatch } from '@/app/hooks';
+import { toggleItemCompletedStatus } from '@/features/todo/todoSlice';
+import { EveryDayContext } from '@/views/EveryDay';
+
+import { Item, ItemContent } from './Styles';
+import { EditNode } from './EditNode';
+```
 
 # 在线文档地址
 
