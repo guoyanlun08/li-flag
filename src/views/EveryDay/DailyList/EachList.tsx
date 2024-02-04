@@ -17,7 +17,7 @@ export function EachList(props: propsType) {
       <Droppable droppableId={moduleId} type="listType">
         {(provided) => (
           <ListBox ref={provided.innerRef} {...provided.droppableProps}>
-            <ListItemBox listData={listData} moduleId={moduleId} />
+            <ListItemBox listData={listData} />
             {provided.placeholder}
           </ListBox>
         )}
