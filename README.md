@@ -49,7 +49,7 @@ revert: 代码回退
 # styled-components 的文章
 
 vscode: 下载 vscode-styled-components 这个插件有高亮提示\
-https://juejin.cn/post/7074600131126886437
+https://styled-components.com/docs/basics#getting-started
 
 # react-beautiful-dnd 拖拽库
 
