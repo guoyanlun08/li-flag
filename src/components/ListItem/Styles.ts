@@ -24,6 +24,8 @@ export const ItemContent = styled.div<{ selected: boolean; completed: boolean }>
   padding-left: 8px;
   width: 100%;
   height: 100%;
+  display: flex;
+  align-items: center;
 `;
 
 export const EditNode = styled.div`

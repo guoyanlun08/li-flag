@@ -18,19 +18,19 @@ const initialState: allModuleType = {
         {
           id: 1,
           moduleId: 'A',
-          text: '<p>A-111</p>',
+          text: 'A-111',
           completed: false
         },
         {
           id: 2,
           moduleId: 'A',
-          text: '<p>A-222</p>',
+          text: 'A-222',
           completed: true
         },
         {
           id: 3,
           moduleId: 'A',
-          text: '<p>A-333</p>',
+          text: 'A-333',
           completed: false
         }
       ]
@@ -42,19 +42,19 @@ const initialState: allModuleType = {
         {
           id: 4,
           moduleId: 'B',
-          text: '<p>B-111</p>',
+          text: 'B-111',
           completed: false
         },
         {
           id: 5,
           moduleId: 'B',
-          text: '<p>B-222</p>',
+          text: 'B-222',
           completed: true
         },
         {
           id: 6,
           moduleId: 'B',
-          text: '<p>B-333</p>',
+          text: 'B-333',
           completed: false
         }
       ]
@@ -66,19 +66,19 @@ const initialState: allModuleType = {
         {
           id: 7,
           moduleId: 'C',
-          text: '<p>C-111</p>',
+          text: 'C-111',
           completed: false
         },
         {
           id: 8,
           moduleId: 'C',
-          text: '<p>C-222</p>',
+          text: 'C-222',
           completed: true
         },
         {
           id: 9,
           moduleId: 'C',
-          text: '<p>C-333</p>',
+          text: 'C-333',
           completed: false
         }
       ]
@@ -90,19 +90,19 @@ const initialState: allModuleType = {
         {
           id: 10,
           moduleId: 'D',
-          text: '<p>D-111</p>',
+          text: 'D-111',
           completed: false
         },
         {
           id: 11,
           moduleId: 'D',
-          text: '<p>D-222</p>',
+          text: 'D-222',
           completed: true
         },
         {
           id: 12,
           moduleId: 'D',
-          text: '<p>D-333</p>',
+          text: 'D-333',
           completed: false
         }
       ]
@@ -137,7 +137,7 @@ export const todoSlice = createSlice({
       const templateItem = {
         moduleId,
         id: idNum++,
-        text: '<p><br></p>',
+        text: '',
         completed: false
       };
       if (type === 'tail') {
