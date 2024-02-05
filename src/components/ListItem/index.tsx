@@ -14,6 +14,7 @@ interface PropsType {
   index: number;
   text: string;
   completed: boolean;
+  editable: boolean;
   dragHandle?: any;
 }
 
@@ -21,7 +22,7 @@ export function ListItem(props: PropsType) {
   const context = useContext(EveryDayContext);
   const dispatch = useAppDispatch();
 
-  const { moduleId, id, index, completed, dragHandle } = props;
+  const { moduleId, id, editable, text, index, completed, dragHandle } = props;
   const [isHover, setIsHover] = useState(false);
 
   const isSelected = context.selectedId === id;
@@ -46,10 +47,14 @@ export function ListItem(props: PropsType) {
       onMouseEnter={mouseEnterItemFn}
       onMouseLeave={mouseLeaveItemFn}
       onDoubleClick={(e) => e.stopPropagation()}>
-      <MenuOutlined style={{ display: isHover ? 'block' : 'none' }} className="drag-handle" {...dragHandle} />
-      <Checkbox checked={completed} onChange={() => dispatch(toggleItemCompletedStatus({ moduleId: moduleId, itemIndex: index }))} />
+      <MenuOutlined style={{ display: editable && isHover ? 'block' : 'none' }} className="drag-handle" {...dragHandle} />
+      <Checkbox
+        checked={completed}
+        disabled={!editable}
+        onChange={() => dispatch(toggleItemCompletedStatus({ moduleId: moduleId, itemIndex: index }))}
+      />
       <ItemContent selected={isSelected} completed={completed}>
-        <EditNode selected={isSelected} />
+        {editable ? <EditNode selected={isSelected} /> : <div>{text}</div>}
       </ItemContent>
     </Item>
   );

@@ -81,5 +81,6 @@ Redux Toolkit 是编写 Redux 逻辑的推荐方式
 | bug: ListItem，的拖拽标签，快速拖拽时，标签不会消失，需要再去碰一次，才消失                                        | allen  | xxx            |
 | ~~feat: 近期完成模块开发~~                                                                                         | allen  | allen          |
 | ~~feat: 登录界面基本框架样式开发~~                                                                                 | superB | superB         |
-| feat: 存储 store 的 todo 数据格式需要修改，且项目涉及的组件都要调整(02/03 必须处理)                                | allen  | allen          |
-| feat: 近期完成模块的 list 列表，看是否重新设计；还是用通用 ListItem 组件，若用 ListItem 组件，则需要重新设计       | allen  | allen          |
+| ~~feat: 存储 store 的 todo 数据格式需要修改，且项目涉及的组件都要调整(02/03 必须处理) ~~                               | allen  | allen          |
+| ~~feat: 近期完成模块的 list 列表，看是否重新设计；还是用通用 ListItem 组件，若用 ListItem 组件，则需要重新设计~~       | allen  | allen          |
+| feat: ListItem 中的 checkbox disabled样式调整       | allen  | ???          |
