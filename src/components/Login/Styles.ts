@@ -1,4 +1,26 @@
 import styled from 'styled-components';
+import { Modal } from 'antd';
+
+export const Styled_LoginModal = styled(Modal)`
+  && {
+    .ant-modal-header {
+      background-color: transparent;
+      margin-bottom: 0;
+      .ant-modal-title {
+        background-color: transparent;
+        font-family: emoji;
+        font-size: 20px;
+        font-style: italic;
+        color: #403e3e;
+      }
+    }
+    .ant-modal-content {
+      background: linear-gradient(45deg, rgb(228, 136, 188), rgb(130, 199, 226));
+      transform-origin: center center;
+      transition: all 2s ease 0s;
+    }
+  }
+`;
 
 export const Styled_LoginBox = styled.div<{ active: string }>`
     height: 300px;
