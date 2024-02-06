@@ -71,7 +71,7 @@ Redux Toolkit 是编写 Redux 逻辑的推荐方式
 | TODO 项 (完成项, 在这用~~删除线~~横划, 不要删掉.)                                                                  | 提出人 | 处理人         |
 | ------------------------------------------------------------------------------------------------------------------ | ------ | -------------- |
 | 梳理一下, 接下来的模块                                                                                             | allen  | yellowB, allen |
-| App.tsx 里的 函数名语义化一下, 不太明确                                                                            | allen  | yellowB        |
+| ~~App.tsx 里的 函数名语义化一下, 不太明确~~                                                                        | allen  | yellowB        |
 | 登录界面，大致逻辑，在线文档里的流程图                                                                             | allen  | yellowB        |
 | 项目里使用 styled-com 的标签, 命名格式需要全部统一一下（已确定，superB => EveryDay, SiderMenu; allen => ToolsBar） | allen  | yellowB,allen  |
 | ~~redux 没有发挥真正作用, 参数传递多层(爷->孙), 需要处理~~(本身没什么问题, 原用 useContent 处理)                   | allen  | allen          |
@@ -81,6 +81,6 @@ Redux Toolkit 是编写 Redux 逻辑的推荐方式
 | bug: ListItem，的拖拽标签，快速拖拽时，标签不会消失，需要再去碰一次，才消失                                        | allen  | xxx            |
 | ~~feat: 近期完成模块开发~~                                                                                         | allen  | allen          |
 | ~~feat: 登录界面基本框架样式开发~~                                                                                 | superB | superB         |
-| ~~feat: 存储 store 的 todo 数据格式需要修改，且项目涉及的组件都要调整(02/03 必须处理) ~~                               | allen  | allen          |
-| ~~feat: 近期完成模块的 list 列表，看是否重新设计；还是用通用 ListItem 组件，若用 ListItem 组件，则需要重新设计~~       | allen  | allen          |
-| feat: ListItem 中的 checkbox disabled样式调整       | allen  | ???          |
+| ~~feat: 存储 store 的 todo 数据格式需要修改，且项目涉及的组件都要调整(02/03 必须处理) ~~                           | allen  | allen          |
+| ~~feat: 近期完成模块的 list 列表，看是否重新设计；还是用通用 ListItem 组件，若用 ListItem 组件，则需要重新设计~~   | allen  | allen          |
+| feat: ListItem 中的 checkbox disabled 样式调整                                                                     | allen  | ???            |
