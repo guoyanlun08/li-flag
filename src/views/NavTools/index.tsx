@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
-import { ToolBarContainer, ToolItem } from './Styles';
+import { Styled_NavTools, Styled_NavToolItem } from './Styles';
 
-function ToolsBar(props: any) {
+function NavTools(props: any) {
   const { getSwitch } = props;
   const [showList, setShowList] = useState(true);
   function switchToList() {
@@ -10,13 +10,13 @@ function ToolsBar(props: any) {
     getSwitch(showList);
   }
   return (
-    <ToolBarContainer>
+    <Styled_NavTools>
       <div style={{ display: 'flex' }}>
         {/* 将来会是个循环 */}
-        <ToolItem onClick={() => switchToList()}>{showList ? 'List Mode' : 'Card Mode'}</ToolItem>
+        <Styled_NavToolItem onClick={() => switchToList()}>{showList ? 'List Mode' : 'Card Mode'}</Styled_NavToolItem>
       </div>
-    </ToolBarContainer>
+    </Styled_NavTools>
   );
 }
 
-export default ToolsBar;
+export default NavTools;

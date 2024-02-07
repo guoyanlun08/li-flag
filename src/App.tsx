@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Layout } from 'antd';
 
 import SiderMenu from '@/views/SiderMenu';
-import ToolsBar from '@/views/ToolsBar';
+import NavTools from '@/views/NavTools';
 import EveryDay from '@/views/EveryDay';
 
 const { Sider, Header, Content } = Layout;
@@ -23,7 +23,7 @@ function App() {
       </Sider>
       <Layout>
         <Header style={{ background: 'white' }}>
-          <ToolsBar getSwitch={switchToList} />
+          <NavTools getSwitch={switchToList} />
         </Header>
         <Content className="hiddenScroll" style={{ margin: '10px' }}>
           <EveryDay switchList={switchList} />
