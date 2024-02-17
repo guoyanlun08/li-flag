@@ -84,3 +84,5 @@ Redux Toolkit 是编写 Redux 逻辑的推荐方式
 | ~~feat: 存储 store 的 todo 数据格式需要修改，且项目涉及的组件都要调整(02/03 必须处理) ~~                               | allen  | allen          |
 | ~~feat: 近期完成模块的 list 列表，看是否重新设计；还是用通用 ListItem 组件，若用 ListItem 组件，则需要重新设计~~       | allen  | allen          |
 | feat: ListItem 中的 checkbox disabled 样式调整                                                                         | allen  | ???            |
+| feat: 封装下项目所用的 axios 请求，非登录请求携带 token。token 存储 localstorage                                       | allen  | ???            |
+| feat: 先用账户密码进行登录，注册则可能需要个确认密码输入。后期应该会用手机号码注册，且用验证码注册登录。               | allen  | ???            |
