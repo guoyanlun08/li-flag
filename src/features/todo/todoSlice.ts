@@ -18,19 +18,34 @@ const initialState: allModuleType = {
         {
           id: 1,
           moduleId: 'A',
-          text: 'A-111',
+          value: [
+            {
+              type: 'paragraph',
+              children: [{ text: 'A line of text in a paragraph.' }]
+            }
+          ],
           completed: false
         },
         {
           id: 2,
           moduleId: 'A',
-          text: 'A-222',
+          value: [
+            {
+              type: 'paragraph',
+              children: [{ text: 'A line of text in a paragraph.' }]
+            }
+          ],
           completed: true
         },
         {
           id: 3,
           moduleId: 'A',
-          text: 'A-333',
+          value: [
+            {
+              type: 'paragraph',
+              children: [{ text: 'A line of text in a paragraph.' }]
+            }
+          ],
           completed: false
         }
       ]
@@ -42,19 +57,34 @@ const initialState: allModuleType = {
         {
           id: 4,
           moduleId: 'B',
-          text: 'B-111',
+          value: [
+            {
+              type: 'paragraph',
+              children: [{ text: 'A line of text in a paragraph.' }]
+            }
+          ],
           completed: false
         },
         {
           id: 5,
           moduleId: 'B',
-          text: 'B-222',
+          value: [
+            {
+              type: 'paragraph',
+              children: [{ text: 'A line of text in a paragraph.' }]
+            }
+          ],
           completed: true
         },
         {
           id: 6,
           moduleId: 'B',
-          text: 'B-333',
+          value: [
+            {
+              type: 'paragraph',
+              children: [{ text: 'A line of text in a paragraph.' }]
+            }
+          ],
           completed: false
         }
       ]
@@ -66,19 +96,34 @@ const initialState: allModuleType = {
         {
           id: 7,
           moduleId: 'C',
-          text: 'C-111',
+          value: [
+            {
+              type: 'paragraph',
+              children: [{ text: 'A line of text in a paragraph.' }]
+            }
+          ],
           completed: false
         },
         {
           id: 8,
           moduleId: 'C',
-          text: 'C-222',
+          value: [
+            {
+              type: 'paragraph',
+              children: [{ text: 'A line of text in a paragraph.' }]
+            }
+          ],
           completed: true
         },
         {
           id: 9,
           moduleId: 'C',
-          text: 'C-333',
+          value: [
+            {
+              type: 'paragraph',
+              children: [{ text: 'A line of text in a paragraph.' }]
+            }
+          ],
           completed: false
         }
       ]
@@ -90,19 +135,34 @@ const initialState: allModuleType = {
         {
           id: 10,
           moduleId: 'D',
-          text: 'D-111',
+          value: [
+            {
+              type: 'paragraph',
+              children: [{ text: 'A line of text in a paragraph.' }]
+            }
+          ],
           completed: false
         },
         {
           id: 11,
           moduleId: 'D',
-          text: 'D-222',
+          value: [
+            {
+              type: 'paragraph',
+              children: [{ text: 'A line of text in a paragraph.' }]
+            }
+          ],
           completed: true
         },
         {
           id: 12,
           moduleId: 'D',
-          text: 'D-333',
+          value: [
+            {
+              type: 'paragraph',
+              children: [{ text: 'A line of text in a paragraph.' }]
+            }
+          ],
           completed: false
         }
       ]
@@ -137,7 +197,12 @@ export const todoSlice = createSlice({
       const templateItem = {
         moduleId,
         id: idNum++,
-        text: '',
+        value: [
+          {
+            type: 'paragraph',
+            children: [{ text: 'A line of text in a paragraph.' }]
+          }
+        ],
         completed: false
       };
       if (type === 'tail') {

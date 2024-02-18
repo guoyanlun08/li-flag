@@ -16,6 +16,6 @@ export interface moduleDataType {
 export interface todoListItemType {
   id: number;
   moduleId: string;
-  text: string;
+  value: {}[];
   completed: boolean;
 }

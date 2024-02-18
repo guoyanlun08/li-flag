@@ -57,7 +57,16 @@ export function EditNode(props: any) {
   };
 
   return (
-    <Slate editor={editor} initialValue={initialValue}>
+    <Slate
+      editor={editor}
+      initialValue={initialValue}
+      onChange={(value) => {
+        const isAstChange = editor.operations.some((op) => 'set_selection' !== op.type);
+
+        if (isAstChange) {
+          console.log(JSON.stringify(value[0]));
+        }
+      }}>
       <div ref={editableContainer} style={{ position: 'relative', display: 'flex', alignItems: 'center', height: '100%' }}>
         {visiable && <Toolbar left={toolbarLeft} />}
         <Editable

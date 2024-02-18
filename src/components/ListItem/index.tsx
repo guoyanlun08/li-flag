@@ -12,7 +12,7 @@ interface PropsType {
   moduleId: string;
   id: number;
   index: number;
-  text: string;
+  value: {}[];
   completed: boolean;
   editable: boolean;
   dragHandle?: any;
@@ -22,7 +22,7 @@ export function ListItem(props: PropsType) {
   const context = useContext(EveryDayContext);
   const dispatch = useAppDispatch();
 
-  const { moduleId, id, editable, text, index, completed, dragHandle } = props;
+  const { moduleId, id, editable, value, index, completed, dragHandle } = props;
   const [isHover, setIsHover] = useState(false);
 
   const isSelected = context.selectedId === id;
@@ -54,7 +54,8 @@ export function ListItem(props: PropsType) {
         onChange={() => dispatch(toggleItemCompletedStatus({ moduleId: moduleId, itemIndex: index }))}
       />
       <ItemContent selected={isSelected} completed={completed}>
-        {editable ? <EditNode selected={isSelected} /> : <div>{text}</div>}
+        {/* todo: 展示 value的 text需要处理 */}
+        {editable ? <EditNode selected={isSelected} /> : <div></div>}
       </ItemContent>
     </Item>
   );
