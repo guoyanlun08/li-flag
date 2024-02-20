@@ -86,3 +86,4 @@ Redux Toolkit 是编写 Redux 逻辑的推荐方式
 | feat: ListItem 中的 checkbox disabled 样式调整                                                                         | allen  | ???            |
 | feat: 封装下项目所用的 axios 请求，非登录请求携带 token。token 存储 localstorage                                       | allen  | ???            |
 | feat: 先用账户密码进行登录，注册则可能需要个确认密码输入。后期应该会用手机号码注册，且用验证码注册登录。               | allen  | ???            |
+| feat: 调研右键菜单库，目前用途是删除可编辑的 todoItem。需简单好用                                                      |        | superB         |
