@@ -1,5 +1,5 @@
 import React, { useContext, MouseEvent } from 'react';
-import { EachModuleContainer, Title, ListBox } from './Styles';
+import { Styled_EachModuleContainer, Styled_Title, Styled_ListBox } from './Styles';
 import { Droppable } from 'react-beautiful-dnd';
 
 import { useAppDispatch } from '@/app/hooks';
@@ -26,16 +26,16 @@ export function EachCard(props: propsType) {
   };
 
   return (
-    <EachModuleContainer bgColor={bgColor} onDoubleClick={doubleAddItem}>
-      <Title>{moduleId}</Title>
+    <Styled_EachModuleContainer bgColor={bgColor} onDoubleClick={doubleAddItem}>
+      <Styled_Title>{moduleId}</Styled_Title>
       <Droppable droppableId={moduleId} type="listType">
         {(provided, snapshot) => (
-          <ListBox ref={provided.innerRef} {...provided.droppableProps}>
+          <Styled_ListBox ref={provided.innerRef} {...provided.droppableProps}>
             <ListItemBox listData={listData} />
             {provided.placeholder}
-          </ListBox>
+          </Styled_ListBox>
         )}
       </Droppable>
-    </EachModuleContainer>
+    </Styled_EachModuleContainer>
   );
 }

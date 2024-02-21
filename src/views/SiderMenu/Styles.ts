@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import mainColor from '@/styles/variables.module.scss';
 
-export const SiderMenuContainer = styled.div`
+export const Styled_SiderMenuContainer = styled.div`
   width: 100%;
   height: 100%;
   overflow: hidden;
@@ -18,7 +18,7 @@ export const SiderMenuContainer = styled.div`
   }
 `;
 
-export const Header = styled.div<{ fold: boolean }>`
+export const Styled_Header = styled.div<{ fold: boolean }>`
   height: 54px;
   text-align: center;
   padding: 10px;
@@ -30,7 +30,7 @@ export const Header = styled.div<{ fold: boolean }>`
   text-overflow: clip;
 `;
 
-export const MenuBox = styled.div`
+export const Styled_MenuBox = styled.div`
   margin: 10px 0 0;
   flex: 1;
   overflow-y: scroll;
@@ -42,7 +42,7 @@ export const MenuBox = styled.div`
   }
 `;
 
-export const Info = styled.div<{ fold: boolean }>`
+export const Styled_Info = styled.div<{ fold: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -68,7 +68,7 @@ export const Info = styled.div<{ fold: boolean }>`
   }
 `;
 
-export const OptionsBar = styled.div<{ fold: boolean }>`
+export const Styled_OptionsBar = styled.div<{ fold: boolean }>`
   margin-top: 10px;
   text-align: center;
   > div {
@@ -96,6 +96,6 @@ export const OptionsBar = styled.div<{ fold: boolean }>`
     }
   }
 `;
-export const LoginBox = styled.div`
+export const Styled_LoginBox = styled.div`
   height: 400px;
 `;

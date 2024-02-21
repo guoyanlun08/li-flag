@@ -1,5 +1,5 @@
 import React from 'react';
-import { ListBox, DailyListContainer } from './Styles';
+import { Styled_ListBox, Styled_DailyListContainer } from './Styles';
 import { Droppable } from 'react-beautiful-dnd';
 import ListItemBox from '../ListItemBox';
 
@@ -13,15 +13,15 @@ interface propsType {
 export function EachList(props: propsType) {
   const { bgColor, moduleId, listData } = props;
   return (
-    <DailyListContainer bgColor={bgColor}>
+    <Styled_DailyListContainer bgColor={bgColor}>
       <Droppable droppableId={moduleId} type="listType">
         {(provided) => (
-          <ListBox ref={provided.innerRef} {...provided.droppableProps}>
+          <Styled_ListBox ref={provided.innerRef} {...provided.droppableProps}>
             <ListItemBox listData={listData} />
             {provided.placeholder}
-          </ListBox>
+          </Styled_ListBox>
         )}
       </Droppable>
-    </DailyListContainer>
+    </Styled_DailyListContainer>
   );
 }

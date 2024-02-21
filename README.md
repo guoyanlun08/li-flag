@@ -73,7 +73,7 @@ Redux Toolkit 是编写 Redux 逻辑的推荐方式
 | 梳理一下, 接下来的模块                                                                                                 | allen  | yellowB, allen |
 | ~~App.tsx 里的 函数名语义化一下, 不太明确~~                                                                            | allen  | yellowB        |
 | 登录界面，大致逻辑，在线文档里的流程图                                                                                 | allen  | yellowB        |
-| 项目里使用 styled-com 的标签, 命名格式需要全部统一一下（已确定，superB => EveryDay, SiderMenu; ~~allen => NavTools~~） | allen  | yellowB,allen  |
+| ~~项目里使用 styled-com 的标签, 命名格式需要全部统一一下（已确定，superB => EveryDay, SiderMenu; allen => NavTools）~~ | allen  | yellowB,allen  |
 | ~~redux 没有发挥真正作用, 参数传递多层(爷->孙), 需要处理~~(本身没什么问题, 原用 useContent 处理)                       | allen  | allen          |
 | feat: Toolbar 组件工具样式需要增加, 熟悉一下 slate 的使用                                                              | allen  | yellowB        |
 | ~~Toolbar 组件文本选中, 再点击同 ListItem 其他区域(取消拖蓝), 会有 Toolbar 会有闪现问题~~                              | allen  | allen          |
@@ -84,6 +84,6 @@ Redux Toolkit 是编写 Redux 逻辑的推荐方式
 | ~~feat: 存储 store 的 todo 数据格式需要修改，且项目涉及的组件都要调整(02/03 必须处理) ~~                               | allen  | allen          |
 | ~~feat: 近期完成模块的 list 列表，看是否重新设计；还是用通用 ListItem 组件，若用 ListItem 组件，则需要重新设计~~       | allen  | allen          |
 | feat: ListItem 中的 checkbox disabled 样式调整                                                                         | allen  | ???            |
-| feat: 封装下项目所用的 axios 请求，非登录请求携带 token。token 存储 localstorage                                       | allen  | ???            |
+| ~~feat: 封装下项目所用的 axios 请求，非登录请求携带 token。token 存储 localstorage ~~                                  | allen  | boss huang     |
 | feat: 先用账户密码进行登录，注册则可能需要个确认密码输入。后期应该会用手机号码注册，且用验证码注册登录。               | allen  | ???            |
 | feat: 调研右键菜单库，目前用途是删除可编辑的 todoItem。需简单好用                                                      |        | superB         |

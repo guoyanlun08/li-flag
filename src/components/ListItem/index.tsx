@@ -6,7 +6,7 @@ import { useAppDispatch } from '@/app/hooks';
 import { toggleItemCompletedStatus } from '@/features/todo/todoSlice';
 import { EveryDayContext } from '@/views/EveryDay';
 
-import { Item, ItemContent } from './Styles';
+import { Styled_Item, Styled_ItemContent } from './Styles';
 import { EditNode } from './EditNode';
 interface PropsType {
   moduleId: string;
@@ -41,7 +41,7 @@ export function ListItem(props: PropsType) {
   };
 
   return (
-    <Item
+    <Styled_Item
       selected={isSelected}
       onMouseDown={selectItemFn}
       onMouseEnter={mouseEnterItemFn}
@@ -53,10 +53,10 @@ export function ListItem(props: PropsType) {
         disabled={!editable}
         onChange={() => dispatch(toggleItemCompletedStatus({ moduleId: moduleId, itemIndex: index }))}
       />
-      <ItemContent selected={isSelected} completed={completed}>
+      <Styled_ItemContent selected={isSelected} completed={completed}>
         {/* todo: 展示 value的 text需要处理 */}
         {editable ? <EditNode selected={isSelected} /> : <div></div>}
-      </ItemContent>
-    </Item>
+      </Styled_ItemContent>
+    </Styled_Item>
   );
 }
