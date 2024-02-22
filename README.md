@@ -75,7 +75,7 @@ Redux Toolkit 是编写 Redux 逻辑的推荐方式
 | 登录界面，大致逻辑，在线文档里的流程图                                                                                 | allen  | yellowB        |
 | ~~项目里使用 styled-com 的标签, 命名格式需要全部统一一下（已确定，superB => EveryDay, SiderMenu; allen => NavTools）~~ | allen  | yellowB,allen  |
 | ~~redux 没有发挥真正作用, 参数传递多层(爷->孙), 需要处理~~(本身没什么问题, 原用 useContent 处理)                       | allen  | allen          |
-| feat: Toolbar 组件工具样式需要增加, 熟悉一下 slate 的使用                                                              | allen  | yellowB        |
+| ~~feat: Toolbar 组件工具样式需要增加, 熟悉一下 slate 的使用~~                                                          | allen  | yellowB        |
 | ~~Toolbar 组件文本选中, 再点击同 ListItem 其他区域(取消拖蓝), 会有 Toolbar 会有闪现问题~~                              | allen  | allen          |
 | ~~sideBar 侧边栏展开收起控制移动到外层容器~~                                                                           | superB | superB         |
 | bug: ListItem，的拖拽标签，快速拖拽时，标签不会消失，需要再去碰一次，才消失                                            | allen  | xxx            |

@@ -1,6 +1,7 @@
-import React, { CSSProperties } from 'react';
+import React from 'react';
 import { Editor } from 'slate';
 import { useSlate } from 'slate-react';
+import { Styled_ToolBar} from './Styles';
 
 // toolbar 偏移量
 const offsetX = 20;
@@ -10,13 +11,6 @@ interface propsType {
 }
 
 export function Toolbar(props: propsType) {
-  const styleToolbar: CSSProperties = {
-    position: 'absolute',
-    display: 'flex',
-    zIndex: 100,
-    top: '-20px'
-  };
-
   const editor = useSlate();
 
   const CustomEditor = {
@@ -47,9 +41,9 @@ export function Toolbar(props: propsType) {
   };
 
   return (
-    <div style={{ ...styleToolbar, left: props.left - offsetX }}>
-      <button onMouseDown={(event) => CustomEditor.toggleBoldMark(event, editor)}>B</button>
-      <button onMouseDown={(event) => CustomEditor.toggleItalicMark(event, editor)}>I</button>
-    </div>
+    <Styled_ToolBar left={props.left - offsetX}>
+      <button className='tool-bold' onMouseDown={(event) => CustomEditor.toggleBoldMark(event, editor)}>B</button>
+      <button className='tool-italic' onMouseDown={(event) => CustomEditor.toggleItalicMark(event, editor)}>I</button>
+    </Styled_ToolBar>
   );
 }
