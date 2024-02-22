@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Checkbox } from 'antd';
 import { MenuOutlined } from '@ant-design/icons';
 
@@ -24,6 +24,12 @@ export function ListItem(props: PropsType) {
 
   const { moduleId, id, editable, value, index, completed, dragHandle } = props;
   const [isHover, setIsHover] = useState(false);
+
+  useEffect(() => {
+    if (!context.dragStatus) {
+      setIsHover(false);
+    }
+  }, [context.dragStatus]);
 
   const isSelected = context.selectedId === id;
 
