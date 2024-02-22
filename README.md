@@ -78,10 +78,10 @@ Redux Toolkit 是编写 Redux 逻辑的推荐方式
 | ~~feat: Toolbar 组件工具样式需要增加, 熟悉一下 slate 的使用~~                                                          | allen  | yellowB        |
 | ~~Toolbar 组件文本选中, 再点击同 ListItem 其他区域(取消拖蓝), 会有 Toolbar 会有闪现问题~~                              | allen  | allen          |
 | ~~sideBar 侧边栏展开收起控制移动到外层容器~~                                                                           | superB | superB         |
-| bug: ListItem，的拖拽标签，快速拖拽时，标签不会消失，需要再去碰一次，才消失                                            | allen  | xxx            |
+| ~~bug: ListItem，的拖拽标签，快速拖拽时，标签不会消失，需要再去碰一次，才消失~~                                        | allen  | allen          |
 | ~~feat: 近期完成模块开发~~                                                                                             | allen  | allen          |
 | ~~feat: 登录界面基本框架样式开发~~                                                                                     | superB | superB         |
-| ~~feat: 存储 store 的 todo 数据格式需要修改，且项目涉及的组件都要调整(02/03 必须处理) ~~                               | allen  | allen          |
+| ~~feat: 存储 store 的 todo 数据格式需要修改，且项目涉及的组件都要调整(02/03 必须处理)~~                                | allen  | allen          |
 | ~~feat: 近期完成模块的 list 列表，看是否重新设计；还是用通用 ListItem 组件，若用 ListItem 组件，则需要重新设计~~       | allen  | allen          |
 | feat: ListItem 中的 checkbox disabled 样式调整                                                                         | allen  | ???            |
 | ~~feat: 封装下项目所用的 axios 请求，非登录请求携带 token。token 存储 localstorage ~~                                  | allen  | boss huang     |
