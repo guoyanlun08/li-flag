@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
 import { MenuOutlined } from '@ant-design/icons';
 import IconFont from '@/components/iconFont';
-import LoginModal from '@/components/Login'
+import LoginModal from '@/components/Login';
 import { Styled_SiderMenuContainer, Styled_Header, Styled_MenuBox, Styled_Info, Styled_OptionsBar } from './Styles';
 
 function OptionItem(props: any) {
   return (
-    <div onClick={(e) => {e.stopPropagation();console.log(props.title)}}>
-        <IconFont name={props.icon} style={{ fontSize: '30px' }}/>
-        <span className='menuItemText'>{props.title}</span>
+    <div
+      onClick={(e) => {
+        e.stopPropagation();
+        console.log(props.title);
+      }}
+    >
+      <IconFont name={props.icon} style={{ fontSize: '30px' }} />
+      <span className="menuItemText">{props.title}</span>
     </div>
   );
 }
@@ -32,14 +37,14 @@ function SiderMenu(props: any) {
   const { getClose } = props;
   const [colpased, setColpased] = useState(false);
   const [loginVisible, setLoginVisible] = useState(false);
-  const triggle = ():void => {
+  const triggle = (): void => {
     setColpased(!colpased);
     getClose(colpased);
   };
-  const showLoginDialog = (e:any):void => {
-    e.stopPropagation(); 
+  const showLoginDialog = (e: any): void => {
+    e.stopPropagation();
     setLoginVisible(true);
-  }
+  };
   return (
     <>
       <Styled_SiderMenuContainer onClick={triggle}>
@@ -59,9 +64,7 @@ function SiderMenu(props: any) {
             })}
           </Styled_OptionsBar>
         </Styled_MenuBox>
-        <div className="side-footer">
-          {colpased ? <MenuOutlined /> : <MenuOutlined rotate={90} />}
-        </div>
+        <div className="side-footer">{colpased ? <MenuOutlined /> : <MenuOutlined rotate={90} />}</div>
       </Styled_SiderMenuContainer>
       <LoginModal open={loginVisible} onCancel={() => setLoginVisible(false)}></LoginModal>
     </>

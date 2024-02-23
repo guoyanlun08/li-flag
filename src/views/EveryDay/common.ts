@@ -33,7 +33,6 @@ export const onDragEnd = (result: DropResult, setDragStatus: (value: boolean) =>
     return;
   }
 
-
   // 两个不同的模块之间的拖拽
   const sourceModule = eachModule[source.droppableId];
   const dragItem = {

@@ -66,7 +66,8 @@ export function EditNode(props: any) {
         if (isAstChange) {
           console.log(JSON.stringify(value[0]));
         }
-      }}>
+      }}
+    >
       <div ref={editableContainer} style={{ position: 'relative', display: 'flex', alignItems: 'center', height: '100%' }}>
         {visiable && <Toolbar left={toolbarLeft} />}
         <Editable

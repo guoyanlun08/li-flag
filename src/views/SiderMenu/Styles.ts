@@ -24,7 +24,7 @@ export const Styled_Header = styled.div<{ fold: boolean }>`
   padding: 10px;
   font-size: 25px;
   display: ${(props) => (props.fold ? 'block' : 'none')};
-  
+
   font-family: fantasy;
   white-space: nowrap;
   text-overflow: clip;
@@ -87,11 +87,11 @@ export const Styled_OptionsBar = styled.div<{ fold: boolean }>`
       color: ${mainColor.activeTab};
       font-weight: bold;
     }
-    & .ant-space-item{
+    & .ant-space-item {
       display: flex;
       align-items: center;
     }
-    & .menuItemText{
+    & .menuItemText {
       display: ${(props) => (props.fold ? 'inline-block' : 'none')};
     }
   }

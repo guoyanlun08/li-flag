@@ -45,7 +45,8 @@ export default function Login(props: loginProps) {
       width={600}
       maskClosable={false}
       footer={false}
-      afterClose={afterDialogVisibleChange}>
+      afterClose={afterDialogVisibleChange}
+    >
       <Styled_LoginBox active={switchLogin}>
         <div className="pwd-login">
           <div className="pwd-login-unfold">

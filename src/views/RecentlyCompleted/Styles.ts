@@ -39,7 +39,7 @@ export const Styled_ThemeToday = styled.div`
   align-self: end;
   border-radius: 20px;
   padding: 10px;
-  &:hover{
+  &:hover {
     background: rgb(50, 169, 159);
   }
 `;
@@ -60,4 +60,3 @@ export const Styled_CompletedList = styled.div`
   background: rgba(100, 200, 200, 0.8);
   flex: 1;
 `;
-

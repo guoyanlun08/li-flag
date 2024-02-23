@@ -8,7 +8,7 @@ const CreateIcon = createFromIconfontCN({
 });
 
 // 通过name传入iconfont图标名字，其他属性保持和antd的Icon一样的属性
-export default function IconFont({name = '', ...resetProps}) {
+export default function IconFont({ name = '', ...resetProps }) {
   return (
     <Space>
       <CreateIcon type={name} {...resetProps} />

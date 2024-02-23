@@ -52,7 +52,8 @@ export function ListItem(props: PropsType) {
       onMouseDown={selectItemFn}
       onMouseEnter={mouseEnterItemFn}
       onMouseLeave={mouseLeaveItemFn}
-      onDoubleClick={(e) => e.stopPropagation()}>
+      onDoubleClick={(e) => e.stopPropagation()}
+    >
       <MenuOutlined style={{ display: editable && isHover ? 'block' : 'none' }} className="drag-handle" {...dragHandle} />
       <Checkbox
         checked={completed}

@@ -1,6 +1,6 @@
-import axios, {AxiosInstance, AxiosResponse, InternalAxiosRequestConfig} from 'axios';
+import axios, { AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 // import qs from 'qs'
-import { showMessage } from "./status";
+import { showMessage } from './status';
 import { message } from 'antd';
 
 // 返回res.data的interface
@@ -10,12 +10,12 @@ export interface IResponse {
   msg: string;
 }
 
-let http:AxiosInstance = axios.create({
+let http: AxiosInstance = axios.create({
   baseURL: process.env.REACT_APP_BASE_URL,
   headers: {
-    Accept: "application/json",
-    "Content-Type": "application/json",
-  },
+    Accept: 'application/json',
+    'Content-Type': 'application/json'
+  }
 });
 
 // axios实例拦截响应
@@ -38,7 +38,7 @@ http.interceptors.response.use(
   },
   // 请求失败
   (error: any) => {
-    const {response} = error;
+    const { response } = error;
     if (response) {
       // 请求已发出，但是不在2xx的范围
       showMessage(response.status);
@@ -54,12 +54,12 @@ http.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
     const token = localStorage.getItem('SESSION_TOKEN');
     if (token) {
-      config.headers.Authorization = `Bearer ${token}`
+      config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
   },
-  (error:any) => {
+  (error: any) => {
     return Promise.reject(error);
   }
-)
+);
 export default http;
