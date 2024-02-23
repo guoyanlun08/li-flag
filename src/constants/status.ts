@@ -1,3 +1,5 @@
+// 这里的常量用枚举，且暴露
+
 export const showMessage = (status: number | string): string => {
   let message: string = '';
   switch (status) {

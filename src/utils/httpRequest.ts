@@ -1,6 +1,6 @@
 import axios, { AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 // import qs from 'qs'
-import { showMessage } from './status';
+import { showMessage } from '@/constants/status';
 import { message } from 'antd';
 
 // 返回res.data的interface
@@ -10,8 +10,10 @@ export interface IResponse {
   msg: string;
 }
 
-let http: AxiosInstance = axios.create({
-  baseURL: process.env.REACT_APP_BASE_URL,
+type ReqFunction = (method: string, url: string, variables?: {}, options?: {}) => Promise<any>;
+
+const http: AxiosInstance = axios.create({
+  baseURL: process.env.REACT_APP_BASE_URL || 'http://localhost:3020/api/',
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json'
@@ -21,19 +23,20 @@ let http: AxiosInstance = axios.create({
 // axios实例拦截响应
 http.interceptors.response.use(
   (response: AxiosResponse) => {
-    if (response.headers.authorization) {
-      localStorage.setItem('SESSION_TOKEN', response.headers.authorization);
-    } else {
-      if (response.data && response.data.token) {
-        localStorage.setItem('SESSION_TOKEN', response.data.token);
-      }
-    }
+    // todo: 待确定 这是为啥
+    // if (response.headers.authorization) {
+    //   localStorage.setItem('SESSION_TOKEN', response.headers.authorization);
+    // } else {
+    //   if (response.data && response.data.token) {
+    //     localStorage.setItem('SESSION_TOKEN', response.data.token);
+    //   }
+    // }
 
     if (response.status === 200) {
-      return response;
+      return response.data;
     } else {
       showMessage(response.status);
-      return response;
+      return response.data;
     }
   },
   // 请求失败
@@ -62,4 +65,23 @@ http.interceptors.request.use(
     return Promise.reject(error);
   }
 );
-export default http;
+
+const api: ReqFunction = (method, url, variables, options) => {
+  return new Promise((resolve, reject) => {
+    http({
+      url,
+      method,
+      params: method === 'get' ? variables : undefined,
+      data: method !== 'get' ? variables : undefined
+      // headers: options.header,
+    }).then(
+      (data) => resolve(data),
+      (error) => reject(error)
+    );
+  });
+};
+
+export default {
+  get: (...args: [string, object?, object?]) => api('get', ...args),
+  post: (...args: [string, object?, object?]) => api('post', ...args)
+};
