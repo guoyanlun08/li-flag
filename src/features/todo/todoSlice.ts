@@ -175,6 +175,29 @@ export const todoSlice = createSlice({
   name: 'todo',
   initialState,
   reducers: {
+    // 设置 todoState的数据
+    setTodoSate: (state, action: PayloadAction<{ data: any }>) => {
+      const {
+        data: { list }
+      } = action.payload;
+
+      const structure: any = {
+        A: [],
+        B: [],
+        C: [],
+        D: []
+      };
+
+      list.forEach((item: any) => {
+        structure[item.module].push(item);
+      });
+
+      // todo: 无限打印的问题需要看一下
+      Object.keys(structure).forEach((moduleId) => {
+        // const moduleList = structure[moduleId].sort((a: any, b: any) => a.order - b.order);
+        // state.eachModule[moduleId].listData = moduleList;
+      });
+    },
     // 同一个模块中 Item 拖拽
     sameModuleItemDrag: (state, action: PayloadAction<{ moduleId: string; afterDragModule: todoListItemType[] }>) => {
       const { moduleId, afterDragModule } = action.payload;
@@ -226,7 +249,7 @@ export const todoSlice = createSlice({
 });
 
 // 导出 分发动作
-export const { sameModuleItemDrag, differentModuleItemDrag, addTodoItem, toggleItemCompletedStatus } = todoSlice.actions;
+export const { setTodoSate, sameModuleItemDrag, differentModuleItemDrag, addTodoItem, toggleItemCompletedStatus } = todoSlice.actions;
 
 // 导出 todo 的 state值, 用 useAppSelector 也行
 export const selectTodo = (state: RootState) => state.todo;
