@@ -37,8 +37,7 @@ function EveryDay(props: propsType) {
     <EveryDayContext.Provider value={{ dragStatus, setDragStatus, selectedId, setSelectedId }}>
       <DragDropContext
         onBeforeDragStart={() => onBeforeDragStart(setDragStatus)}
-        onDragEnd={(result) => onDragEnd(result, setDragStatus, eachModule, dispatch)}
-      >
+        onDragEnd={(result) => onDragEnd(result, setDragStatus, eachModule, dispatch)}>
         {props.switchList ? <DailyList {...dailyProps} /> : <DailyCard {...dailyProps} />}
       </DragDropContext>
     </EveryDayContext.Provider>

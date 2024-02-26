@@ -5,7 +5,7 @@
 # 规范
 
 - 使用 styled-components 用 **Styled_ButtonBox** 来和普通组件区分
-- 组件头部引入顺序：a. 先外部依赖; b. 类型和方法; c. 组件 和 styled
+- 组件头部引入顺序：a. 先外部依赖; b. 类型和方法; c. 组件 和 styled 和 常量
 
 ```js
 // 如

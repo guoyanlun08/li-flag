@@ -1,203 +1,18 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { DraggableLocation } from 'react-beautiful-dnd';
 
 import { RootState } from '@/app/store';
-import variables from '@/styles/variables.module.scss';
 import { allModuleType, todoListItemType } from '@/types/todoType';
+
+import { initialState, fetchTodoList, fetchTodoListResolveCb } from './dataAndMethods';
 
 // todo: 临时处理，这里出现的 bug，可以忽略 后期 id 会是唯一的
 export let idNum = 1000;
-
-// todo: 先写死
-const initialState: allModuleType = {
-  eachModule: {
-    A: {
-      moduleId: 'A',
-      bgColor: variables.mainRed,
-      listData: [
-        {
-          id: 1,
-          moduleId: 'A',
-          value: [
-            {
-              type: 'paragraph',
-              children: [{ text: 'A line of text in a paragraph.' }]
-            }
-          ],
-          completed: false
-        },
-        {
-          id: 2,
-          moduleId: 'A',
-          value: [
-            {
-              type: 'paragraph',
-              children: [{ text: 'A line of text in a paragraph.' }]
-            }
-          ],
-          completed: true
-        },
-        {
-          id: 3,
-          moduleId: 'A',
-          value: [
-            {
-              type: 'paragraph',
-              children: [{ text: 'A line of text in a paragraph.' }]
-            }
-          ],
-          completed: false
-        }
-      ]
-    },
-    B: {
-      moduleId: 'B',
-      bgColor: variables.mainBlue,
-      listData: [
-        {
-          id: 4,
-          moduleId: 'B',
-          value: [
-            {
-              type: 'paragraph',
-              children: [{ text: 'A line of text in a paragraph.' }]
-            }
-          ],
-          completed: false
-        },
-        {
-          id: 5,
-          moduleId: 'B',
-          value: [
-            {
-              type: 'paragraph',
-              children: [{ text: 'A line of text in a paragraph.' }]
-            }
-          ],
-          completed: true
-        },
-        {
-          id: 6,
-          moduleId: 'B',
-          value: [
-            {
-              type: 'paragraph',
-              children: [{ text: 'A line of text in a paragraph.' }]
-            }
-          ],
-          completed: false
-        }
-      ]
-    },
-    C: {
-      moduleId: 'C',
-      bgColor: variables.mainGreen,
-      listData: [
-        {
-          id: 7,
-          moduleId: 'C',
-          value: [
-            {
-              type: 'paragraph',
-              children: [{ text: 'A line of text in a paragraph.' }]
-            }
-          ],
-          completed: false
-        },
-        {
-          id: 8,
-          moduleId: 'C',
-          value: [
-            {
-              type: 'paragraph',
-              children: [{ text: 'A line of text in a paragraph.' }]
-            }
-          ],
-          completed: true
-        },
-        {
-          id: 9,
-          moduleId: 'C',
-          value: [
-            {
-              type: 'paragraph',
-              children: [{ text: 'A line of text in a paragraph.' }]
-            }
-          ],
-          completed: false
-        }
-      ]
-    },
-    D: {
-      moduleId: 'D',
-      bgColor: variables.mainGray,
-      listData: [
-        {
-          id: 10,
-          moduleId: 'D',
-          value: [
-            {
-              type: 'paragraph',
-              children: [{ text: 'A line of text in a paragraph.' }]
-            }
-          ],
-          completed: false
-        },
-        {
-          id: 11,
-          moduleId: 'D',
-          value: [
-            {
-              type: 'paragraph',
-              children: [{ text: 'A line of text in a paragraph.' }]
-            }
-          ],
-          completed: true
-        },
-        {
-          id: 12,
-          moduleId: 'D',
-          value: [
-            {
-              type: 'paragraph',
-              children: [{ text: 'A line of text in a paragraph.' }]
-            }
-          ],
-          completed: false
-        }
-      ]
-    }
-  },
-  eachModuleOrder: ['A', 'B', 'C', 'D']
-};
 
 export const todoSlice = createSlice({
   name: 'todo',
   initialState,
   reducers: {
-    // 设置 todoState的数据
-    setTodoSate: (state, action: PayloadAction<{ data: any }>) => {
-      const {
-        data: { list }
-      } = action.payload;
-
-      const structure: any = {
-        A: [],
-        B: [],
-        C: [],
-        D: []
-      };
-
-      list.forEach((item: any) => {
-        structure[item.module].push(item);
-      });
-
-      // todo: 无限打印的问题需要看一下
-      Object.keys(structure).forEach((moduleId) => {
-        // const moduleList = structure[moduleId].sort((a: any, b: any) => a.order - b.order);
-        // state.eachModule[moduleId].listData = moduleList;
-      });
-    },
     // 同一个模块中 Item 拖拽
     sameModuleItemDrag: (state, action: PayloadAction<{ moduleId: string; afterDragModule: todoListItemType[] }>) => {
       const { moduleId, afterDragModule } = action.payload;
@@ -245,11 +60,17 @@ export const todoSlice = createSlice({
       const item = state.eachModule[moduleId].listData[itemIndex];
       item.completed = !item.completed;
     }
+  },
+  extraReducers(builder) {
+    builder.addCase(fetchTodoList.fulfilled, fetchTodoListResolveCb);
   }
 });
 
 // 导出 分发动作
-export const { setTodoSate, sameModuleItemDrag, differentModuleItemDrag, addTodoItem, toggleItemCompletedStatus } = todoSlice.actions;
+export const { sameModuleItemDrag, differentModuleItemDrag, addTodoItem, toggleItemCompletedStatus } = todoSlice.actions;
+
+// 导出 异步动作
+export { fetchTodoList };
 
 // 导出 todo 的 state值, 用 useAppSelector 也行
 export const selectTodo = (state: RootState) => state.todo;
