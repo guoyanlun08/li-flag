@@ -2,6 +2,7 @@ import { PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 
 import { allModuleType } from '@/types/todoType';
 import api from '@/utils/httpRequest';
+import { setTodoState, addTodoItem } from './todoSlice';
 
 import variables from '@/styles/variables.module.scss';
 
@@ -169,29 +170,35 @@ export const initialState: allModuleType = {
 };
 
 // 异步：设置 todoState的数据
-export const fetchTodoList = createAsyncThunk('todo/fetchTodoList', async () => {
-  const response = await api.get('/todoItem/getTodoList');
-  return response.data;
+export const getTodoListThunk = createAsyncThunk('todo/getTodoList', async (payload, { dispatch }) => {
+  try {
+    const response = await api.get('/todoItem/getTodoList');
+    const { list } = response.data;
+
+    dispatch(setTodoState({ list }));
+  } catch (e) {
+    console.error(`新增失败:: getTodoListThunk :: ${e}`);
+  }
 });
 
-// fetchTodoList.fulfilled 处理函数
-export const fetchTodoListResolveCb = (state: allModuleType, action: PayloadAction<any>) => {
-  const { list } = action.payload;
-  console.log(list);
-
-  const structure: any = {
-    A: [],
-    B: [],
-    C: [],
-    D: []
-  };
-
-  list.forEach((item: any) => {
-    structure[item.module].push(item);
-  });
-
-  Object.keys(structure).forEach((moduleId) => {
-    const moduleList = structure[moduleId].sort((a: any, b: any) => a.order - b.order);
-    state.eachModule[moduleId].listData = moduleList;
-  });
-};
+// 异步：新增 todoItem的数据
+export const addTodoItemThunk = createAsyncThunk<any, { moduleId: string; order: number; type: string }>(
+  'todo/addTodoItem',
+  async (payload, { dispatch }) => {
+    try {
+      const { moduleId, order, type } = payload;
+      const response = await api.post('todoItem/addTodoItem', { moduleId, order });
+      const { id, value, isCompleted } = response.data;
+      const newTodoItem = {
+        id,
+        moduleId,
+        value,
+        isCompleted,
+        order
+      };
+      dispatch(addTodoItem({ newTodoItem, type, insertIndex: order }));
+    } catch (e) {
+      console.error(`新增失败:: addTodoItemThunk :: ${e}`);
+    }
+  }
+);

@@ -5,6 +5,7 @@ import { Droppable } from 'react-beautiful-dnd';
 import { useAppDispatch } from '@/app/hooks';
 import { EveryDayContext } from '@/views/EveryDay';
 import { idNum, addTodoItem } from '@/features/todo/todoSlice';
+import { addTodoItemThunk } from '@/features/todo/dataAndMethods';
 import { todoListItemType } from '@/types/todoType';
 import ListItemBox from '../ListItemBox';
 
@@ -20,9 +21,11 @@ export function EachCard(props: propsType) {
   const { bgColor, moduleId, listData } = props;
   const dispatch = useAppDispatch();
 
-  const doubleAddItem = (e: MouseEvent) => {
-    context.setSelectedId(idNum);
-    dispatch(addTodoItem({ moduleId, type: 'tail' }));
+  const doubleAddItem = async (e: MouseEvent) => {
+    const order = listData.length + 1;
+    // context.setSelectedId(idNum);
+    // dispatch(addTodoItem({ moduleId, type: 'tail' }));
+    await dispatch(addTodoItemThunk({ moduleId, order, type: 'tail' }));
   };
 
   return (
