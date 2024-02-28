@@ -65,9 +65,9 @@ export const todoSlice = createSlice({
     // Item 中完成状态改变
     toggleItemCompletedStatus: (state, action: PayloadAction<{ moduleId: string; itemIndex: number }>) => {
       const { moduleId, itemIndex } = action.payload;
-
       const item = state.eachModule[moduleId].listData[itemIndex];
-      item.completed = !item.completed;
+
+      item.completed = Number(!item.completed);
     }
   }
 });

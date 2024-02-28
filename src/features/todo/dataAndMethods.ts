@@ -22,7 +22,7 @@ export const initialState: todoStateType = {
               children: [{ text: 'A line of text in a paragraph.' }]
             }
           ],
-          completed: false
+          completed: 0
         },
         {
           id: 2,
@@ -33,18 +33,7 @@ export const initialState: todoStateType = {
               children: [{ text: 'A line of text in a paragraph.' }]
             }
           ],
-          completed: true
-        },
-        {
-          id: 3,
-          moduleId: 'A',
-          value: [
-            {
-              type: 'paragraph',
-              children: [{ text: 'A line of text in a paragraph.' }]
-            }
-          ],
-          completed: false
+          completed: 1
         }
       ]
     },
@@ -61,7 +50,7 @@ export const initialState: todoStateType = {
               children: [{ text: 'A line of text in a paragraph.' }]
             }
           ],
-          completed: false
+          completed: 0
         },
         {
           id: 5,
@@ -72,18 +61,7 @@ export const initialState: todoStateType = {
               children: [{ text: 'A line of text in a paragraph.' }]
             }
           ],
-          completed: true
-        },
-        {
-          id: 6,
-          moduleId: 'B',
-          value: [
-            {
-              type: 'paragraph',
-              children: [{ text: 'A line of text in a paragraph.' }]
-            }
-          ],
-          completed: false
+          completed: 1
         }
       ]
     },
@@ -100,7 +78,7 @@ export const initialState: todoStateType = {
               children: [{ text: 'A line of text in a paragraph.' }]
             }
           ],
-          completed: false
+          completed: 0
         },
         {
           id: 8,
@@ -111,18 +89,7 @@ export const initialState: todoStateType = {
               children: [{ text: 'A line of text in a paragraph.' }]
             }
           ],
-          completed: true
-        },
-        {
-          id: 9,
-          moduleId: 'C',
-          value: [
-            {
-              type: 'paragraph',
-              children: [{ text: 'A line of text in a paragraph.' }]
-            }
-          ],
-          completed: false
+          completed: 1
         }
       ]
     },
@@ -139,7 +106,7 @@ export const initialState: todoStateType = {
               children: [{ text: 'A line of text in a paragraph.' }]
             }
           ],
-          completed: false
+          completed: 0
         },
         {
           id: 11,
@@ -150,18 +117,7 @@ export const initialState: todoStateType = {
               children: [{ text: 'A line of text in a paragraph.' }]
             }
           ],
-          completed: true
-        },
-        {
-          id: 12,
-          moduleId: 'D',
-          value: [
-            {
-              type: 'paragraph',
-              children: [{ text: 'A line of text in a paragraph.' }]
-            }
-          ],
-          completed: false
+          completed: 1
         }
       ]
     }
@@ -178,7 +134,7 @@ export const getTodoListThunk = createAsyncThunk('todo/getTodoList', async (payl
 
     dispatch(setTodoState({ list }));
   } catch (e) {
-    console.error(`新增失败:: getTodoListThunk :: ${e}`);
+    console.error(`获取失败:: getTodoListThunk :: ${e}`);
   }
 });
 
@@ -203,3 +159,9 @@ export const addTodoItemThunk = createAsyncThunk<any, { moduleId: string; order:
     }
   }
 );
+
+export const updateTodoItemThunk = createAsyncThunk<any, { completed?: boolean }>('todo/updateTodoItem', async () => {
+  try {
+    // api.post('/todoItem/updateTodoItem')
+  } catch (e) {}
+});

@@ -18,5 +18,5 @@ export interface todoListItemType {
   id: number;
   moduleId: string;
   value: {}[];
-  completed: boolean;
+  completed: number;
 }

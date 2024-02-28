@@ -13,7 +13,7 @@ interface PropsType {
   id: number;
   index: number;
   value: {}[];
-  completed: boolean;
+  completed: number;
   editable: boolean;
   dragHandle?: any;
 }
@@ -56,11 +56,11 @@ export function ListItem(props: PropsType) {
       onDoubleClick={(e) => e.stopPropagation()}>
       <MenuOutlined style={{ display: editable && isHover ? 'block' : 'none' }} className="drag-handle" {...dragHandle} />
       <Checkbox
-        checked={completed}
+        checked={Boolean(completed)}
         disabled={!editable}
         onChange={() => dispatch(toggleItemCompletedStatus({ moduleId: moduleId, itemIndex: index }))}
       />
-      <Styled_ItemContent selected={isSelected} completed={completed}>
+      <Styled_ItemContent selected={isSelected}>
         {/* todo: 展示 value的 text需要处理 */}
         {editable ? <EditNode selected={isSelected} /> : <div></div>}
       </Styled_ItemContent>

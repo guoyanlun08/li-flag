@@ -19,7 +19,7 @@ export const Styled_Item = styled.div<{ selected: boolean }>`
     top: 0;
   }
 `;
-export const Styled_ItemContent = styled.div<{ selected: boolean; completed: boolean }>`
+export const Styled_ItemContent = styled.div<{ selected: boolean }>`
   border-bottom: ${(props) => (props.selected ? '1px solid transparent' : '1px solid rgba(255, 255, 255, 0.2)')};
   padding-left: 8px;
   width: 100%;
