@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
-import {useAppDispatch} from '@/app/hooks';
-import IconFont from '@/components/iconFont';
-import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { ModalProps, Form, Input, Button, QRCode } from 'antd';
+import { LockOutlined, UserOutlined } from '@ant-design/icons';
+
+import { useAppDispatch } from '@/app/hooks';
+import api from '@/utils/httpRequest';
+import { getTodoListThunk } from '@/features/todo/todoSlice';
+import { setToken } from '@/utils/localStorage';
+
+import IconFont from '@/components/iconFont';
 import { Styled_LoginModal, Styled_LoginBox, Styled_Agreement } from './Styles';
-import api from '@/utils/httpRequest'
-import {getTodoListThunk} from '@/features/todo/todoSlice';
 
 interface loginProps extends ModalProps {
   onLoginFinish: (val: boolean) => void;
@@ -22,19 +25,18 @@ export default function Login(props: loginProps) {
   const [switchLogin, setSwitchLogin] = useState('accountAndPhone');
   const [socialType, setSocialType] = useState('');
   const [loginTitle, setLoginTitle] = useState(loginTitleList[Math.floor(Math.random() * loginTitleList.length)]);
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
   const useLogin = async (values: any) => {
     // 表单提交操作
-      const {data:res} = await api.post('/user/login', { ...values })
-      if(res.token){
-        localStorage.setItem('SESSION_TOKEN',res.token)
-        dispatch(getTodoListThunk())
-        props.onLoginFinish(false)
-      }
-      else {
-        props.onLoginFinish(true)
-      }
-  }
+    const { data: res } = await api.post('/user/login', { ...values });
+    if (res.token) {
+      setToken(res.token);
+      dispatch(getTodoListThunk());
+      props.onLoginFinish(false);
+    } else {
+      props.onLoginFinish(true);
+    }
+  };
   const afterDialogVisibleChange = (): void => {
     // 切换标语
     setLoginTitle(loginTitleList[Math.floor(Math.random() * loginTitleList.length)]);
@@ -58,8 +60,7 @@ export default function Login(props: loginProps) {
       width={600}
       maskClosable={false}
       footer={false}
-      afterClose={afterDialogVisibleChange}
-    >
+      afterClose={afterDialogVisibleChange}>
       <Styled_LoginBox active={switchLogin}>
         <div className="pwd-login">
           <div className="pwd-login-unfold">

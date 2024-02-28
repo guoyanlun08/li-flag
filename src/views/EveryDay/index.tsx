@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
 
 import { onBeforeDragStart, onDragEnd } from '@/views/EveryDay/common';
 import { useAppSelector, useAppDispatch } from '@/app/hooks';
+import { getToken } from '@/utils/localStorage';
+import { getTodoListThunk } from '@/features/todo/todoSlice';
 
 import DailyCard from './DailyCard';
 import DailyList from './DailyList';
@@ -23,6 +25,16 @@ function EveryDay(props: propsType) {
   const dispatch = useAppDispatch();
 
   const [dragStatus, setDragStatus] = useState(false); // 当前拖拽状态
+
+  useEffect(() => {
+    // todo: 应该需要抽离一个 hook
+    if (getToken()) {
+      console.log('有token情况');
+      dispatch(getTodoListThunk());
+    } else {
+      console.log('无token情况');
+    }
+  }, []);
 
   // 传递子元素 props
   const dailyProps = {

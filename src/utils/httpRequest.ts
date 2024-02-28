@@ -1,7 +1,9 @@
 import axios, { AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
-// import qs from 'qs'
-import { showMessage } from '@/constants/status';
 import { message } from 'antd';
+// import qs from 'qs'
+import { getToken } from '@/utils/localStorage';
+
+import { showMessage } from '@/constants/status';
 
 // 返回res.data的interface
 export interface IResponse {
@@ -55,7 +57,7 @@ http.interceptors.response.use(
 // axios实例拦截请求
 http.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
-    const token = localStorage.getItem('SESSION_TOKEN');
+    const token = getToken();
     if (token) {
       config.headers.Authorization = `${token}`;
     }
