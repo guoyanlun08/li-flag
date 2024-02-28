@@ -66,7 +66,7 @@ function SiderMenu(props: any) {
         </Styled_MenuBox>
         <div className="side-footer">{colpased ? <MenuOutlined /> : <MenuOutlined rotate={90} />}</div>
       </Styled_SiderMenuContainer>
-      <LoginModal open={loginVisible} onCancel={() => setLoginVisible(false)}></LoginModal>
+      <LoginModal open={loginVisible} onLoginFinish={(val) => setLoginVisible(val)} onCancel={() => setLoginVisible(false)}></LoginModal>
     </>
   );
 }

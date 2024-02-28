@@ -7,7 +7,9 @@ import { Styled_LoginModal, Styled_LoginBox, Styled_Agreement } from './Styles';
 import api from '@/utils/httpRequest'
 import {getTodoListThunk} from '@/features/todo/todoSlice';
 
-interface loginProps extends ModalProps {}
+interface loginProps extends ModalProps {
+  onLoginFinish: (val: boolean) => void;
+}
 const loginTitleList = [
   '先立个小目标，赚它一个亿!',
   '加油！！今天也要好好努力哟！',
@@ -27,6 +29,10 @@ export default function Login(props: loginProps) {
       if(res.token){
         localStorage.setItem('SESSION_TOKEN',res.token)
         dispatch(getTodoListThunk())
+        props.onLoginFinish(false)
+      }
+      else {
+        props.onLoginFinish(true)
       }
   }
   const afterDialogVisibleChange = (): void => {
