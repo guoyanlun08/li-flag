@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
+import {useAppDispatch} from '@/app/hooks';
 import IconFont from '@/components/iconFont';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { ModalProps, Form, Input, Button, QRCode } from 'antd';
 import { Styled_LoginModal, Styled_LoginBox, Styled_Agreement } from './Styles';
+import api from '@/utils/httpRequest'
+import {getTodoListThunk} from '@/features/todo/todoSlice';
 
 interface loginProps extends ModalProps {}
 const loginTitleList = [
@@ -17,11 +20,15 @@ export default function Login(props: loginProps) {
   const [switchLogin, setSwitchLogin] = useState('accountAndPhone');
   const [socialType, setSocialType] = useState('');
   const [loginTitle, setLoginTitle] = useState(loginTitleList[Math.floor(Math.random() * loginTitleList.length)]);
-  const onFinish = (values: any) => {
+  const dispatch = useAppDispatch()
+  const useLogin = async (values: any) => {
     // 表单提交操作
-    console.log('Received values of form: ', values);
-  };
-
+      const {data:res} = await api.post('/user/login', { ...values })
+      if(res.token){
+        localStorage.setItem('SESSION_TOKEN',res.token)
+        dispatch(getTodoListThunk())
+      }
+  }
   const afterDialogVisibleChange = (): void => {
     // 切换标语
     setLoginTitle(loginTitleList[Math.floor(Math.random() * loginTitleList.length)]);
@@ -50,11 +57,11 @@ export default function Login(props: loginProps) {
       <Styled_LoginBox active={switchLogin}>
         <div className="pwd-login">
           <div className="pwd-login-unfold">
-            <Form name="normal_login" className="login-form" onFinish={onFinish}>
+            <Form name="normal_login" className="login-form" onFinish={useLogin}>
               {/* <div className='login-title'>
                 <span>先立个小目标，赚它一个亿!</span>
               </div> */}
-              <Form.Item name="username" rules={[{ required: true, message: '请输入用户名!' }]}>
+              <Form.Item name="userId" rules={[{ required: true, message: '请输入用户名!' }]}>
                 <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
               </Form.Item>
               <Form.Item name="password" rules={[{ required: true, message: '请输入密码!' }]}>
