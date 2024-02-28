@@ -13,9 +13,7 @@ interface propsType {
 
 interface IEveryDayContext {
   dragStatus: boolean;
-  selectedId: number;
   setDragStatus: React.Dispatch<React.SetStateAction<boolean>>;
-  setSelectedId: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export const EveryDayContext = React.createContext<IEveryDayContext>({} as any);
@@ -25,7 +23,6 @@ function EveryDay(props: propsType) {
   const dispatch = useAppDispatch();
 
   const [dragStatus, setDragStatus] = useState(false); // 当前拖拽状态
-  const [selectedId, setSelectedId] = useState<number>(-1); // 当前选中 item
 
   // 传递子元素 props
   const dailyProps = {
@@ -34,7 +31,7 @@ function EveryDay(props: propsType) {
   };
 
   return (
-    <EveryDayContext.Provider value={{ dragStatus, setDragStatus, selectedId, setSelectedId }}>
+    <EveryDayContext.Provider value={{ dragStatus, setDragStatus }}>
       <DragDropContext
         onBeforeDragStart={() => onBeforeDragStart(setDragStatus)}
         onDragEnd={(result) => onDragEnd(result, setDragStatus, eachModule, dispatch)}>

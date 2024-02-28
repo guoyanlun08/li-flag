@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { DraggableLocation } from 'react-beautiful-dnd';
 
 import { RootState } from '@/app/store';
-import { allModuleType, todoListItemType } from '@/types/todoType';
+import { todoListItemType } from '@/types/todoType';
 
 import { initialState, getTodoListThunk, addTodoItemThunk } from './dataAndMethods';
 
@@ -13,6 +13,7 @@ export const todoSlice = createSlice({
   name: 'todo',
   initialState,
   reducers: {
+    // 设置 todoState的 eachModule
     setTodoState: (state, action: PayloadAction<{ list: [] }>) => {
       const { list } = action.payload;
 
@@ -50,9 +51,16 @@ export const todoSlice = createSlice({
     // 增加 Item 项
     addTodoItem: (state, action: PayloadAction<{ newTodoItem: any; type: string; insertIndex?: number }>) => {
       const { newTodoItem, type, insertIndex } = action.payload;
+
       if (type === 'tail') {
         state.eachModule[newTodoItem.moduleId].listData.push(newTodoItem);
+        state.selectedId = newTodoItem.id;
       }
+    },
+    // 设置 selectedId
+    setSelectedId(state, action: PayloadAction<{ id: number }>) {
+      const { id } = action.payload;
+      state.selectedId = id;
     },
     // Item 中完成状态改变
     toggleItemCompletedStatus: (state, action: PayloadAction<{ moduleId: string; itemIndex: number }>) => {
@@ -65,7 +73,8 @@ export const todoSlice = createSlice({
 });
 
 // 导出 分发动作
-export const { setTodoState, sameModuleItemDrag, differentModuleItemDrag, addTodoItem, toggleItemCompletedStatus } = todoSlice.actions;
+export const { setTodoState, sameModuleItemDrag, differentModuleItemDrag, addTodoItem, setSelectedId, toggleItemCompletedStatus } =
+  todoSlice.actions;
 
 // 导出 异步动作
 export { getTodoListThunk, addTodoItemThunk };

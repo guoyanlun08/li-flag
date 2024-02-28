@@ -1,6 +1,7 @@
-export interface allModuleType {
+export interface todoStateType {
   eachModule: eachModuleType;
   eachModuleOrder: string[];
+  selectedId: number | undefined;
 }
 
 export interface eachModuleType {

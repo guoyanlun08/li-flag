@@ -1,13 +1,13 @@
 import { PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 
-import { allModuleType } from '@/types/todoType';
+import { todoStateType } from '@/types/todoType';
 import api from '@/utils/httpRequest';
 import { setTodoState, addTodoItem } from './todoSlice';
 
 import variables from '@/styles/variables.module.scss';
 
 // 初始化数据
-export const initialState: allModuleType = {
+export const initialState: todoStateType = {
   eachModule: {
     A: {
       moduleId: 'A',
@@ -166,7 +166,8 @@ export const initialState: allModuleType = {
       ]
     }
   },
-  eachModuleOrder: ['A', 'B', 'C', 'D']
+  eachModuleOrder: ['A', 'B', 'C', 'D'],
+  selectedId: undefined
 };
 
 // 异步：设置 todoState的数据

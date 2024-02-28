@@ -2,8 +2,8 @@ import React, { useState, useContext, useEffect } from 'react';
 import { Checkbox } from 'antd';
 import { MenuOutlined } from '@ant-design/icons';
 
-import { useAppDispatch } from '@/app/hooks';
-import { toggleItemCompletedStatus } from '@/features/todo/todoSlice';
+import { useAppSelector, useAppDispatch } from '@/app/hooks';
+import { toggleItemCompletedStatus, setSelectedId } from '@/features/todo/todoSlice';
 import { EveryDayContext } from '@/views/EveryDay';
 
 import { Styled_Item, Styled_ItemContent } from './Styles';
@@ -21,6 +21,7 @@ interface PropsType {
 export function ListItem(props: PropsType) {
   const context = useContext(EveryDayContext);
   const dispatch = useAppDispatch();
+  const todoState = useAppSelector((store) => store.todo);
 
   const { moduleId, id, editable, value, index, completed, dragHandle } = props;
   const [isHover, setIsHover] = useState(false);
@@ -31,10 +32,10 @@ export function ListItem(props: PropsType) {
     }
   }, [context.dragStatus]);
 
-  const isSelected = context.selectedId === id;
+  const isSelected = todoState.selectedId === id;
 
   const selectItemFn = () => {
-    context.setSelectedId(id);
+    dispatch(setSelectedId({ id }));
   };
 
   const mouseEnterItemFn = () => {
@@ -52,8 +53,7 @@ export function ListItem(props: PropsType) {
       onMouseDown={selectItemFn}
       onMouseEnter={mouseEnterItemFn}
       onMouseLeave={mouseLeaveItemFn}
-      onDoubleClick={(e) => e.stopPropagation()}
-    >
+      onDoubleClick={(e) => e.stopPropagation()}>
       <MenuOutlined style={{ display: editable && isHover ? 'block' : 'none' }} className="drag-handle" {...dragHandle} />
       <Checkbox
         checked={completed}
