@@ -90,3 +90,5 @@ Redux Toolkit 是编写 Redux 逻辑的推荐方式
 | feat: todoItem 增删改查接口。                                                                                               | allen  | allen          |
 | feat: 调研右键菜单库，目前用途是删除可编辑的 todoItem。需简单好用                                                           | allen  | superB         |
 | ~~feat: 每个模块数据溢出，overflow 设置，且滚动条样式调整(看是否设置全局滚动条样式)未设置全局滚动条样式, 这里不显示滚动条~~ | allen  | allen          |
+| bug: 长文字输入 item 被换行，效果应该像 input 一样                                                                          |        | ???            |
+| bug: 第一个 item 的 tooltar 显示被 title 覆盖                                                                               |        | ???            |
