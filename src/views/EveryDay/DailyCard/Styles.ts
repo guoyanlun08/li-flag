@@ -25,5 +25,9 @@ export const Styled_Title = styled.div`
 
 export const Styled_ListBox = styled.div`
   flex: 1;
-  padding: 0 15px;
+  padding: 0 15px 80px;
+  overflow-y: auto;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
