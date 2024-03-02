@@ -129,7 +129,7 @@ export const initialState: todoStateType = {
 // 异步：设置 todoState的数据
 export const getTodoListThunk = createAsyncThunk('todo/getTodoList', async (payload, { dispatch }) => {
   try {
-    const response = await api.get('/todoItem/getTodoList');
+    const response = await api.get('/todoItem/getTodoList', { today: 1 });
     const { list } = response.data;
 
     dispatch(setTodoState({ list }));

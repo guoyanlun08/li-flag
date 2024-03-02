@@ -3,11 +3,9 @@ import { Editor } from 'slate';
 import { useSlate } from 'slate-react';
 import { Styled_ToolBar } from './Styles';
 
-// toolbar 偏移量
-const offsetX = 20;
-
 interface propsType {
   left: number;
+  top: number;
 }
 
 export function Toolbar(props: propsType) {
@@ -41,7 +39,7 @@ export function Toolbar(props: propsType) {
   };
 
   return (
-    <Styled_ToolBar left={props.left - offsetX}>
+    <Styled_ToolBar left={props.left} top={props.top}>
       <button className="tool-bold" onMouseDown={(event) => CustomEditor.toggleBoldMark(event, editor)}>
         B
       </button>

@@ -19,7 +19,7 @@ export const Styled_EachModuleContainer = styled.div<{ bgColor: string }>`
 `;
 
 export const Styled_Title = styled.div`
-  padding: 10px;
+  padding: 10px 10px 0px;
   user-select: none;
 `;
 

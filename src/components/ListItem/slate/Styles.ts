@@ -1,10 +1,13 @@
 import styled from 'styled-components';
 
-export const Styled_ToolBar = styled.div<{ left: number }>`
-  position: absolute;
+// toolbar 偏移量
+const offsetY = 25;
+
+export const Styled_ToolBar = styled.div<{ left: number; top: number }>`
+  position: fixed;
   display: flex;
   z-index: 100;
-  top: -25px;
+  top: ${(props) => `${props.top - offsetY}px`};
   left: ${(props) => `${props.left}px`};
   color: #fff;
   background-color: #000;

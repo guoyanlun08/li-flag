@@ -4,7 +4,7 @@ import { Droppable } from 'react-beautiful-dnd';
 
 import { useAppDispatch } from '@/app/hooks';
 import { EveryDayContext } from '@/views/EveryDay';
-import { idNum, addTodoItem } from '@/features/todo/todoSlice';
+
 import { addTodoItemThunk } from '@/features/todo/dataAndMethods';
 import { todoListItemType } from '@/types/todoType';
 import ListItemBox from '../ListItemBox';
