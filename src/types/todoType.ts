@@ -17,6 +17,6 @@ export interface moduleDataType {
 export interface todoListItemType {
   id: number;
   moduleId: string;
-  value: {}[];
+  todoValue: string;
   completed: number;
 }

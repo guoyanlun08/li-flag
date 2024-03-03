@@ -4,10 +4,7 @@ import { DraggableLocation } from 'react-beautiful-dnd';
 import { RootState } from '@/app/store';
 import { todoListItemType } from '@/types/todoType';
 
-import { initialState, getTodoListThunk, addTodoItemThunk } from './dataAndMethods';
-
-// todo: 临时处理，这里出现的 bug，可以忽略 后期 id 会是唯一的
-export let idNum = 1000;
+import { initialState, getTodoListThunk, addTodoItemThunk, updateTodoItemThunk } from './dataAndMethods';
 
 export const todoSlice = createSlice({
   name: 'todo',
@@ -77,7 +74,7 @@ export const { setTodoState, sameModuleItemDrag, differentModuleItemDrag, addTod
   todoSlice.actions;
 
 // 导出 异步动作
-export { getTodoListThunk, addTodoItemThunk };
+export { getTodoListThunk, addTodoItemThunk, updateTodoItemThunk };
 
 // 导出 todo 的 state值, 用 useAppSelector 也行
 export const selectTodo = (state: RootState) => state.todo;

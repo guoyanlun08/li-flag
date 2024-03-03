@@ -1,26 +1,32 @@
 import React, { useState, useCallback, useRef } from 'react';
-
 import { Editor, createEditor } from 'slate'; // 导入 Slate 编辑器工厂。
 import { Slate, Editable, withReact } from 'slate-react'; // 导入 Slate 组件和 React 插件。
+
+import { useDebounce } from '@/hooks/efficientHooks';
+import { useAppSelector, useAppDispatch } from '@/app/hooks';
+import { updateTodoItemThunk } from '@/features/todo/todoSlice';
 
 import { Toolbar } from './slate/Toolbar';
 import { DefaultElement } from './slate/DefaultElement';
 import { Leaf } from './slate/Leaf';
 
-const initialValue = [
-  {
-    type: 'paragraph',
-    children: [{ text: 'A line of text in a paragraph.' }]
-  }
-];
+interface PropsType {
+  todoValue: string;
+  selected: boolean;
+}
 
-export function EditNode(props: any) {
+export function EditNode(props: PropsType) {
+  const { todoValue } = props;
   const styleEditable = {
     height: '20px',
     width: '100%',
     border: 'none',
     outline: 'none'
   };
+
+  const todoState = useAppSelector((store) => store.todo);
+  const dispatch = useAppDispatch();
+  const debounce = useDebounce();
 
   const editableContainer = useRef<HTMLDivElement | null>(null);
   const [editor] = useState(() => withReact(createEditor()));
@@ -64,33 +70,43 @@ export function EditNode(props: any) {
     }
   };
 
-  return (
-    <Slate
-      editor={editor}
-      initialValue={initialValue}
-      onChange={(value) => {
-        const isAstChange = editor.operations.some((op) => 'set_selection' !== op.type);
+  // 实际 触发 slate text的保存文本变化
+  const realTextChange = (todoValue: string) => {
+    dispatch(updateTodoItemThunk({ id: todoState.selectedId!, todoValue }));
+  };
 
-        if (isAstChange) {
-          console.log(JSON.stringify(value[0]));
-        }
-      }}>
-      <div ref={editableContainer} style={{ position: 'relative', display: 'flex', alignItems: 'center', height: '100%' }}>
-        {visiable && <Toolbar left={toolbarLeft} top={toolbarTop} />}
-        <Editable
-          style={styleEditable}
-          renderElement={renderElement}
-          renderLeaf={renderLeaf}
-          onSelect={handleSelect}
-          onBlur={() => setVisable(false)}
-          onKeyDown={(event) => {
-            // 不给换行
-            if (event.key === 'Enter') {
-              event.preventDefault();
-            }
-          }}
-        />
-      </div>
-    </Slate>
+  return (
+    <div style={{ width: '100%' }}>
+      <Slate
+        editor={editor}
+        initialValue={JSON.parse(todoValue)}
+        onChange={(value) => {
+          // 结构改变
+          const isAstChange = editor.operations.some((op) => 'set_selection' !== op.type);
+          // 文本值改变
+          const isTextChange = editor.operations.some((op) => op.type === 'insert_text' || op.type === 'remove_text');
+
+          if (isTextChange) {
+            debounce(realTextChange, 1000, JSON.stringify(value));
+          }
+        }}>
+        <div ref={editableContainer} style={{ position: 'relative', display: 'flex', alignItems: 'center', height: '100%' }}>
+          {visiable && <Toolbar left={toolbarLeft} top={toolbarTop} />}
+          <Editable
+            style={styleEditable}
+            renderElement={renderElement}
+            renderLeaf={renderLeaf}
+            onSelect={handleSelect}
+            onBlur={() => setVisable(false)}
+            onKeyDown={(event) => {
+              // 不给换行
+              if (event.key === 'Enter') {
+                event.preventDefault();
+              }
+            }}
+          />
+        </div>
+      </Slate>
+    </div>
   );
 }

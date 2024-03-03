@@ -1,9 +1,8 @@
-import React, { useContext, MouseEvent } from 'react';
+import React, { MouseEvent } from 'react';
 import { Styled_EachModuleContainer, Styled_Title, Styled_ListBox } from './Styles';
 import { Droppable } from 'react-beautiful-dnd';
 
 import { useAppDispatch } from '@/app/hooks';
-import { EveryDayContext } from '@/views/EveryDay';
 
 import { addTodoItemThunk } from '@/features/todo/dataAndMethods';
 import { todoListItemType } from '@/types/todoType';
@@ -16,8 +15,6 @@ interface propsType {
 }
 
 export function EachCard(props: propsType) {
-  const context = useContext(EveryDayContext);
-
   const { bgColor, moduleId, listData } = props;
   const dispatch = useAppDispatch();
 

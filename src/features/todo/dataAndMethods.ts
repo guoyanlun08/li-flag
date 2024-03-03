@@ -16,23 +16,23 @@ export const initialState: todoStateType = {
         {
           id: 1,
           moduleId: 'A',
-          value: [
+          todoValue: JSON.stringify([
             {
               type: 'paragraph',
               children: [{ text: 'A line of text in a paragraph.' }]
             }
-          ],
+          ]),
           completed: 0
         },
         {
           id: 2,
           moduleId: 'A',
-          value: [
+          todoValue: JSON.stringify([
             {
               type: 'paragraph',
               children: [{ text: 'A line of text in a paragraph.' }]
             }
-          ],
+          ]),
           completed: 1
         }
       ]
@@ -44,23 +44,23 @@ export const initialState: todoStateType = {
         {
           id: 4,
           moduleId: 'B',
-          value: [
+          todoValue: JSON.stringify([
             {
               type: 'paragraph',
               children: [{ text: 'A line of text in a paragraph.' }]
             }
-          ],
+          ]),
           completed: 0
         },
         {
           id: 5,
           moduleId: 'B',
-          value: [
+          todoValue: JSON.stringify([
             {
               type: 'paragraph',
               children: [{ text: 'A line of text in a paragraph.' }]
             }
-          ],
+          ]),
           completed: 1
         }
       ]
@@ -72,23 +72,23 @@ export const initialState: todoStateType = {
         {
           id: 7,
           moduleId: 'C',
-          value: [
+          todoValue: JSON.stringify([
             {
               type: 'paragraph',
               children: [{ text: 'A line of text in a paragraph.' }]
             }
-          ],
+          ]),
           completed: 0
         },
         {
           id: 8,
           moduleId: 'C',
-          value: [
+          todoValue: JSON.stringify([
             {
               type: 'paragraph',
               children: [{ text: 'A line of text in a paragraph.' }]
             }
-          ],
+          ]),
           completed: 1
         }
       ]
@@ -100,23 +100,23 @@ export const initialState: todoStateType = {
         {
           id: 10,
           moduleId: 'D',
-          value: [
+          todoValue: JSON.stringify([
             {
               type: 'paragraph',
               children: [{ text: 'A line of text in a paragraph.' }]
             }
-          ],
+          ]),
           completed: 0
         },
         {
           id: 11,
           moduleId: 'D',
-          value: [
+          todoValue: JSON.stringify([
             {
               type: 'paragraph',
               children: [{ text: 'A line of text in a paragraph.' }]
             }
-          ],
+          ]),
           completed: 1
         }
       ]
@@ -129,8 +129,8 @@ export const initialState: todoStateType = {
 // 异步：设置 todoState的数据
 export const getTodoListThunk = createAsyncThunk('todo/getTodoList', async (payload, { dispatch }) => {
   try {
-    const response = await api.get('/todoItem/getTodoList', { today: 1 });
-    const { list } = response.data;
+    const resp = await api.get('/todoItem/getTodoList', { today: 1 });
+    const { list } = resp.data;
 
     dispatch(setTodoState({ list }));
   } catch (e) {
@@ -144,12 +144,12 @@ export const addTodoItemThunk = createAsyncThunk<any, { moduleId: string; order:
   async (payload, { dispatch }) => {
     try {
       const { moduleId, order, type } = payload;
-      const response = await api.post('todoItem/addTodoItem', { moduleId, order });
-      const { id, value, isCompleted } = response.data;
+      const resp = await api.post('todoItem/addTodoItem', { moduleId, order });
+      const { id, todoValue, isCompleted } = resp.data;
       const newTodoItem = {
         id,
         moduleId,
-        value,
+        todoValue,
         isCompleted,
         order
       };
@@ -160,8 +160,13 @@ export const addTodoItemThunk = createAsyncThunk<any, { moduleId: string; order:
   }
 );
 
-export const updateTodoItemThunk = createAsyncThunk<any, { completed?: boolean }>('todo/updateTodoItem', async () => {
-  try {
-    // api.post('/todoItem/updateTodoItem')
-  } catch (e) {}
-});
+export const updateTodoItemThunk = createAsyncThunk<any, { id: number; completed?: boolean; todoValue?: string }>(
+  'todo/updateTodoItem',
+  async (payload, { dispatch }) => {
+    try {
+      const { id, todoValue } = payload;
+
+      const resp = await api.post('/todoItem/updateTodoItem', { id, todoValue });
+    } catch (e) {}
+  }
+);

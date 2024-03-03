@@ -15,7 +15,7 @@ interface PropsType {
   moduleId: string;
   id: number;
   index: number;
-  value: {}[];
+  todoValue: string;
   completed: number;
   editable: boolean;
   dragHandle?: any;
@@ -30,7 +30,7 @@ export function ListItem(props: PropsType) {
     id: MENU_ID
   });
 
-  const { moduleId, id, editable, value, index, completed, dragHandle } = props;
+  const { moduleId, id, editable, todoValue, index, completed, dragHandle } = props;
   const [isHover, setIsHover] = useState(false);
 
   useEffect(() => {
@@ -85,9 +85,10 @@ export function ListItem(props: PropsType) {
         />
         <Styled_ItemContent selected={isSelected}>
           {/* todo: 展示 value的 text需要处理 */}
-          {editable ? <EditNode selected={isSelected} /> : <div></div>}
+          {editable ? <EditNode todoValue={todoValue} selected={isSelected} /> : <div></div>}
         </Styled_ItemContent>
       </Styled_Item>
+
       <Menu id={MENU_ID} animation="fade">
         <Item onClick={deleteItemClick} data={{ moduleId, id }}>
           删除
