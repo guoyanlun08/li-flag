@@ -16,6 +16,7 @@ export const Styled_EachModuleContainer = styled.div<{ bgColor: string }>`
   border-radius: 20px;
   display: flex;
   flex-direction: column;
+  user-select: none;
 `;
 
 export const Styled_Title = styled.div`
