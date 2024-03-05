@@ -98,3 +98,4 @@ Redux Toolkit 是编写 Redux 逻辑的推荐方式
 | ~~feat: 每个模块数据溢出，overflow 设置，且滚动条样式调整(看是否设置全局滚动条样式)未设置全局滚动条样式, 这里不显示滚动条~~ | allen  | allen          |
 | bug: 长文字输入 item 被换行，效果应该像 input 一样                                                                          |        | ???            |
 | ~~bug: 第一个 item 的 tooltar 显示被 title 覆盖（原因容器设置了 overflow-y:auto 被遮挡）~~                                  |        | allen          |
+| bug: 右键菜单需要已组件形式引入，且应是整个【每日模块】用一个右键菜单组件，不然导致多点右键，上一个渲染还在.                | allen  | HB             |
