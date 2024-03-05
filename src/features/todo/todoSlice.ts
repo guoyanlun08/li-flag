@@ -30,6 +30,12 @@ export const todoSlice = createSlice({
         state.eachModule[moduleId].listData = moduleList;
       });
     },
+    // 设置 todoState 单独 module数据
+    setTodoModule: (state, action: PayloadAction<{ list: []; moduleId: string }>) => {
+      const { list, moduleId } = action.payload;
+
+      state.eachModule[moduleId].listData = list;
+    },
     // 同一个模块中 Item 拖拽
     sameModuleItemDrag: (state, action: PayloadAction<{ moduleId: string; afterDragModule: todoListItemType[] }>) => {
       const { moduleId, afterDragModule } = action.payload;

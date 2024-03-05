@@ -5,8 +5,7 @@ import { Menu, Item, useContextMenu, ItemParams } from 'react-contexify';
 import 'react-contexify/dist/ReactContexify.css';
 
 import { useAppSelector, useAppDispatch } from '@/app/hooks';
-import { toggleItemCompletedStatus, setSelectedId, getTodoListThunk, deleteTodoItemThunk } from '@/features/todo/todoSlice';
-import api from '@/utils/httpRequest';
+import { toggleItemCompletedStatus, setSelectedId, getTodoListThunk, deleteTodoItemThunk, setTodoState } from '@/features/todo/todoSlice';
 import { EveryDayContext } from '@/views/EveryDay';
 
 import { Styled_Item, Styled_ItemContent } from './Styles';
@@ -65,7 +64,9 @@ export function ListItem(props: PropsType) {
   const deleteItemClick = async ({ event, props, triggerEvent, data }: ItemParams) => {
     const { id } = props;
     await dispatch(deleteTodoItemThunk({ id }));
-    await dispatch(getTodoListThunk());
+    const { payload: list } = await dispatch(getTodoListThunk({ today: true }));
+    // todo: 需要优化处理 这里的
+    dispatch(setTodoState({ list }));
     hideContextMenu();
   };
 
