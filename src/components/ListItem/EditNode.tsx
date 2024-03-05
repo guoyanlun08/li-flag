@@ -93,11 +93,15 @@ export function EditNode(props: PropsType) {
         <div ref={editableContainer} style={{ position: 'relative', display: 'flex', alignItems: 'center', height: '100%' }}>
           {visiable && <Toolbar left={toolbarLeft} top={toolbarTop} />}
           <Editable
+            spellCheck={false}
             style={styleEditable}
             renderElement={renderElement}
             renderLeaf={renderLeaf}
             onSelect={handleSelect}
-            onBlur={() => setVisable(false)}
+            onBlur={() => {
+              window?.getSelection()?.removeAllRanges();
+              setVisable(false);
+            }}
             onKeyDown={(event) => {
               // 不给换行
               if (event.key === 'Enter') {
