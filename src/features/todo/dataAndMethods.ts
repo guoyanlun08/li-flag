@@ -2,7 +2,7 @@ import { PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 
 import { todoStateType } from '@/types/todoType';
 import api from '@/utils/httpRequest';
-import { setTodoState, addTodoItem } from './todoSlice';
+import { addTodoItem } from './todoSlice';
 
 import variables from '@/styles/variables.module.scss';
 

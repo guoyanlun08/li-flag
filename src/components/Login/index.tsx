@@ -4,7 +4,7 @@ import { LockOutlined, UserOutlined } from '@ant-design/icons';
 
 import { useAppDispatch } from '@/app/hooks';
 import api from '@/utils/httpRequest';
-import { getTodoListThunk, setTodoState } from '@/features/todo/todoSlice';
+import { getTodoListThunk, setTodoEntireModule } from '@/features/todo/todoSlice';
 import { setToken } from '@/utils/localStorage';
 
 import IconFont from '@/components/iconFont';
@@ -33,7 +33,7 @@ export default function Login(props: loginProps) {
     if (res.token) {
       setToken(res.token);
       const { payload: list } = await dispatch(getTodoListThunk({ today: true }));
-      dispatch(setTodoState({ list }));
+      dispatch(setTodoEntireModule({ list }));
 
       props.onLoginFinish(false);
     } else {

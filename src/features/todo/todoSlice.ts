@@ -11,7 +11,7 @@ export const todoSlice = createSlice({
   initialState,
   reducers: {
     // 设置 todoState的 eachModule
-    setTodoState: (state, action: PayloadAction<{ list: [] }>) => {
+    setTodoEntireModule: (state, action: PayloadAction<{ list: [] }>) => {
       const { list } = action.payload;
 
       const structure: any = {
@@ -76,8 +76,15 @@ export const todoSlice = createSlice({
 });
 
 // 导出 分发动作
-export const { setTodoState, sameModuleItemDrag, differentModuleItemDrag, addTodoItem, setSelectedId, toggleItemCompletedStatus } =
-  todoSlice.actions;
+export const {
+  setTodoEntireModule,
+  setTodoModule,
+  sameModuleItemDrag,
+  differentModuleItemDrag,
+  addTodoItem,
+  setSelectedId,
+  toggleItemCompletedStatus
+} = todoSlice.actions;
 
 // 导出 异步动作
 export { getTodoListThunk, addTodoItemThunk, updateTodoItemThunk, deleteTodoItemThunk };

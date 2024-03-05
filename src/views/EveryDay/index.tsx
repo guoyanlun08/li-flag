@@ -4,7 +4,7 @@ import { DragDropContext } from 'react-beautiful-dnd';
 import { onBeforeDragStart, onDragEnd } from '@/views/EveryDay/common';
 import { useAppSelector, useAppDispatch } from '@/app/hooks';
 import { getToken } from '@/utils/localStorage';
-import { getTodoListThunk, setTodoState } from '@/features/todo/todoSlice';
+import { getTodoListThunk, setTodoEntireModule } from '@/features/todo/todoSlice';
 
 import DailyCard from './DailyCard';
 import DailyList from './DailyList';
@@ -31,7 +31,7 @@ function EveryDay(props: propsType) {
     const fetchTodoListHadToken = async () => {
       const { payload: list } = await dispatch(getTodoListThunk({ today: true }));
 
-      dispatch(setTodoState({ list }));
+      dispatch(setTodoEntireModule({ list }));
     };
 
     if (getToken()) {
