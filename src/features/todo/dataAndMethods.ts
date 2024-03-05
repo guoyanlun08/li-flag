@@ -160,6 +160,7 @@ export const addTodoItemThunk = createAsyncThunk<any, { moduleId: string; order:
   }
 );
 
+// 异步：更新 todoItem的数据
 export const updateTodoItemThunk = createAsyncThunk<any, { id: number; completed?: boolean; todoValue?: string }>(
   'todo/updateTodoItem',
   async (payload, { dispatch }) => {
@@ -167,6 +168,19 @@ export const updateTodoItemThunk = createAsyncThunk<any, { id: number; completed
       const { id, todoValue } = payload;
 
       const resp = await api.post('/todoItem/updateTodoItem', { id, todoValue });
-    } catch (e) {}
+    } catch (e) {
+      console.error(`更新失败:: updateTodoItemThunk :: ${e}`);
+    }
   }
 );
+
+// 异步： 删除 todoItem
+export const deleteTodoItemThunk = createAsyncThunk<any, { id: number }>('todo/deleteTodoItem', async (payload, { dispatch }) => {
+  try {
+    const { id } = payload;
+
+    const resp = await api.post('/todoItem/deleteTodoItemById', { id });
+  } catch (e) {
+    console.error(`删除失败:: deleteTodoItemThunk :: ${e}`);
+  }
+});

@@ -31,7 +31,7 @@ export default function Login(props: loginProps) {
     const { data: res } = await api.post('/user/login', { ...values });
     if (res.token) {
       setToken(res.token);
-      dispatch(getTodoListThunk());
+      await dispatch(getTodoListThunk());
       props.onLoginFinish(false);
     } else {
       props.onLoginFinish(true);

@@ -71,8 +71,8 @@ export function EditNode(props: PropsType) {
   };
 
   // 实际 触发 slate text的保存文本变化
-  const realTextChange = (todoValue: string) => {
-    dispatch(updateTodoItemThunk({ id: todoState.selectedId!, todoValue }));
+  const realTextChange = async (todoValue: string) => {
+    await dispatch(updateTodoItemThunk({ id: todoState.selectedId!, todoValue }));
   };
 
   return (

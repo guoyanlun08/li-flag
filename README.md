@@ -1,8 +1,10 @@
-# `npm install`
+# li-flag
 
-# `npm start`
+## `npm install`
 
-# 规范
+## `npm start`
+
+## 规范
 
 - 使用 styled-components 用 **Styled_ButtonBox** 来和普通组件区分
 - 组件头部引入顺序：a. 先外部依赖; b. 类型和方法; c. 组件 和 styled 和 常量
@@ -21,18 +23,18 @@ import { Item, ItemContent } from './Styles';
 import { EditNode } from './EditNode';
 ```
 
-# 在线文档地址
+## 在线文档地址
 
-https://docs.qq.com/desktop/mydoc/folder/IcgRghEPvVbH
+<https://docs.qq.com/desktop/mydoc/folder/IcgRghEPvVbH>
 
-# src
+## src
 
 components 公共组件\
 styles 公共样式\
 utils 公用函数处理（时间，小数等等）\
 views 页面
 
-# git commit 注释
+## git commit 注释
 
 feat: 新功能\
 fix: 修补 bug\
@@ -46,27 +48,31 @@ ci: 更改持续集成软件的配置文件和 package 中的 scripts 命令，�
 chore: 变更构建流程或辅助工具 \
 revert: 代码回退
 
-# styled-components 的文章
+## styled-components 的文章
 
 vscode: 下载 vscode-styled-components 这个插件有高亮提示\
-https://styled-components.com/docs/basics#getting-started
+<https://styled-components.com/docs/basics#getting-started>
 
-# react-beautiful-dnd 拖拽库
+## react-beautiful-dnd 拖拽库
 
 中文文档: https://github.com/chinanf-boy/react-beautiful-dnd-zh \
-ts 项目参考：https://github1s.com/cowienduckie/react-beautiful-dnd-sample/blob/HEAD/src/App.tsx#L14
+ts 项目参考：<https://github1s.com/cowienduckie/react-beautiful-dnd-sample/blob/HEAD/src/App.tsx#L14>
 
-# redux-toolkit 文档
+## redux-toolkit 文档
 
-redux-toolkit: https://cn.redux.js.org/redux-toolkit/overview/#%E5%8C%85%E5%90%AB%E4%BA%86%E4%BB%80%E4%B9%88 \
+redux-toolkit: <https://cn.redux.js.org/redux-toolkit/overview/#%E5%8C%85%E5%90%AB%E4%BA%86%E4%BB%80%E4%B9%88> \
 Redux 通常与 React-Redux 库一起使用，把 Redux 和 React 集成在一起
 Redux Toolkit 是编写 Redux 逻辑的推荐方式
 
-# slate.js 富文本编辑器, 项目里 ListItem 组件使用其模型控制字体
+## slate.js 富文本编辑器, 项目里 ListItem 组件使用其模型控制字体
 
-文档: https://docs.slatejs.org/
+文档: <https://docs.slatejs.org/>
 
-# TODO
+## React-Contexify 右键菜单文档
+
+<https://fkhadra.github.io/react-contexify>
+
+## TODO
 
 | TODO 项 (完成项, 在这用~~删除线~~横划, 不要删掉.)                                                                           | 提出人 | 处理人         |
 | --------------------------------------------------------------------------------------------------------------------------- | ------ | -------------- |

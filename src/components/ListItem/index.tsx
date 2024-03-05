@@ -5,7 +5,7 @@ import { Menu, Item, useContextMenu, ItemParams } from 'react-contexify';
 import 'react-contexify/dist/ReactContexify.css';
 
 import { useAppSelector, useAppDispatch } from '@/app/hooks';
-import { toggleItemCompletedStatus, setSelectedId, getTodoListThunk } from '@/features/todo/todoSlice';
+import { toggleItemCompletedStatus, setSelectedId, getTodoListThunk, deleteTodoItemThunk } from '@/features/todo/todoSlice';
 import api from '@/utils/httpRequest';
 import { EveryDayContext } from '@/views/EveryDay';
 
@@ -22,15 +22,19 @@ interface PropsType {
 }
 
 export function ListItem(props: PropsType) {
+  const { moduleId, id, editable, todoValue, index, completed, dragHandle } = props;
+
   const context = useContext(EveryDayContext);
   const dispatch = useAppDispatch();
   const todoState = useAppSelector((store) => store.todo);
   const MENU_ID = 'rightMenu';
-  const { show } = useContextMenu({
-    id: MENU_ID
+  const { show, hideAll: hideContextMenu } = useContextMenu({
+    id: MENU_ID,
+    props: {
+      id
+    }
   });
 
-  const { moduleId, id, editable, todoValue, index, completed, dragHandle } = props;
   const [isHover, setIsHover] = useState(false);
 
   useEffect(() => {
@@ -59,13 +63,10 @@ export function ListItem(props: PropsType) {
     });
   };
   const deleteItemClick = async ({ event, props, triggerEvent, data }: ItemParams) => {
-    console.log(data);
-    // 每个模块都加数据，点击删除看打印的数据都是同一个模块，哪里传的参数可能不对
-    // const res = await api.post('/todoItem/deleteTodoItemById', { id });
-    // console.log(res);
-    // if (res && res.code === 0) {
-    //   dispatch(getTodoListThunk());
-    // }
+    const { id } = props;
+    await dispatch(deleteTodoItemThunk({ id }));
+    await dispatch(getTodoListThunk());
+    hideContextMenu();
   };
 
   return (
@@ -89,10 +90,8 @@ export function ListItem(props: PropsType) {
         </Styled_ItemContent>
       </Styled_Item>
 
-      <Menu id={MENU_ID} animation="fade">
-        <Item onClick={deleteItemClick} data={{ moduleId, id }}>
-          删除
-        </Item>
+      <Menu id={MENU_ID} animation="scale">
+        <Item onClick={deleteItemClick}>删除</Item>
       </Menu>
     </>
   );

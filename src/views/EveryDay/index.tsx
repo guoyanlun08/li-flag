@@ -26,11 +26,15 @@ function EveryDay(props: propsType) {
 
   const [dragStatus, setDragStatus] = useState(false); // 当前拖拽状态
 
+  // todo: 应该需要抽离一个 hook
   useEffect(() => {
-    // todo: 应该需要抽离一个 hook
+    const fetchTodoListHadToken = async () => {
+      await dispatch(getTodoListThunk());
+    };
+
     if (getToken()) {
       console.log('有token情况');
-      dispatch(getTodoListThunk());
+      fetchTodoListHadToken();
     } else {
       console.log('无token情况');
     }
