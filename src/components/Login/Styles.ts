@@ -22,10 +22,10 @@ export const Styled_LoginModal = styled(Modal)`
   }
 `;
 
-export const Styled_LoginBox = styled.div<{ active: string }>`
+export const Styled_LoginBox = styled.div<{ active: string; isLogin: boolean }>`
   height: 300px;
   width: 100%;
-  display: flex;
+  display: ${(props) => (props.isLogin ? 'flex' : 'none')};
   justify-content: center;
   .pwd-login {
     height: 100%;
@@ -117,4 +117,19 @@ export const Styled_Agreement = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+`;
+export const Styled_Register = styled.div<{ isLogin: boolean }>`
+  height: 300px;
+  width: 100%;
+  display: ${(props) => (props.isLogin ? 'none' : 'flex')};
+  justify-content: center;
+  .user-register {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    .register-form-button {
+      width: 100%;
+    }
+  }
 `;
