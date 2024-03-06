@@ -27,7 +27,7 @@ export default function Login(props: loginProps) {
   const [isLogin, setIsLogin] = useState(true);
   const [loginTitle, setLoginTitle] = useState(loginTitleList[Math.floor(Math.random() * loginTitleList.length)]);
   const dispatch = useAppDispatch();
-  const useLogin = async (values: any) => {
+  const loginHandle = async (values: any) => {
     // 表单提交操作
     const { data: res } = await api.post('/user/login', { ...values });
     if (res.token) {
@@ -40,7 +40,7 @@ export default function Login(props: loginProps) {
       props.onLoginFinish(true);
     }
   };
-  const useRegister = async (values: any) => {
+  const registerHandle = async (values: any) => {
     const res = await api.post('/user/register', { ...values });
     if (res && res.code === 0) {
       console.log(res);
@@ -80,12 +80,12 @@ export default function Login(props: loginProps) {
       <Styled_LoginBox active={switchLogin} isLogin={isLogin}>
         <div className="pwd-login">
           <div className="pwd-login-unfold">
-            <Form name="normal_login" className="login-form" onFinish={useLogin}>
+            <Form name="normal_login" className="login-form" onFinish={loginHandle}>
               <Form.Item name="userId" rules={[{ required: true, message: '请输入用户名!' }]}>
                 <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
               </Form.Item>
               <Form.Item name="password" rules={[{ required: true, message: '请输入密码!' }]}>
-                <Input prefix={<LockOutlined className="site-form-item-icon" />} type="password" placeholder="Password" />
+                <Input.Password prefix={<LockOutlined className="site-form-item-icon" />} type="password" placeholder="Password" />
               </Form.Item>
               <Form.Item>
                 <Button type="primary" htmlType="submit" className="login-form-button">
@@ -166,15 +166,15 @@ export default function Login(props: loginProps) {
       </Styled_LoginBox>
       <Styled_Register isLogin={isLogin}>
         <div className="user-register">
-          <Form name="normal_register" className="register-form" onFinish={useRegister}>
+          <Form name="normal_register" className="register-form" onFinish={registerHandle}>
             <Form.Item name="userId" rules={[{ required: true, message: '请输入用户名!' }]}>
               <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
             </Form.Item>
             <Form.Item name="password" rules={[{ required: true, message: '请输入密码!' }]}>
-              <Input prefix={<LockOutlined className="site-form-item-icon" />} type="password" placeholder="Password" />
+              <Input.Password prefix={<LockOutlined className="site-form-item-icon" />} type="password" placeholder="Password" />
             </Form.Item>
             <Form.Item name="repectPassword" rules={[{ required: true, message: '请输入确认密码!' }]}>
-              <Input prefix={<LockOutlined className="site-form-item-icon" />} type="password" placeholder="RepectPassword" />
+              <Input.Password prefix={<LockOutlined className="site-form-item-icon" />} type="password" placeholder="RepectPassword" />
             </Form.Item>
             <Form.Item>
               <Button type="primary" htmlType="submit" className="register-form-button">
