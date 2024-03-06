@@ -5,7 +5,14 @@ import { Menu, Item, useContextMenu, ItemParams } from 'react-contexify';
 import 'react-contexify/dist/ReactContexify.css';
 
 import { useAppSelector, useAppDispatch } from '@/app/hooks';
-import { toggleItemCompletedStatus, setSelectedId, getTodoListThunk, deleteTodoItemThunk, setTodoModule } from '@/features/todo/todoSlice';
+import {
+  toggleItemCompletedStatus,
+  setSelectedId,
+  getTodoListThunk,
+  updateTodoItemThunk,
+  deleteTodoItemThunk,
+  setTodoModule
+} from '@/features/todo/todoSlice';
 import { EveryDayContext } from '@/views/EveryDay';
 
 import { Styled_Item, Styled_ItemContent } from './Styles';
@@ -83,7 +90,12 @@ export function ListItem(props: PropsType) {
         <Checkbox
           checked={Boolean(completed)}
           disabled={!editable}
-          onChange={() => dispatch(toggleItemCompletedStatus({ moduleId: moduleId, itemIndex: index }))}
+          onChange={async () => {
+            const { payload: hadUpdated = false } = await dispatch(updateTodoItemThunk({ id, completed: Number(!completed) }));
+            if (hadUpdated) {
+              dispatch(toggleItemCompletedStatus({ moduleId: moduleId, itemIndex: index }));
+            }
+          }}
         />
         <Styled_ItemContent selected={isSelected}>
           {/* todo: 展示 value的 text需要处理 */}

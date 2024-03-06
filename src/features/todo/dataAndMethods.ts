@@ -146,15 +146,19 @@ export const addTodoItemThunk = createAsyncThunk<any, { moduleId: string; order:
     try {
       const { moduleId, order, type } = payload;
       const resp = await api.post('todoItem/addTodoItem', { moduleId, order });
-      const { id, todoValue, isCompleted } = resp.data;
-      const newTodoItem = {
-        id,
-        moduleId,
-        todoValue,
-        isCompleted,
-        order
-      };
-      dispatch(addTodoItem({ newTodoItem, type, insertIndex: order }));
+      if (resp?.code === 0) {
+        const { id, todoValue, completed } = resp.data;
+        const newTodoItem = {
+          id,
+          moduleId,
+          todoValue,
+          completed,
+          order
+        };
+        dispatch(addTodoItem({ newTodoItem, type, insertIndex: order }));
+      } else {
+        throw new Error('新增失败');
+      }
     } catch (e) {
       console.error(`新增失败:: addTodoItemThunk :: ${e}`);
     }
@@ -162,13 +166,19 @@ export const addTodoItemThunk = createAsyncThunk<any, { moduleId: string; order:
 );
 
 // 异步：更新 todoItem的数据
-export const updateTodoItemThunk = createAsyncThunk<any, { id: number; completed?: boolean; todoValue?: string }>(
+export const updateTodoItemThunk = createAsyncThunk<any, { id: number; completed?: number; todoValue?: string }>(
   'todo/updateTodoItem',
   async (payload, { dispatch }) => {
     try {
-      const { id, todoValue } = payload;
+      const { id, todoValue, completed } = payload;
 
-      const resp = await api.post('/todoItem/updateTodoItem', { id, todoValue });
+      const resp = await api.post('/todoItem/updateTodoItem', { id, todoValue, completed });
+
+      if (resp?.code === 0) {
+        return true;
+      } else {
+        throw new Error('更新失败');
+      }
     } catch (e) {
       console.error(`更新失败:: updateTodoItemThunk :: ${e}`);
     }
