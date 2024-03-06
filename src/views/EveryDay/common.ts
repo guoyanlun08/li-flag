@@ -1,6 +1,7 @@
-import { sameModuleItemDrag, differentModuleItemDrag } from '@/features/todo/todoSlice';
-// types
 import { DropResult } from 'react-beautiful-dnd';
+
+import api from '@/utils/httpRequest';
+import { sameModuleItemDrag, differentModuleItemDrag } from '@/features/todo/todoSlice';
 import { eachModuleType, todoListItemType } from '@/types/todoType';
 
 function reorderList(list: todoListItemType[], startIndex: number, endIndex: number) {
@@ -26,10 +27,14 @@ export const onDragEnd = (result: DropResult, setDragStatus: (value: boolean) =>
 
   // 是同一 Droppable内的拖拽
   if (source.droppableId === destination.droppableId) {
-    const beforeDragModule = eachModule[source.droppableId];
-    const afterDragModule = reorderList(beforeDragModule.listData, source.index, destination.index);
+    const { listData: beforeDragListData } = eachModule[source.droppableId];
+    const afterDragListData = reorderList(beforeDragListData, source.index, destination.index);
 
-    dispatch(sameModuleItemDrag({ moduleId: source.droppableId, afterDragModule }));
+    api.put('todoItem/updateTodoModule', { listData: afterDragListData }).then((res) => {
+      console.log(res);
+    });
+
+    dispatch(sameModuleItemDrag({ moduleId: source.droppableId, afterDragListData }));
     return;
   }
 

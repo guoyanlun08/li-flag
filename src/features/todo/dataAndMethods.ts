@@ -1,4 +1,4 @@
-import { PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { todoStateType } from '@/types/todoType';
 import api from '@/utils/httpRequest';
@@ -145,7 +145,7 @@ export const addTodoItemThunk = createAsyncThunk<any, { moduleId: string; order:
   async (payload, { dispatch }) => {
     try {
       const { moduleId, order, type } = payload;
-      const resp = await api.post('todoItem/addTodoItem', { moduleId, order });
+      const resp = await api.post('/todoItem/addTodoItem', { moduleId, order });
       if (resp?.code === 0) {
         const { id, todoValue, completed } = resp.data;
         const newTodoItem = {

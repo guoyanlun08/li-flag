@@ -15,7 +15,7 @@ export interface IResponse {
 type ReqFunction = (method: string, url: string, variables?: {}, options?: {}) => Promise<any>;
 
 const http: AxiosInstance = axios.create({
-  baseURL: process.env.REACT_APP_BASE_URL || 'http://localhost:3020/api/',
+  baseURL: process.env.REACT_APP_BASE_URL || 'http://localhost:3020/api',
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json'
@@ -85,5 +85,7 @@ const api: ReqFunction = (method, url, variables, options) => {
 
 export default {
   get: (...args: [string, object?, object?]) => api('get', ...args),
-  post: (...args: [string, object?, object?]) => api('post', ...args)
+  post: (...args: [string, object?, object?]) => api('post', ...args),
+  put: (...args: [string, object?, object?]) => api('put', ...args),
+  delete: (...args: [string, object?, object?]) => api('delete', ...args)
 };

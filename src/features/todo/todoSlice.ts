@@ -37,9 +37,9 @@ export const todoSlice = createSlice({
       state.eachModule[moduleId].listData = list;
     },
     // 同一个模块中 Item 拖拽
-    sameModuleItemDrag: (state, action: PayloadAction<{ moduleId: string; afterDragModule: todoListItemType[] }>) => {
-      const { moduleId, afterDragModule } = action.payload;
-      state.eachModule[moduleId].listData = afterDragModule;
+    sameModuleItemDrag: (state, action: PayloadAction<{ moduleId: string; afterDragListData: todoListItemType[] }>) => {
+      const { moduleId, afterDragListData } = action.payload;
+      state.eachModule[moduleId].listData = afterDragListData;
     },
     // 不同模块中 Item 拖拽
     differentModuleItemDrag: (
