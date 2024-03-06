@@ -1,7 +1,7 @@
 import { DropResult } from 'react-beautiful-dnd';
 
 import api from '@/utils/httpRequest';
-import { sameModuleItemDrag, differentModuleItemDrag } from '@/features/todo/todoSlice';
+import { sameModuleItemDrag, setTodoModule, differentModuleItemDrag, updateTodoModuleThunk } from '@/features/todo/todoSlice';
 import { eachModuleType, todoListItemType } from '@/types/todoType';
 
 function reorderList(list: todoListItemType[], startIndex: number, endIndex: number) {
@@ -16,7 +16,7 @@ export const onBeforeDragStart = (setDragStatus: (value: boolean) => void) => {
   setDragStatus(true);
 };
 
-export const onDragEnd = (result: DropResult, setDragStatus: (value: boolean) => void, eachModule: eachModuleType, dispatch: any) => {
+export const onDragEnd = async (result: DropResult, setDragStatus: (value: boolean) => void, eachModule: eachModuleType, dispatch: any) => {
   const { draggableId, source, destination, type } = result;
 
   setDragStatus(false);
@@ -30,11 +30,10 @@ export const onDragEnd = (result: DropResult, setDragStatus: (value: boolean) =>
     const { listData: beforeDragListData } = eachModule[source.droppableId];
     const afterDragListData = reorderList(beforeDragListData, source.index, destination.index);
 
-    api.put('todoItem/updateTodoModule', { listData: afterDragListData }).then((res) => {
-      console.log(res);
-    });
-
+    // TODO: 待确定，这样处理，主要是渲染问题
     dispatch(sameModuleItemDrag({ moduleId: source.droppableId, afterDragListData }));
+    const { payload: list } = await dispatch(updateTodoModuleThunk({ listData: afterDragListData }));
+    dispatch(setTodoModule({ list, moduleId: source.droppableId }));
     return;
   }
 

@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { todoStateType } from '@/types/todoType';
+import { todoStateType, todoListItemType } from '@/types/todoType';
 import api from '@/utils/httpRequest';
 import { addTodoItem } from './todoSlice';
 
@@ -22,7 +22,10 @@ export const initialState: todoStateType = {
               children: [{ text: 'A line of text in a paragraph.' }]
             }
           ]),
-          completed: 0
+          completed: 0,
+          order: 1,
+          createTime: new Date(),
+          updateTime: new Date()
         },
         {
           id: 2,
@@ -33,7 +36,10 @@ export const initialState: todoStateType = {
               children: [{ text: 'A line of text in a paragraph.' }]
             }
           ]),
-          completed: 1
+          completed: 1,
+          order: 2,
+          createTime: new Date(),
+          updateTime: new Date()
         }
       ]
     },
@@ -50,7 +56,10 @@ export const initialState: todoStateType = {
               children: [{ text: 'A line of text in a paragraph.' }]
             }
           ]),
-          completed: 0
+          completed: 0,
+          order: 1,
+          createTime: new Date(),
+          updateTime: new Date()
         },
         {
           id: 5,
@@ -61,7 +70,10 @@ export const initialState: todoStateType = {
               children: [{ text: 'A line of text in a paragraph.' }]
             }
           ]),
-          completed: 1
+          completed: 1,
+          order: 2,
+          createTime: new Date(),
+          updateTime: new Date()
         }
       ]
     },
@@ -78,7 +90,10 @@ export const initialState: todoStateType = {
               children: [{ text: 'A line of text in a paragraph.' }]
             }
           ]),
-          completed: 0
+          completed: 0,
+          order: 1,
+          createTime: new Date(),
+          updateTime: new Date()
         },
         {
           id: 8,
@@ -89,7 +104,10 @@ export const initialState: todoStateType = {
               children: [{ text: 'A line of text in a paragraph.' }]
             }
           ]),
-          completed: 1
+          completed: 1,
+          order: 2,
+          createTime: new Date(),
+          updateTime: new Date()
         }
       ]
     },
@@ -106,7 +124,10 @@ export const initialState: todoStateType = {
               children: [{ text: 'A line of text in a paragraph.' }]
             }
           ]),
-          completed: 0
+          completed: 0,
+          order: 1,
+          createTime: new Date(),
+          updateTime: new Date()
         },
         {
           id: 11,
@@ -117,7 +138,10 @@ export const initialState: todoStateType = {
               children: [{ text: 'A line of text in a paragraph.' }]
             }
           ]),
-          completed: 1
+          completed: 1,
+          order: 2,
+          createTime: new Date(),
+          updateTime: new Date()
         }
       ]
     }
@@ -127,17 +151,20 @@ export const initialState: todoStateType = {
 };
 
 // 异步：设置 todoState的数据
-export const getTodoListThunk = createAsyncThunk<any, { today?: boolean }>('todo/getTodoList', async (payload, { dispatch }) => {
-  try {
-    const { today } = payload;
-    const resp = await api.get('/todoItem/getTodoList', { today: Number(today) });
-    const { list } = resp.data;
+export const getTodoListThunk = createAsyncThunk<any, { today?: boolean; moduleId?: string }>(
+  'todo/getTodoList',
+  async (payload, { dispatch }) => {
+    try {
+      const { today, moduleId } = payload;
+      const resp = await api.get('/todoItem/getTodoList', { moduleId, today: Number(today) });
+      const { list } = resp.data;
 
-    return list;
-  } catch (e) {
-    console.error(`获取失败:: getTodoListThunk :: ${e}`);
+      return list;
+    } catch (e) {
+      console.error(`获取失败:: getTodoListThunk :: ${e}`);
+    }
   }
-});
+);
 
 // 异步：新增 todoItem的数据
 export const addTodoItemThunk = createAsyncThunk<any, { moduleId: string; order: number; type: string }>(
@@ -195,3 +222,24 @@ export const deleteTodoItemThunk = createAsyncThunk<any, { id: number }>('todo/d
     console.error(`删除失败:: deleteTodoItemThunk :: ${e}`);
   }
 });
+
+// 异步： 更新 todo module
+export const updateTodoModuleThunk = createAsyncThunk<any, { listData: todoListItemType[] }>(
+  'todo/updateTodoModule',
+  async (payload, { dispatch }) => {
+    try {
+      const { listData } = payload;
+
+      const resp = await api.put('/todoItem/updateTodoModule', { listData });
+      if (resp?.code === 0) {
+        console.log(resp);
+
+        return resp.data.list;
+      } else {
+        throw new Error('更新失败');
+      }
+    } catch (e) {
+      console.error(`更新失败:: updateTodoModuleThunk :: ${e}`);
+    }
+  }
+);

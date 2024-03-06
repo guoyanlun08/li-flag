@@ -19,4 +19,7 @@ export interface todoListItemType {
   moduleId: string;
   todoValue: string;
   completed: number;
+  order: number;
+  createTime?: Date;
+  updateTime?: Date;
 }

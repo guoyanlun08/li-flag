@@ -72,7 +72,8 @@ export function ListItem(props: PropsType) {
   const deleteItemClick = async ({ event, props, triggerEvent, data }: ItemParams) => {
     const { id, moduleId } = props;
     await dispatch(deleteTodoItemThunk({ id }));
-    const { payload: list } = await dispatch(getTodoListThunk({ today: true }));
+    const { payload: list } = await dispatch(getTodoListThunk({ moduleId, today: true }));
+
     dispatch(setTodoModule({ list, moduleId }));
     hideContextMenu();
   };

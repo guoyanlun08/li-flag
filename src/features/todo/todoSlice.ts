@@ -4,7 +4,14 @@ import { DraggableLocation } from 'react-beautiful-dnd';
 import { RootState } from '@/app/store';
 import { todoListItemType } from '@/types/todoType';
 
-import { initialState, getTodoListThunk, addTodoItemThunk, updateTodoItemThunk, deleteTodoItemThunk } from './dataAndMethods';
+import {
+  initialState,
+  getTodoListThunk,
+  addTodoItemThunk,
+  updateTodoItemThunk,
+  deleteTodoItemThunk,
+  updateTodoModuleThunk
+} from './dataAndMethods';
 
 export const todoSlice = createSlice({
   name: 'todo',
@@ -87,7 +94,7 @@ export const {
 } = todoSlice.actions;
 
 // 导出 异步动作
-export { getTodoListThunk, addTodoItemThunk, updateTodoItemThunk, deleteTodoItemThunk };
+export { getTodoListThunk, addTodoItemThunk, updateTodoItemThunk, deleteTodoItemThunk, updateTodoModuleThunk };
 
 // 导出 todo 的 state值, 用 useAppSelector 也行
 export const selectTodo = (state: RootState) => state.todo;
