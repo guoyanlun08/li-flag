@@ -1,6 +1,5 @@
 import { DropResult } from 'react-beautiful-dnd';
 
-import api from '@/utils/httpRequest';
 import { sameModuleItemDrag, setTodoModule, differentModuleItemDrag, updateTodoModuleThunk } from '@/features/todo/todoSlice';
 import { eachModuleType, todoListItemType } from '@/types/todoType';
 
@@ -30,10 +29,16 @@ export const onDragEnd = async (result: DropResult, setDragStatus: (value: boole
     const { listData: beforeDragListData } = eachModule[source.droppableId];
     const afterDragListData = reorderList(beforeDragListData, source.index, destination.index);
 
-    // TODO: 待确定，这样处理，主要是渲染问题
-    dispatch(sameModuleItemDrag({ moduleId: source.droppableId, afterDragListData }));
+    dispatch(sameModuleItemDrag({ moduleId: source.droppableId, listData: afterDragListData }));
     const { payload: list } = await dispatch(updateTodoModuleThunk({ listData: afterDragListData }));
-    dispatch(setTodoModule({ list, moduleId: source.droppableId }));
+
+    if (list) {
+      dispatch(setTodoModule({ list, moduleId: source.droppableId }));
+    } else {
+      // 拖拽失败的情况
+      dispatch(sameModuleItemDrag({ moduleId: source.droppableId, listData: beforeDragListData }));
+      // TODO: 交互提示失败
+    }
     return;
   }
 

@@ -24,8 +24,8 @@ export const initialState: todoStateType = {
           ]),
           completed: 0,
           order: 1,
-          createTime: new Date(),
-          updateTime: new Date()
+          createTime: Date.now(),
+          updateTime: Date.now()
         },
         {
           id: 2,
@@ -38,8 +38,8 @@ export const initialState: todoStateType = {
           ]),
           completed: 1,
           order: 2,
-          createTime: new Date(),
-          updateTime: new Date()
+          createTime: Date.now(),
+          updateTime: Date.now()
         }
       ]
     },
@@ -58,8 +58,8 @@ export const initialState: todoStateType = {
           ]),
           completed: 0,
           order: 1,
-          createTime: new Date(),
-          updateTime: new Date()
+          createTime: Date.now(),
+          updateTime: Date.now()
         },
         {
           id: 5,
@@ -72,8 +72,8 @@ export const initialState: todoStateType = {
           ]),
           completed: 1,
           order: 2,
-          createTime: new Date(),
-          updateTime: new Date()
+          createTime: Date.now(),
+          updateTime: Date.now()
         }
       ]
     },
@@ -92,8 +92,8 @@ export const initialState: todoStateType = {
           ]),
           completed: 0,
           order: 1,
-          createTime: new Date(),
-          updateTime: new Date()
+          createTime: Date.now(),
+          updateTime: Date.now()
         },
         {
           id: 8,
@@ -106,8 +106,8 @@ export const initialState: todoStateType = {
           ]),
           completed: 1,
           order: 2,
-          createTime: new Date(),
-          updateTime: new Date()
+          createTime: Date.now(),
+          updateTime: Date.now()
         }
       ]
     },
@@ -126,8 +126,8 @@ export const initialState: todoStateType = {
           ]),
           completed: 0,
           order: 1,
-          createTime: new Date(),
-          updateTime: new Date()
+          createTime: Date.now(),
+          updateTime: Date.now()
         },
         {
           id: 11,
@@ -140,8 +140,8 @@ export const initialState: todoStateType = {
           ]),
           completed: 1,
           order: 2,
-          createTime: new Date(),
-          updateTime: new Date()
+          createTime: Date.now(),
+          updateTime: Date.now()
         }
       ]
     }
@@ -232,8 +232,6 @@ export const updateTodoModuleThunk = createAsyncThunk<any, { listData: todoListI
 
       const resp = await api.put('/todoItem/updateTodoModule', { listData });
       if (resp?.code === 0) {
-        console.log(resp);
-
         return resp.data.list;
       } else {
         throw new Error('更新失败');
