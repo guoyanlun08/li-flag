@@ -18,7 +18,7 @@ function ListItemBox(props: propsType) {
         <Draggable key={item.id} draggableId={item.id.toString()} index={index}>
           {(provided: any) => (
             <div ref={provided.innerRef} {...provided.draggableProps}>
-              <ListItem {...item} editable={true} dragHandle={provided.dragHandleProps} index={index} />
+              <ListItem todoItem={item} editable={true} dragHandle={provided.dragHandleProps} index={index} />
             </div>
           )}
         </Draggable>

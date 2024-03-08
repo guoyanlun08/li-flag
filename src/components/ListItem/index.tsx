@@ -1,46 +1,28 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Checkbox } from 'antd';
 import { MenuOutlined } from '@ant-design/icons';
-import { Menu, Item, useContextMenu, ItemParams } from 'react-contexify';
-import 'react-contexify/dist/ReactContexify.css';
 
 import { useAppSelector, useAppDispatch } from '@/app/hooks';
-import {
-  toggleItemCompletedStatus,
-  setSelectedId,
-  getTodoListThunk,
-  updateTodoItemThunk,
-  deleteTodoItemThunk,
-  setTodoModule
-} from '@/features/todo/todoSlice';
+import { toggleItemCompletedStatus, setSelectedItem, updateTodoItemThunk } from '@/features/todo/todoSlice';
 import { EveryDayContext } from '@/views/EveryDay';
+import { todoListItemType } from '@/types/todoType';
 
 import { Styled_Item, Styled_ItemContent } from './Styles';
 import { EditNode } from './EditNode';
 interface PropsType {
-  moduleId: string;
-  id: number;
   index: number;
-  todoValue: string;
-  completed: number;
   editable: boolean;
   dragHandle?: any;
+  todoItem: todoListItemType;
 }
 
 export function ListItem(props: PropsType) {
-  const { moduleId, id, editable, todoValue, index, completed, dragHandle } = props;
+  const { editable, index, dragHandle, todoItem } = props;
+  const { moduleId, id, todoValue, completed } = todoItem;
 
   const context = useContext(EveryDayContext);
   const dispatch = useAppDispatch();
   const todoState = useAppSelector((store) => store.todo);
-  const MENU_ID = 'rightMenu';
-  const { show, hideAll: hideContextMenu } = useContextMenu({
-    id: MENU_ID,
-    props: {
-      id,
-      moduleId
-    }
-  });
 
   const [isHover, setIsHover] = useState(false);
 
@@ -50,10 +32,10 @@ export function ListItem(props: PropsType) {
     }
   }, [context.dragStatus]);
 
-  const isSelected = todoState.selectedId === id;
+  const isSelected = todoState.selectedItem?.id === id;
 
   const selectItemFn = () => {
-    dispatch(setSelectedId({ id }));
+    dispatch(setSelectedItem({ todoItem }));
   };
 
   const mouseEnterItemFn = () => {
@@ -64,49 +46,29 @@ export function ListItem(props: PropsType) {
     if (context.dragStatus) return;
     setIsHover(false);
   };
-  const displayMenu = (e: React.MouseEvent) => {
-    show({
-      event: e
-    });
-  };
-  const deleteItemClick = async ({ event, props, triggerEvent, data }: ItemParams) => {
-    const { id, moduleId } = props;
-    await dispatch(deleteTodoItemThunk({ id }));
-    const { payload: list } = await dispatch(getTodoListThunk({ moduleId, today: true }));
-
-    dispatch(setTodoModule({ list, moduleId }));
-    hideContextMenu();
-  };
 
   return (
-    <>
-      <Styled_Item
-        selected={isSelected}
-        onMouseDown={selectItemFn}
-        onMouseEnter={mouseEnterItemFn}
-        onMouseLeave={mouseLeaveItemFn}
-        onDoubleClick={(e) => e.stopPropagation()}
-        onContextMenu={displayMenu}>
-        <MenuOutlined style={{ display: editable && isHover ? 'block' : 'none' }} className="drag-handle" {...dragHandle} />
-        <Checkbox
-          checked={Boolean(completed)}
-          disabled={!editable}
-          onChange={async () => {
-            const { payload: hadUpdated = false } = await dispatch(updateTodoItemThunk({ id, completed: Number(!completed) }));
-            if (hadUpdated) {
-              dispatch(toggleItemCompletedStatus({ moduleId: moduleId, itemIndex: index }));
-            }
-          }}
-        />
-        <Styled_ItemContent selected={isSelected}>
-          {/* todo: 展示 value的 text需要处理 */}
-          {editable ? <EditNode todoValue={todoValue} selected={isSelected} /> : <div></div>}
-        </Styled_ItemContent>
-      </Styled_Item>
-
-      <Menu id={MENU_ID} animation="scale">
-        <Item onClick={deleteItemClick}>删除</Item>
-      </Menu>
-    </>
+    <Styled_Item
+      selected={isSelected}
+      onMouseDown={selectItemFn}
+      onMouseEnter={mouseEnterItemFn}
+      onMouseLeave={mouseLeaveItemFn}
+      onDoubleClick={(e) => e.stopPropagation()}>
+      <MenuOutlined style={{ display: editable && isHover ? 'block' : 'none' }} className="drag-handle" {...dragHandle} />
+      <Checkbox
+        checked={Boolean(completed)}
+        disabled={!editable}
+        onChange={async () => {
+          const { payload: hadUpdated = false } = await dispatch(updateTodoItemThunk({ id, completed: Number(!completed) }));
+          if (hadUpdated) {
+            dispatch(toggleItemCompletedStatus({ moduleId: moduleId, itemIndex: index }));
+          }
+        }}
+      />
+      <Styled_ItemContent selected={isSelected}>
+        {/* todo: 展示 value的 text需要处理 */}
+        {editable ? <EditNode todoValue={todoValue} selected={isSelected} /> : <div></div>}
+      </Styled_ItemContent>
+    </Styled_Item>
   );
 }

@@ -64,13 +64,13 @@ export const todoSlice = createSlice({
 
       if (type === 'tail') {
         state.eachModule[newTodoItem.moduleId].listData.push(newTodoItem);
-        state.selectedId = newTodoItem.id;
+        state.selectedItem = newTodoItem;
       }
     },
-    // 设置 selectedId
-    setSelectedId: (state, action: PayloadAction<{ id: number }>) => {
-      const { id } = action.payload;
-      state.selectedId = id;
+    // 设置 selectedItem
+    setSelectedItem: (state, action: PayloadAction<{ todoItem: todoListItemType }>) => {
+      const { todoItem } = action.payload;
+      state.selectedItem = todoItem;
     },
     // Item 中完成状态改变
     toggleItemCompletedStatus: (state, action: PayloadAction<{ moduleId: string; itemIndex: number }>) => {
@@ -89,7 +89,7 @@ export const {
   sameModuleItemDrag,
   differentModuleItemDrag,
   addTodoItem,
-  setSelectedId,
+  setSelectedItem,
   toggleItemCompletedStatus
 } = todoSlice.actions;
 

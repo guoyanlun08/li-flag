@@ -18,8 +18,10 @@ interface PropsType {
 export function EditNode(props: PropsType) {
   const { todoValue } = props;
   const styleEditable = {
-    height: '20px',
+    height: '100%',
     width: '100%',
+    display: 'flex',
+    alignItems: 'center',
     border: 'none',
     outline: 'none'
   };
@@ -72,11 +74,11 @@ export function EditNode(props: PropsType) {
 
   // 实际 触发 slate text的保存文本变化
   const realTextChange = async (todoValue: string) => {
-    await dispatch(updateTodoItemThunk({ id: todoState.selectedId!, todoValue }));
+    await dispatch(updateTodoItemThunk({ id: todoState.selectedItem!.id, todoValue }));
   };
 
   return (
-    <div style={{ width: '100%' }}>
+    <div style={{ width: '100%', height: '100%' }}>
       <Slate
         editor={editor}
         initialValue={JSON.parse(todoValue)}

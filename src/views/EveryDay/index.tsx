@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
+import { useContextMenu } from 'react-contexify';
 
 import { onBeforeDragStart, onDragEnd } from '@/views/EveryDay/common';
 import { useAppSelector, useAppDispatch } from '@/app/hooks';
@@ -8,6 +9,7 @@ import { getTodoListThunk, setTodoEntireModule } from '@/features/todo/todoSlice
 
 import DailyCard from './DailyCard';
 import DailyList from './DailyList';
+import ContextMenu, { ITEM_MENU_ID } from '@/components/ContextMenu';
 
 interface propsType {
   switchList: boolean;
@@ -21,8 +23,17 @@ interface IEveryDayContext {
 export const EveryDayContext = React.createContext<IEveryDayContext>({} as any);
 
 function EveryDay(props: propsType) {
-  const { eachModule, eachModuleOrder } = useAppSelector((state) => state.todo);
+  const { eachModule, eachModuleOrder, selectedItem } = useAppSelector((state) => state.todo);
+  const { id, moduleId } = selectedItem || {};
+
   const dispatch = useAppDispatch();
+  const { show: showItemContextMenu } = useContextMenu({
+    id: ITEM_MENU_ID,
+    props: {
+      id,
+      moduleId
+    }
+  });
 
   const [dragStatus, setDragStatus] = useState(false); // 当前拖拽状态
 
@@ -45,7 +56,8 @@ function EveryDay(props: propsType) {
   // 传递子元素 props
   const dailyProps = {
     eachModule,
-    eachModuleOrder
+    eachModuleOrder,
+    showItemContextMenu
   };
 
   return (
@@ -55,6 +67,8 @@ function EveryDay(props: propsType) {
         onDragEnd={(result) => onDragEnd(result, setDragStatus, eachModule, dispatch)}>
         {props.switchList ? <DailyList {...dailyProps} /> : <DailyCard {...dailyProps} />}
       </DragDropContext>
+
+      <ContextMenu moduleId={moduleId} id={id} />
     </EveryDayContext.Provider>
   );
 }

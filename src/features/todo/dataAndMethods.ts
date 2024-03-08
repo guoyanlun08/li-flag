@@ -147,7 +147,7 @@ export const initialState: todoStateType = {
     }
   },
   eachModuleOrder: ['A', 'B', 'C', 'D'],
-  selectedId: undefined
+  selectedItem: undefined
 };
 
 // 异步：设置 todoState的数据
@@ -174,14 +174,8 @@ export const addTodoItemThunk = createAsyncThunk<any, { moduleId: string; order:
       const { moduleId, order, type } = payload;
       const resp = await api.post('/todoItem/addTodoItem', { moduleId, order });
       if (resp?.code === 0) {
-        const { id, todoValue, completed } = resp.data;
-        const newTodoItem = {
-          id,
-          moduleId,
-          todoValue,
-          completed,
-          order
-        };
+        const { newTodoItem } = resp.data;
+
         dispatch(addTodoItem({ newTodoItem, type, insertIndex: order }));
       } else {
         throw new Error('新增失败');

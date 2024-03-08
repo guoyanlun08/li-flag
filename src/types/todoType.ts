@@ -1,7 +1,7 @@
 export interface todoStateType {
   eachModule: eachModuleType;
   eachModuleOrder: string[];
-  selectedId: number | undefined;
+  selectedItem?: todoListItemType;
 }
 
 export interface eachModuleType {
