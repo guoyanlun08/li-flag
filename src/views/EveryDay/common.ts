@@ -1,6 +1,6 @@
 import { DropResult } from 'react-beautiful-dnd';
 
-import { sameModuleItemDrag, setTodoModule, differentModuleItemDrag, updateTodoModuleThunk } from '@/features/todo/todoSlice';
+import { sameModuleItemDrag, setTodoModule, differentModuleItemDrag, updateTodoOrderAfterDragThunk } from '@/features/todo/todoSlice';
 import { eachModuleType, todoListItemType } from '@/types/todoType';
 
 function reorderList(list: todoListItemType[], startIndex: number, endIndex: number) {
@@ -16,7 +16,17 @@ export const onBeforeDragStart = (setDragStatus: (value: boolean) => void) => {
 };
 
 export const onDragEnd = async (result: DropResult, setDragStatus: (value: boolean) => void, eachModule: eachModuleType, dispatch: any) => {
-  const { draggableId, source, destination, type } = result;
+  const { source, destination } = result;
+
+  const sourceParam = {
+    moduleId: source.droppableId,
+    index: source.index
+  };
+
+  const destinationParam = {
+    moduleId: destination?.droppableId,
+    index: destination?.index
+  };
 
   setDragStatus(false);
 
@@ -30,7 +40,9 @@ export const onDragEnd = async (result: DropResult, setDragStatus: (value: boole
     const afterDragListData = reorderList(beforeDragListData, source.index, destination.index);
 
     dispatch(sameModuleItemDrag({ moduleId: source.droppableId, listData: afterDragListData }));
-    const { payload: list } = await dispatch(updateTodoModuleThunk({ listData: afterDragListData }));
+    const { payload: list } = await dispatch(
+      updateTodoOrderAfterDragThunk({ source: { ...sourceParam }, destination: { ...destinationParam } })
+    );
 
     if (list) {
       dispatch(setTodoModule({ list, moduleId: source.droppableId }));
@@ -43,11 +55,8 @@ export const onDragEnd = async (result: DropResult, setDragStatus: (value: boole
   }
 
   // 两个不同的模块之间的拖拽
-  const sourceModule = eachModule[source.droppableId];
-  const dragItem = {
-    ...sourceModule.listData[source.index],
-    moduleId: destination.droppableId
-  };
+  const sourceBeforeModule = eachModule[source.droppableId];
+  const destinationBeforeModule = eachModule[destination.droppableId];
 
-  dispatch(differentModuleItemDrag({ source, destination, dragItem }));
+  dispatch(differentModuleItemDrag({ source, destination, dragItem: sourceBeforeModule.listData[source.index] }));
 };

@@ -218,20 +218,20 @@ export const deleteTodoItemThunk = createAsyncThunk<any, { id: number }>('todo/d
 });
 
 // 异步： 更新 todo module
-export const updateTodoModuleThunk = createAsyncThunk<any, { listData: todoListItemType[] }>(
-  'todo/updateTodoModule',
+export const updateTodoOrderAfterDragThunk = createAsyncThunk<any, { source: DraggableLocation; destination: DraggableLocation }>(
+  'todo/updateTodoOrderAfterDrag',
   async (payload, { dispatch }) => {
     try {
-      const { listData } = payload;
+      const { source, destination } = payload;
 
-      const resp = await api.put('/todoItem/updateTodoModule', { listData });
+      const resp = await api.put('/todoItem/updateTodoOrderAfterDrag', { source, destination });
       if (resp?.code === 0) {
         return resp.data.list;
       } else {
         throw new Error('更新失败');
       }
     } catch (e) {
-      console.error(`更新失败:: updateTodoModuleThunk :: ${e}`);
+      console.error(`更新失败:: updateTodoOrderAfterDragThunk :: ${e}`);
     }
   }
 );

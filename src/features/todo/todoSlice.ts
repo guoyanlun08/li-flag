@@ -10,7 +10,7 @@ import {
   addTodoItemThunk,
   updateTodoItemThunk,
   deleteTodoItemThunk,
-  updateTodoModuleThunk
+  updateTodoOrderAfterDragThunk
 } from './dataAndMethods';
 
 export const todoSlice = createSlice({
@@ -94,7 +94,7 @@ export const {
 } = todoSlice.actions;
 
 // 导出 异步动作
-export { getTodoListThunk, addTodoItemThunk, updateTodoItemThunk, deleteTodoItemThunk, updateTodoModuleThunk };
+export { getTodoListThunk, addTodoItemThunk, updateTodoItemThunk, deleteTodoItemThunk, updateTodoOrderAfterDragThunk };
 
 // 导出 todo 的 state值, 用 useAppSelector 也行
 export const selectTodo = (state: RootState) => state.todo;
