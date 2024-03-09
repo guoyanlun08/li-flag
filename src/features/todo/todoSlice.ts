@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { DraggableLocation } from 'react-beautiful-dnd';
 
 import { RootState } from '@/app/store';
 import { todoListItemType } from '@/types/todoType';
@@ -49,10 +48,7 @@ export const todoSlice = createSlice({
       state.eachModule[moduleId].listData = listData;
     },
     // 不同模块中 Item 拖拽
-    differentModuleItemDrag: (
-      state,
-      action: PayloadAction<{ source: DraggableLocation; destination: DraggableLocation; dragItem: todoListItemType }>
-    ) => {
+    differentModuleItemDrag: (state, action: PayloadAction<{ source: any; destination: any; dragItem: todoListItemType }>) => {
       const { source, destination, dragItem } = action.payload;
 
       state.eachModule[source.droppableId].listData.splice(source.index, 1);

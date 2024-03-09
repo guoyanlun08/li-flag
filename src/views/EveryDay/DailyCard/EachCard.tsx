@@ -19,7 +19,7 @@ export function EachCard(props: propsType) {
   const dispatch = useAppDispatch();
 
   const doubleAddItem = async (e: MouseEvent) => {
-    const order = listData.length + 1;
+    const order = listData.length;
     await dispatch(addTodoItemThunk({ moduleId, order, type: 'tail' }));
   };
 

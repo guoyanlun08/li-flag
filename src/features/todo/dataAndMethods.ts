@@ -155,7 +155,7 @@ export const getTodoListThunk = createAsyncThunk<any, { today?: boolean; moduleI
   'todo/getTodoList',
   async (payload, { dispatch }) => {
     try {
-      const { today, moduleId } = payload;
+      const { today = false, moduleId } = payload;
       const resp = await api.get('/todoItem/getTodoList', { moduleId, today: Number(today) });
       const { list } = resp.data;
 
@@ -218,20 +218,21 @@ export const deleteTodoItemThunk = createAsyncThunk<any, { id: number }>('todo/d
 });
 
 // 异步： 更新 todo module
-export const updateTodoOrderAfterDragThunk = createAsyncThunk<any, { source: DraggableLocation; destination: DraggableLocation }>(
+export const updateTodoOrderAfterDragThunk = createAsyncThunk<any, { source: any; destination: any }>(
   'todo/updateTodoOrderAfterDrag',
   async (payload, { dispatch }) => {
     try {
       const { source, destination } = payload;
-
       const resp = await api.put('/todoItem/updateTodoOrderAfterDrag', { source, destination });
+
       if (resp?.code === 0) {
-        return resp.data.list;
+        return resp.data;
       } else {
         throw new Error('更新失败');
       }
     } catch (e) {
       console.error(`更新失败:: updateTodoOrderAfterDragThunk :: ${e}`);
+      return false;
     }
   }
 );
