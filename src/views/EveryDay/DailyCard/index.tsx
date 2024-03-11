@@ -6,7 +6,8 @@ import { EachCard } from './EachCard';
 function DailyCard(props: any) {
   const onContextMenu = (e: React.MouseEvent) => {
     const target = e.target as HTMLDivElement;
-    if (target.role === 'textbox') {
+
+    if (target.tagName === 'P') {
       props.showItemContextMenu({ event: e });
     }
   };
