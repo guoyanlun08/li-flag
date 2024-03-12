@@ -10,7 +10,7 @@ function Theme() {
       <Styled_ThemeBox>
         <Styled_ThemeTitle>最近 x 天</Styled_ThemeTitle>
         <Styled_ThemeIcon>
-          <IconFont name="icon-qiehuanxitong" />
+          <IconFont name="icon-qiehuanxitong" style={{ fontSize: 80 }} />
         </Styled_ThemeIcon>
         <Styled_ThemeToday>今日已完成</Styled_ThemeToday>
       </Styled_ThemeBox>

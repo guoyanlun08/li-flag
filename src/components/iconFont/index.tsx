@@ -7,7 +7,7 @@ const CreateIcon = createFromIconfontCN({
   scriptUrl: iconUrl
 });
 
-// 通过name传入iconfont图标名字，其他属性保持和antd的Icon一样的属性
+// 通过name传入iconfont图标名字，其他属性保持和antd的Icon一样的属性 -> https://ant.design/components/icon-cn#api
 export default function IconFont({ name = '', ...resetProps }) {
   return (
     <Space>

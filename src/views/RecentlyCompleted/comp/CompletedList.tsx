@@ -23,7 +23,7 @@ function CompletedList() {
   return (
     <Styled_CompletedList>
       {completedList.map((item, index) => {
-        return <ListItem key={item.id} {...item} editable={false} index={index} />;
+        return <ListItem key={item.id} todoItem={item} editable={false} index={index} />;
       })}
     </Styled_CompletedList>
   );
