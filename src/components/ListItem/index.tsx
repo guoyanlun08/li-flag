@@ -42,9 +42,14 @@ export function ListItem(props: PropsType) {
     if (context.dragStatus) return;
     setIsHover(true);
   };
+
   const mouseLeaveItemFn = () => {
     if (context.dragStatus) return;
     setIsHover(false);
+  };
+
+  const todoValueFormat = (value: string) => {
+    return JSON.parse(value)[0].children[0].text;
   };
 
   return (
@@ -67,7 +72,7 @@ export function ListItem(props: PropsType) {
       />
       <Styled_ItemContent selected={isSelected}>
         {/* todo: 展示 value的 text需要处理 */}
-        {editable ? <EditNode todoValue={todoValue} selected={isSelected} /> : <div></div>}
+        {editable ? <EditNode todoValue={todoValue} selected={isSelected} /> : <div>{todoValueFormat(todoValue)}</div>}
       </Styled_ItemContent>
     </Styled_Item>
   );
