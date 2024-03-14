@@ -1,5 +1,5 @@
 import React from 'react';
-import { Space, Form, AutoComplete, Switch, Radio } from 'antd';
+import { Space, Form, AutoComplete, Switch, Radio, Button } from 'antd';
 
 import { recentFormType } from '../index';
 import { Styled_Condition } from '../Styles';
@@ -7,6 +7,7 @@ import { Styled_Condition } from '../Styles';
 type propsType = {
   form: recentFormType;
   handleChange: (value: Partial<recentFormType>) => void;
+  handleReset: () => void;
 };
 
 const RECENT_DAY_OPTIONS = [
@@ -17,7 +18,7 @@ const RECENT_DAY_OPTIONS = [
 
 /** 近期模块 —— 筛选条件 */
 function Condition(props: propsType) {
-  const { form, handleChange } = props;
+  const { form, handleChange, handleReset } = props;
 
   return (
     <Styled_Condition>
@@ -45,7 +46,11 @@ function Condition(props: propsType) {
               <Radio value={'D'}>D</Radio>
             </Radio.Group>
           </Form.Item>
-
+          <Form.Item>
+            <Button type="default" onClick={() => handleReset()}>
+              重 置
+            </Button>
+          </Form.Item>
           {/* <Form.Item label="是否开启分页">
             <Switch checked={form.isSkip} onChange={(value) => handleChange({ isSkip: value })} />
           </Form.Item> */}

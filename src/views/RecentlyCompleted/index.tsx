@@ -26,13 +26,14 @@ const recentDaysFormat = (days: number) => {
 
 /** 近期完成模块 */
 function RecentlyCompleted() {
-  const [completedList, setCompletedList] = useState<todoListItemType[]>([]);
-  const [isToday, setIsToday] = useState(false);
-  const [recentForm, setRecentForm] = useState<recentFormType>({
+  const initRecentFormValue: recentFormType = {
     recentDays: 3,
     isSkip: false,
     moduleId: undefined
-  });
+  };
+  const [completedList, setCompletedList] = useState<todoListItemType[]>([]);
+  const [isToday, setIsToday] = useState(false);
+  const [recentForm, setRecentForm] = useState(initRecentFormValue);
 
   useEffect(() => {
     fetchCompletedList();
@@ -49,22 +50,32 @@ function RecentlyCompleted() {
       moduleId: form.moduleId
     };
 
-    setRecentForm(form);
     const {
       data: { list }
     } = await api.get('/todoItem/getTodoList', { completed: 1, ...data });
     setCompletedList(list);
+    setRecentForm(form);
+  };
+
+  const resetRecentForm = () => {
+    setRecentForm(initRecentFormValue);
+    fetchCompletedList();
   };
 
   // 切换是不是 今日
-  const toggleIsToday = (isToday: boolean) => {
+  const toggleIsToday = async (isToday: boolean) => {
+    if (isToday) {
+      //
+    } else {
+      fetchCompletedList(recentForm);
+    }
     setIsToday(isToday);
   };
 
   return (
     <Styled_Container>
       <Theme day={recentForm.recentDays} isToday={isToday} toggleIsToday={toggleIsToday} />
-      <Condition form={recentForm} handleChange={fetchCompletedList} />
+      {isToday ? null : <Condition form={recentForm} handleChange={fetchCompletedList} handleReset={resetRecentForm} />}
       <CompletedList completedList={completedList} />
     </Styled_Container>
   );
