@@ -9,6 +9,15 @@
 - 使用 styled-components 用 **Styled_ButtonBox** 来和普通组件区分
 - 组件头部引入顺序：a. 先外部依赖; b. 类型和方法; c. 组件 和 styled 和 常量
 
+- 注释
+  TODO => 表示需要实现，但目前还未实现的功能
+
+  XXX => 勉强可以工作，但是性能差等原因
+
+  FIXME => 代码是错误的，不能工作，需要修复
+
+  有些外部导出的变量函数用 【/\*\* \*/】来注释，看这样 vscode 才有提示信息
+
 ```js
 // 如
 import React, { useState, useContext } from 'react';

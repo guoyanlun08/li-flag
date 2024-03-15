@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
 
 import IconFont from '@/components/iconFont';
 import { Styled_Theme, Styled_ThemeBox, Styled_ThemeTitle, Styled_ThemeIcon, Styled_ThemeToday } from '../Styles';
@@ -15,15 +15,22 @@ function Theme(props: propsType) {
 
   const recentDayTitleDom = <Styled_ThemeTitle isToday={isToday}>最近 {day} 天</Styled_ThemeTitle>;
   const todayTitleDom = <Styled_ThemeToday isToday={isToday}>今日已完成</Styled_ThemeToday>;
+  const IconStyle = {
+    fontSize: 80,
+    transition: 'transform 1s',
+    transform: isToday ? 'rotate(180deg)' : 'none'
+  };
 
   return (
     <Styled_Theme>
       <Styled_ThemeBox>
         {isToday ? todayTitleDom : recentDayTitleDom}
         <Styled_ThemeIcon>
-          <IconFont name="icon-qiehuanxitong" rotate={45} style={{ fontSize: 80 }} onClick={() => toggleIsToday(!isToday)} />
+          <IconFont name="icon-qiehuanxitong" rotate={45} style={IconStyle} onClick={() => toggleIsToday(!isToday)} />
         </Styled_ThemeIcon>
-        {isToday ? recentDayTitleDom : todayTitleDom}
+        <div style={{ alignSelf: 'end' }} onClick={() => toggleIsToday(!isToday)}>
+          {isToday ? recentDayTitleDom : todayTitleDom}
+        </div>
       </Styled_ThemeBox>
     </Styled_Theme>
   );

@@ -23,14 +23,15 @@ const recentDaysFormat = (days: number) => {
     endTime: moment().endOf('day').format()
   };
 };
+/** recentForm 初始化 */
+const initRecentFormValue: recentFormType = {
+  recentDays: 3,
+  isSkip: false,
+  moduleId: undefined
+};
 
 /** 近期完成模块 */
 function RecentlyCompleted() {
-  const initRecentFormValue: recentFormType = {
-    recentDays: 3,
-    isSkip: false,
-    moduleId: undefined
-  };
   const [completedList, setCompletedList] = useState<todoListItemType[]>([]);
   const [isToday, setIsToday] = useState(false);
   const [recentForm, setRecentForm] = useState(initRecentFormValue);
@@ -50,24 +51,29 @@ function RecentlyCompleted() {
       moduleId: form.moduleId
     };
 
+    await apiGetTodoList(data);
+    setRecentForm(form);
+  };
+
+  // 获取 todoList 接口调用
+  const apiGetTodoList = async (data: Partial<{ startTime: string; endTime: string; isSkip: boolean; moduleId: string }>) => {
     const {
       data: { list }
     } = await api.get('/todoItem/getTodoList', { completed: 1, ...data });
     setCompletedList(list);
-    setRecentForm(form);
   };
 
   const resetRecentForm = () => {
-    setRecentForm(initRecentFormValue);
-    fetchCompletedList();
+    fetchCompletedList(initRecentFormValue);
   };
 
   // 切换是不是 今日
   const toggleIsToday = async (isToday: boolean) => {
     if (isToday) {
-      //
+      const { startTime, endTime } = recentDaysFormat(1);
+      await apiGetTodoList({ startTime, endTime });
     } else {
-      fetchCompletedList(recentForm);
+      await fetchCompletedList(recentForm);
     }
     setIsToday(isToday);
   };
@@ -75,7 +81,7 @@ function RecentlyCompleted() {
   return (
     <Styled_Container>
       <Theme day={recentForm.recentDays} isToday={isToday} toggleIsToday={toggleIsToday} />
-      {isToday ? null : <Condition form={recentForm} handleChange={fetchCompletedList} handleReset={resetRecentForm} />}
+      <Condition isToday={isToday} form={recentForm} handleChange={fetchCompletedList} handleReset={resetRecentForm} />
       <CompletedList completedList={completedList} />
     </Styled_Container>
   );
