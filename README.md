@@ -98,16 +98,17 @@ Redux Toolkit 是编写 Redux 逻辑的推荐方式
 | ~~feat: 登录界面基本框架样式开发~~                                                                                          | superB   | superB         |
 | ~~feat: 存储 store 的 todo 数据格式需要修改，且项目涉及的组件都要调整(02/03 必须处理)~~                                     | allen    | allen          |
 | ~~feat: 近期完成模块的 list 列表，看是否重新设计；还是用通用 ListItem 组件，若用 ListItem 组件，则需要重新设计~~            | allen    | allen          |
-| feat: ListItem 中的 checkbox disabled 样式调整                                                                              | allen    | ???            |
 | ~~feat: 封装下项目所用的 axios 请求，非登录请求携带 token。token 存储 localstorage~~                                        | allen    | boss huang     |
 | ~~feat: 先用账户密码进行登录，注册则可能需要个确认密码输入。后期应该会用手机号码注册，且用验证码注册登录。~~                | allen    | superB         |
 | ~~feat: 登录注册的接口。~~                                                                                                  | allen    | HB             |
 | ~~feat: todoItem 增删改查接口。~~                                                                                           | allen    | allen          |
 | ~~feat: 调研右键菜单库，目前用途是删除可编辑的 todoItem。需简单好用~~                                                       | allen    | superB         |
 | ~~feat: 每个模块数据溢出，overflow 设置，且滚动条样式调整(看是否设置全局滚动条样式)未设置全局滚动条样式, 这里不显示滚动条~~ | allen    | allen          |
-| bug: 长文字输入 item 被换行，效果应该像 input 一样                                                                          |          | ???            |
 | ~~bug: 第一个 item 的 tooltar 显示被 title 覆盖（原因容器设置了 overflow-y:auto 被遮挡）~~                                  |          | allen          |
 | ~~bug: 右键菜单需要已组件形式引入，且应是整个【每日模块】用一个右键菜单组件，不然导致多点右键，上一个渲染还在.~~            | allen    | HB             |
 | ~~list 的 order 从 0 开始~~                                                                                                 | allen    | allen          |
+| bug: 长文字输入 item 被换行，效果应该像 input 一样                                                                          |          | ???            |
+| feat: ListItem 中的 checkbox disabled 样式调整                                                                              | allen    | ???            |
 | todoItem 增删改查测试(测试先清 TodoItem 库) ！！！！                                                                        |          | allen, HB      |
 | feat: 每日模块的标题，背景颜色支持自定义                                                                                    | superBoy | ???            |
+| 12 点固定刷新每日模块                                                                                                       | allen    | allen          |
