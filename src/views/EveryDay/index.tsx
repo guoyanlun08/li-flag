@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import qs from 'query-string';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { useContextMenu } from 'react-contexify';
 
@@ -11,10 +13,6 @@ import DailyCard from './DailyCard';
 import DailyList from './DailyList';
 import ContextMenu, { ITEM_MENU_ID } from '@/components/ContextMenu';
 
-interface propsType {
-  switchList: boolean;
-}
-
 interface IEveryDayContext {
   dragStatus: boolean;
   setDragStatus: React.Dispatch<React.SetStateAction<boolean>>;
@@ -22,7 +20,9 @@ interface IEveryDayContext {
 
 export const EveryDayContext = React.createContext<IEveryDayContext>({} as any);
 
-function EveryDay(props: propsType) {
+function EveryDay() {
+  const { search } = useLocation();
+
   const { eachModule, eachModuleOrder, selectedItem } = useAppSelector((state) => state.todo);
   const { id, moduleId } = selectedItem || {};
 
@@ -65,9 +65,8 @@ function EveryDay(props: propsType) {
       <DragDropContext
         onBeforeDragStart={() => onBeforeDragStart(setDragStatus)}
         onDragEnd={(result) => onDragEnd(result, setDragStatus, eachModule, dispatch)}>
-        {props.switchList ? <DailyList {...dailyProps} /> : <DailyCard {...dailyProps} />}
+        {qs.parse(search).list ? <DailyList {...dailyProps} /> : <DailyCard {...dailyProps} />}
       </DragDropContext>
-
       <ContextMenu moduleId={moduleId} id={id} />
     </EveryDayContext.Provider>
   );

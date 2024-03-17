@@ -1,9 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { Provider } from 'react-redux';
+import { RouterProvider } from 'react-router-dom';
+
+import router from '@/routes';
+import store from '@/app/store';
+
 import 'antd/dist/reset.css';
 import './styles/index.scss';
-import store from '@/app/store';
-import { Provider } from 'react-redux';
 
 import App from './App';
 // import reportWebVitals from './reportWebVitals';
@@ -11,7 +15,7 @@ import App from './App';
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
   <Provider store={store}>
-    <App />
+    <RouterProvider router={router} />
   </Provider>
 );
 

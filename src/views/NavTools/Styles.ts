@@ -10,6 +10,7 @@ export const Styled_NavToolItem = styled.div`
   height: 30px;
   line-height: 30px;
   padding: 0px 20px;
+  margin-right: 20px;
   border-radius: 10px;
   background: #6b5cba;
   color: #d0d8d9;

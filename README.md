@@ -81,6 +81,10 @@ Redux Toolkit 是编写 Redux 逻辑的推荐方式
 
 <https://fkhadra.github.io/react-contexify>
 
+## React Router v6 路由文档
+
+<https://baimingxuan.github.io/react-router6-doc/start/tutorial>
+
 ## TODO
 
 | TODO 项 (完成项, 在这用~~删除线~~横划, 不要删掉.)                                                                           | 提出人   | 处理人         |
@@ -107,8 +111,11 @@ Redux Toolkit 是编写 Redux 逻辑的推荐方式
 | ~~bug: 第一个 item 的 tooltar 显示被 title 覆盖（原因容器设置了 overflow-y:auto 被遮挡）~~                                  |          | allen          |
 | ~~bug: 右键菜单需要已组件形式引入，且应是整个【每日模块】用一个右键菜单组件，不然导致多点右键，上一个渲染还在.~~            | allen    | HB             |
 | ~~list 的 order 从 0 开始~~                                                                                                 | allen    | allen          |
+| ~~router 引入~~                                                                                                             | allen    | allen          |
 | bug: 长文字输入 item 被换行，效果应该像 input 一样                                                                          |          | ???            |
 | feat: ListItem 中的 checkbox disabled 样式调整                                                                              | allen    | ???            |
 | todoItem 增删改查测试(测试先清 TodoItem 库) ！！！！                                                                        |          | allen, HB      |
 | feat: 每日模块的标题，背景颜色支持自定义                                                                                    | superBoy | ???            |
 | 12 点固定刷新每日模块                                                                                                       | allen    | allen          |
+| navTools 激活状态样式                                                                                                       | allen    | allen          |
+| 项目里 type interface 定义首字母没大写，大写一下                                                                            | allen    | allen          |

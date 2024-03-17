@@ -1,36 +1,48 @@
 import React, { useState } from 'react';
 import { MenuOutlined } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
+
 import IconFont from '@/components/iconFont';
 import LoginModal from '@/components/Login';
 import { Styled_SiderMenuContainer, Styled_Header, Styled_MenuBox, Styled_Info, Styled_OptionsBar } from './Styles';
 
-function OptionItem(props: any) {
+type OptionItemProps = {
+  title: string;
+  icon: string;
+  path: string;
+};
+
+function OptionItem(props: OptionItemProps) {
+  const navigate = useNavigate();
+
   return (
     <div
       onClick={(e) => {
         e.stopPropagation();
-        console.log(props.title);
-      }}
-    >
+        navigate(`${props.path}`);
+      }}>
       <IconFont name={props.icon} style={{ fontSize: '30px' }} />
       <span className="menuItemText">{props.title}</span>
     </div>
   );
 }
 //dev mock data
-const devData = [
+const devData: OptionItemProps[] = [
   {
     title: '每日模块',
-    icon: 'icon-a-009_wodedaiban'
-  },
-  {
-    title: 'Option1',
-    icon: 'icon-a-009_xinjianliucheng'
-  },
-  {
-    title: 'Option2',
-    icon: 'icon-a-009_wodericheng'
+    icon: 'icon-a-009_wodedaiban',
+    path: '/everyday'
   }
+  // {
+  //   title: 'Option1',
+  //   icon: 'icon-a-009_xinjianliucheng',
+  //   path: '/'
+  // },
+  // {
+  //   title: 'Option2',
+  //   icon: 'icon-a-009_wodericheng',
+  //   path: '/'
+  // }
 ];
 
 function SiderMenu(props: any) {
@@ -59,8 +71,8 @@ function SiderMenu(props: any) {
             <div className="info-name">FlagUser</div>
           </Styled_Info>
           <Styled_OptionsBar fold={colpased}>
-            {devData.map((item, index) => {
-              return <OptionItem icon={item.icon} title={item.title} key={item.title + String(index)} />;
+            {devData.map((item) => {
+              return <OptionItem key={item.title} icon={item.icon} title={item.title} path={item.path} />;
             })}
           </Styled_OptionsBar>
         </Styled_MenuBox>
