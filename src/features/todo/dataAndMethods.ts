@@ -1,13 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { todoStateType, todoListItemType } from '@/types/todoType';
+import { TodoStateType } from '@/types/todoType';
 import api from '@/utils/httpRequest';
 import { addTodoItem } from './todoSlice';
 
 import variables from '@/styles/variables.module.scss';
 
 // 初始化数据
-export const initialState: todoStateType = {
+export const initialState: TodoStateType = {
   eachModule: {
     A: {
       moduleId: 'A',

@@ -1,9 +1,9 @@
 import { DropResult } from 'react-beautiful-dnd';
 
 import { sameModuleItemDrag, getTodoListThunk, differentModuleItemDrag, updateTodoOrderAfterDragThunk } from '@/features/todo/todoSlice';
-import { eachModuleType, todoListItemType } from '@/types/todoType';
+import { EachModuleType, TodoListItemType } from '@/types/todoType';
 
-function reorderList(list: todoListItemType[], startIndex: number, endIndex: number) {
+function reorderList(list: TodoListItemType[], startIndex: number, endIndex: number) {
   const result = Array.from(list);
   const [removed] = result.splice(startIndex, 1);
   result.splice(endIndex, 0, removed);
@@ -15,7 +15,7 @@ export const onBeforeDragStart = (setDragStatus: (value: boolean) => void) => {
   setDragStatus(true);
 };
 
-export const onDragEnd = async (result: DropResult, setDragStatus: (value: boolean) => void, eachModule: eachModuleType, dispatch: any) => {
+export const onDragEnd = async (result: DropResult, setDragStatus: (value: boolean) => void, eachModule: EachModuleType, dispatch: any) => {
   const { source, destination } = result;
   setDragStatus(false);
 

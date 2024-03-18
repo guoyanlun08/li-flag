@@ -1,15 +1,15 @@
 import React from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 
-import { todoListItemType } from '@/types/todoType';
+import { TodoListItemType } from '@/types/todoType';
 
 import { ListItem } from '@/components/ListItem';
 
-interface propsType {
-  listData: todoListItemType[];
+interface PropsType {
+  listData: TodoListItemType[];
 }
 
-function ListItemBox(props: propsType) {
+function ListItemBox(props: PropsType) {
   const { listData } = props;
 
   return (
