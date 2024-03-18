@@ -6,13 +6,13 @@ import IconFont from '@/components/iconFont';
 import LoginModal from '@/components/Login';
 import { Styled_SiderMenuContainer, Styled_Header, Styled_MenuBox, Styled_Info, Styled_OptionsBar } from './Styles';
 
-type OptionItemProps = {
+type menuProps = {
   title: string;
   icon: string;
   path: string;
 };
 
-function OptionItem(props: OptionItemProps) {
+function OptionItem(props: menuProps) {
   const navigate = useNavigate();
 
   return (
@@ -26,8 +26,9 @@ function OptionItem(props: OptionItemProps) {
     </div>
   );
 }
-//dev mock data
-const devData: OptionItemProps[] = [
+
+// 左侧菜单
+const menus: menuProps[] = [
   {
     title: '每日模块',
     icon: 'icon-a-009_wodedaiban',
@@ -57,6 +58,7 @@ function SiderMenu(props: any) {
     e.stopPropagation();
     setLoginVisible(true);
   };
+
   return (
     <>
       <Styled_SiderMenuContainer onClick={triggle}>
@@ -71,8 +73,8 @@ function SiderMenu(props: any) {
             <div className="info-name">FlagUser</div>
           </Styled_Info>
           <Styled_OptionsBar fold={colpased}>
-            {devData.map((item) => {
-              return <OptionItem key={item.title} icon={item.icon} title={item.title} path={item.path} />;
+            {menus.map((menu) => {
+              return <OptionItem key={menu.title} icon={menu.icon} title={menu.title} path={menu.path} />;
             })}
           </Styled_OptionsBar>
         </Styled_MenuBox>

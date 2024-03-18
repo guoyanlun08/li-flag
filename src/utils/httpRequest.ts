@@ -1,9 +1,9 @@
 import axios, { AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import { message } from 'antd';
-// import qs from 'qs'
-import { getToken } from '@/utils/localStorage';
 
-import { showMessage } from '@/constants/status';
+import { getToken, removeToken } from '@/utils/localStorage';
+
+import { HttpCode, showMessage } from '@/constants/httpCode';
 
 // 返回res.data的interface
 export interface IResponse {
@@ -25,16 +25,7 @@ const http: AxiosInstance = axios.create({
 // axios实例拦截响应
 http.interceptors.response.use(
   (response: AxiosResponse) => {
-    // todo: 待确定 这是为啥
-    // if (response.headers.authorization) {
-    //   localStorage.setItem('SESSION_TOKEN', response.headers.authorization);
-    // } else {
-    //   if (response.data && response.data.token) {
-    //     localStorage.setItem('SESSION_TOKEN', response.data.token);
-    //   }
-    // }
-
-    if (response.status === 200) {
+    if (response.status === HttpCode.SUCCESS) {
       return response.data;
     } else {
       showMessage(response.status);
@@ -45,6 +36,13 @@ http.interceptors.response.use(
   (error: any) => {
     const { response } = error;
     if (response) {
+      if (response.status === HttpCode.FORBIDDEN || response.status === HttpCode.UNAUTHORIZED) {
+        // token 非法移除 token
+        removeToken();
+        // 调出登录弹窗
+
+        return;
+      }
       // 请求已发出，但是不在2xx的范围
       showMessage(response.status);
       return Promise.reject(response.data);
@@ -61,6 +59,7 @@ http.interceptors.request.use(
     if (token) {
       config.headers.Authorization = `${token}`;
     }
+
     return config;
   },
   (error: any) => {
