@@ -117,5 +117,5 @@ Redux Toolkit 是编写 Redux 逻辑的推荐方式
 | todoItem 增删改查测试(测试先清 TodoItem 库) ！！！！                                                                        |          | allen, HB      |
 | feat: 每日模块的标题，背景颜色支持自定义                                                                                    | superBoy | ???            |
 | 12 点固定刷新每日模块                                                                                                       | allen    | allen          |
-| navTools 激活状态样式                                                                                                       | allen    | allen          |
+| ~~navTools 激活状态样式~~                                                                                                   | allen    | allen          |
 | ~~项目里 type interface 定义首字母没大写，大写一下~~                                                                        | allen    | allen          |

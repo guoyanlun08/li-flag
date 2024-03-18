@@ -66,7 +66,7 @@ function EveryDay() {
       <DragDropContext
         onBeforeDragStart={() => onBeforeDragStart(setDragStatus)}
         onDragEnd={(result) => onDragEnd(result, setDragStatus, eachModule, dispatch)}>
-        {qs.parse(search).list ? <DailyList {...dailyProps} /> : <DailyCard {...dailyProps} />}
+        {qs.parse(search).listMode ? <DailyList {...dailyProps} /> : <DailyCard {...dailyProps} />}
       </DragDropContext>
       <ContextMenu moduleId={moduleId} id={id} />
     </EveryDayContext.Provider>
