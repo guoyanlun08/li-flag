@@ -1,13 +1,13 @@
 import React from 'react';
 import { Space, Form, AutoComplete, Switch, Radio, Button } from 'antd';
 
-import { recentFormType } from '../index';
+import { RecentFormType } from '../index';
 import { Styled_Condition } from '../Styles';
 
-type propsType = {
+type PropsType = {
   isToday: boolean;
-  form: recentFormType;
-  handleChange: (value: Partial<recentFormType>) => void;
+  form: RecentFormType;
+  handleChange: (value: Partial<RecentFormType>) => void;
   handleReset: () => void;
 };
 
@@ -18,7 +18,7 @@ const RECENT_DAY_OPTIONS = [
 ];
 
 /** 近期模块 —— 筛选条件 */
-function Condition(props: propsType) {
+function Condition(props: PropsType) {
   const { isToday, form, handleChange, handleReset } = props;
 
   return (

@@ -5,16 +5,16 @@ import { Droppable } from 'react-beautiful-dnd';
 import { useAppDispatch } from '@/app/hooks';
 
 import { addTodoItemThunk } from '@/features/todo/dataAndMethods';
-import { todoListItemType } from '@/types/todoType';
+import { TodoListItemType } from '@/types/todoType';
 import ListItemBox from '../ListItemBox';
 
-interface propsType {
+interface PropsType {
   bgColor: string;
   moduleId: string;
-  listData: todoListItemType[];
+  listData: TodoListItemType[];
 }
 
-export function EachCard(props: propsType) {
+export function EachCard(props: PropsType) {
   const { bgColor, moduleId, listData } = props;
   const dispatch = useAppDispatch();
 

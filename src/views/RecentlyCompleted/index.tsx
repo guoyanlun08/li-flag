@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 
 import api from '@/utils/httpRequest';
-import { todoListItemType } from '@/types/todoType';
+import { TodoListItemType } from '@/types/todoType';
 
 import { Theme, Condition, CompletedList } from './comp';
 import { Styled_Container } from './Styles';
 
-export type recentFormType = {
+export type RecentFormType = {
   recentDays: number;
   isSkip: boolean;
   moduleId?: string;
@@ -24,7 +24,7 @@ const recentDaysFormat = (days: number) => {
   };
 };
 /** recentForm 初始化 */
-const initRecentFormValue: recentFormType = {
+const initRecentFormValue: RecentFormType = {
   recentDays: 3,
   isSkip: false,
   moduleId: undefined
@@ -32,7 +32,7 @@ const initRecentFormValue: recentFormType = {
 
 /** 近期完成模块 */
 function RecentlyCompleted() {
-  const [completedList, setCompletedList] = useState<todoListItemType[]>([]);
+  const [completedList, setCompletedList] = useState<TodoListItemType[]>([]);
   const [isToday, setIsToday] = useState(false);
   const [recentForm, setRecentForm] = useState(initRecentFormValue);
 
@@ -41,7 +41,7 @@ function RecentlyCompleted() {
   }, []);
 
   // 获取已完成 itemList ———— 时间、模块过滤
-  const fetchCompletedList = async (changeValue?: Partial<recentFormType>) => {
+  const fetchCompletedList = async (changeValue?: Partial<RecentFormType>) => {
     const form = { ...recentForm, ...changeValue };
     const { startTime, endTime } = recentDaysFormat(form.recentDays);
     const data = {

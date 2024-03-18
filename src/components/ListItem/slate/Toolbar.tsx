@@ -3,12 +3,12 @@ import { Editor } from 'slate';
 import { useSlate } from 'slate-react';
 import { Styled_ToolBar } from './Styles';
 
-interface propsType {
+interface PropsType {
   left: number;
   top: number;
 }
 
-export function Toolbar(props: propsType) {
+export function Toolbar(props: PropsType) {
   const editor = useSlate();
 
   const CustomEditor = {

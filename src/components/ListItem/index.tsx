@@ -5,7 +5,7 @@ import { MenuOutlined } from '@ant-design/icons';
 import { useAppSelector, useAppDispatch } from '@/app/hooks';
 import { toggleItemCompletedStatus, setSelectedItem, updateTodoItemThunk } from '@/features/todo/todoSlice';
 import { EveryDayContext } from '@/views/EveryDay';
-import { todoListItemType } from '@/types/todoType';
+import { TodoListItemType } from '@/types/todoType';
 
 import { Styled_Item, Styled_ItemContent } from './Styles';
 import { EditNode } from './EditNode';
@@ -13,7 +13,7 @@ interface PropsType {
   index: number;
   editable: boolean;
   dragHandle?: any;
-  todoItem: todoListItemType;
+  todoItem: TodoListItemType;
 }
 
 export function ListItem(props: PropsType) {

@@ -41,8 +41,9 @@ function EveryDay() {
   useEffect(() => {
     const fetchTodoListHadToken = async () => {
       const { payload: list } = await dispatch(getTodoListThunk({ today: true }));
-
-      dispatch(setTodoEntireModule({ list }));
+      if (list) {
+        dispatch(setTodoEntireModule({ list }));
+      }
     };
 
     if (getToken()) {

@@ -1,20 +1,20 @@
-export interface todoStateType {
-  eachModule: eachModuleType;
+export type TodoStateType = {
+  eachModule: EachModuleType;
   eachModuleOrder: string[];
-  selectedItem?: todoListItemType;
-}
+  selectedItem?: TodoListItemType;
+};
 
-export interface eachModuleType {
-  [property: string]: moduleDataType;
-}
+export type EachModuleType = {
+  [property: string]: ModuleDataType;
+};
 
-export interface moduleDataType {
+export type ModuleDataType = {
   moduleId: string;
   bgColor: string;
-  listData: todoListItemType[];
-}
+  listData: TodoListItemType[];
+};
 
-export interface todoListItemType {
+export interface TodoListItemType {
   id: number;
   moduleId: string;
   todoValue: string;

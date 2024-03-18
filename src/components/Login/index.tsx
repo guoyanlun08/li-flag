@@ -10,7 +10,7 @@ import { setToken } from '@/utils/localStorage';
 import IconFont from '@/components/iconFont';
 import { Styled_LoginModal, Styled_LoginBox, Styled_Agreement, Styled_Register } from './Styles';
 
-interface loginProps extends ModalProps {
+interface LoginProps extends ModalProps {
   onLoginFinish: (val: boolean) => void;
 }
 const loginTitleList = [
@@ -21,7 +21,7 @@ const loginTitleList = [
   '别让梦想成为你唯一的邻居。'
 ];
 
-export default function Login(props: loginProps) {
+export default function Login(props: LoginProps) {
   const [switchLogin, setSwitchLogin] = useState('accountAndPhone');
   const [socialType, setSocialType] = useState('');
   const [isLogin, setIsLogin] = useState(true);

@@ -3,14 +3,14 @@ import { Styled_ListBox, Styled_DailyListContainer } from './Styles';
 import { Droppable } from 'react-beautiful-dnd';
 import ListItemBox from '../ListItemBox';
 
-import { todoListItemType } from '@/types/todoType';
-interface propsType {
+import { TodoListItemType } from '@/types/todoType';
+interface PropsType {
   bgColor: string;
   moduleId: string;
-  listData: todoListItemType[];
+  listData: TodoListItemType[];
 }
 
-export function EachList(props: propsType) {
+export function EachList(props: PropsType) {
   const { bgColor, moduleId, listData } = props;
   return (
     <Styled_DailyListContainer bgColor={bgColor}>

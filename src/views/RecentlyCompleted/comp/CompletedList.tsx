@@ -1,16 +1,16 @@
 import React from 'react';
 
-import { todoListItemType } from '@/types/todoType';
+import { TodoListItemType } from '@/types/todoType';
 
 import { ListItem } from '@/components/ListItem';
 import { Styled_CompletedList } from '../Styles';
 
-type propsType = {
-  completedList: todoListItemType[];
+type PropsType = {
+  completedList: TodoListItemType[];
 };
 
 /** 近期模块 —— completed列表 */
-function CompletedList(props: propsType) {
+function CompletedList(props: PropsType) {
   const { completedList } = props;
 
   return (

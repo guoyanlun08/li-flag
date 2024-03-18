@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { Styled_NavTools, Styled_NavToolItem } from './Styles';
 
-function NavTools(props: any) {
+function NavTools() {
   const navigate = useNavigate();
 
   const [showList, setShowList] = useState(true);

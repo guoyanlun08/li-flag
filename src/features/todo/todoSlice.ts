@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { RootState } from '@/app/store';
-import { todoListItemType } from '@/types/todoType';
+import { TodoListItemType } from '@/types/todoType';
 
 import {
   initialState,
@@ -43,12 +43,12 @@ export const todoSlice = createSlice({
       state.eachModule[moduleId].listData = list;
     },
     // 同一个模块中 Item 拖拽
-    sameModuleItemDrag: (state, action: PayloadAction<{ moduleId: string; listData: todoListItemType[] }>) => {
+    sameModuleItemDrag: (state, action: PayloadAction<{ moduleId: string; listData: TodoListItemType[] }>) => {
       const { moduleId, listData } = action.payload;
       state.eachModule[moduleId].listData = listData;
     },
     // 不同模块中 Item 拖拽
-    differentModuleItemDrag: (state, action: PayloadAction<{ source: any; destination: any; dragItem: todoListItemType }>) => {
+    differentModuleItemDrag: (state, action: PayloadAction<{ source: any; destination: any; dragItem: TodoListItemType }>) => {
       const { source, destination, dragItem } = action.payload;
 
       state.eachModule[source.droppableId].listData.splice(source.index, 1);
@@ -64,7 +64,7 @@ export const todoSlice = createSlice({
       }
     },
     // 设置 selectedItem
-    setSelectedItem: (state, action: PayloadAction<{ todoItem: todoListItemType }>) => {
+    setSelectedItem: (state, action: PayloadAction<{ todoItem: TodoListItemType }>) => {
       const { todoItem } = action.payload;
       state.selectedItem = todoItem;
     },
