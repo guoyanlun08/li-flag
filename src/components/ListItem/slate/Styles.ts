@@ -26,3 +26,12 @@ export const Styled_ToolBar = styled.div<{ left: number; top: number }>`
     font-family: serif;
   }
 `;
+export const Styled_textNode = styled.p`
+  width: 100%;
+  padding-right: 15px;
+  overflow-y: hidden;
+  overflow-x: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
