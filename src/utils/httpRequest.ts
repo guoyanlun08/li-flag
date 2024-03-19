@@ -36,13 +36,8 @@ http.interceptors.response.use(
   (error: any) => {
     const { response } = error;
     if (response) {
-      if (response.status === HttpCode.FORBIDDEN || response.status === HttpCode.UNAUTHORIZED) {
-        // token 非法移除 token
-        removeToken();
-        // 调出登录弹窗
-
-        return;
-      }
+      // token 非法移除 token
+      response.status === HttpCode.FORBIDDEN && removeToken();
       // 请求已发出，但是不在2xx的范围
       showMessage(response.status);
       return Promise.reject(response.data);

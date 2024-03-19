@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { ModalProps, Form, Input, Button, QRCode } from 'antd';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 
+import { AuthContext } from '@/app/AuthContext';
 import { useAppDispatch } from '@/app/hooks';
 import api from '@/utils/httpRequest';
 import { getTodoListThunk, setTodoEntireModule } from '@/features/todo/todoSlice';
-import { setToken } from '@/utils/localStorage';
 
 import IconFont from '@/components/iconFont';
 import { Styled_LoginModal, Styled_LoginBox, Styled_Agreement, Styled_Register } from './Styles';
@@ -22,6 +22,7 @@ const loginTitleList = [
 ];
 
 export default function Login(props: LoginProps) {
+  const { handleLogin } = useContext(AuthContext);
   const [switchLogin, setSwitchLogin] = useState('accountAndPhone');
   const [socialType, setSocialType] = useState('');
   const [isLogin, setIsLogin] = useState(true);
@@ -30,14 +31,15 @@ export default function Login(props: LoginProps) {
   const loginHandle = async (values: any) => {
     // 表单提交操作
     const { data: res } = await api.post('/user/login', { ...values });
+
     if (res.token) {
-      setToken(res.token);
+      handleLogin(res.token);
       const { payload: list } = await dispatch(getTodoListThunk({ today: true }));
       dispatch(setTodoEntireModule({ list }));
 
       props.onLoginFinish(false);
     } else {
-      props.onLoginFinish(true);
+      // TODO: 登陆失败提示
     }
   };
   const registerHandle = async (values: any) => {

@@ -1,8 +1,9 @@
-import React, { MouseEvent } from 'react';
+import React, { MouseEvent, useContext } from 'react';
 import { Styled_EachModuleContainer, Styled_Title, Styled_ListBox } from './Styles';
 import { Droppable } from 'react-beautiful-dnd';
 
 import { useAppDispatch } from '@/app/hooks';
+import { AuthContext } from '@/app/AuthContext';
 
 import { addTodoItemThunk } from '@/features/todo/dataAndMethods';
 import { TodoListItemType } from '@/types/todoType';
@@ -16,9 +17,13 @@ interface PropsType {
 
 export function EachCard(props: PropsType) {
   const { bgColor, moduleId, listData } = props;
+  const { isLogin, openLoginModal } = useContext(AuthContext);
   const dispatch = useAppDispatch();
 
   const doubleAddItem = async (e: MouseEvent) => {
+    if (!isLogin) {
+      openLoginModal();
+    }
     const order = listData.length;
     await dispatch(addTodoItemThunk({ moduleId, order, type: 'tail' }));
   };

@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { MenuOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 
+import { AuthContext } from '@/app/AuthContext';
+
 import IconFont from '@/components/iconFont';
-import LoginModal from '@/components/Login';
 import { Styled_SiderMenuContainer, Styled_Header, Styled_MenuBox, Styled_Info, Styled_OptionsBar } from './Styles';
 
 type menuProps = {
@@ -48,40 +49,37 @@ const menus: menuProps[] = [
 
 function SiderMenu(props: any) {
   const { getClose } = props;
+  const { openLoginModal } = useContext(AuthContext);
   const [colpased, setColpased] = useState(false);
-  const [loginVisible, setLoginVisible] = useState(false);
   const triggle = (): void => {
     setColpased(!colpased);
     getClose(colpased);
   };
   const showLoginDialog = (e: any): void => {
     e.stopPropagation();
-    setLoginVisible(true);
+    openLoginModal();
   };
 
   return (
-    <>
-      <Styled_SiderMenuContainer onClick={triggle}>
-        <Styled_Header fold={colpased}>
-          <span>Li-FLAG</span>
-        </Styled_Header>
-        <Styled_MenuBox>
-          <Styled_Info fold={colpased}>
-            <div className="info-avatar" onClick={(e) => showLoginDialog(e)}>
-              <img src={require('../../assets/imgs/1_user5.png')} alt="" />
-            </div>
-            <div className="info-name">FlagUser</div>
-          </Styled_Info>
-          <Styled_OptionsBar fold={colpased}>
-            {menus.map((menu) => {
-              return <OptionItem key={menu.title} icon={menu.icon} title={menu.title} path={menu.path} />;
-            })}
-          </Styled_OptionsBar>
-        </Styled_MenuBox>
-        <div className="side-footer">{colpased ? <MenuOutlined /> : <MenuOutlined rotate={90} />}</div>
-      </Styled_SiderMenuContainer>
-      <LoginModal open={loginVisible} onLoginFinish={(val) => setLoginVisible(val)} onCancel={() => setLoginVisible(false)}></LoginModal>
-    </>
+    <Styled_SiderMenuContainer onClick={triggle}>
+      <Styled_Header fold={colpased}>
+        <span>Li-FLAG</span>
+      </Styled_Header>
+      <Styled_MenuBox>
+        <Styled_Info fold={colpased}>
+          <div className="info-avatar" onClick={(e) => showLoginDialog(e)}>
+            <img src={require('../../assets/imgs/1_user5.png')} alt="" />
+          </div>
+          <div className="info-name">FlagUser</div>
+        </Styled_Info>
+        <Styled_OptionsBar fold={colpased}>
+          {menus.map((menu) => {
+            return <OptionItem key={menu.title} icon={menu.icon} title={menu.title} path={menu.path} />;
+          })}
+        </Styled_OptionsBar>
+      </Styled_MenuBox>
+      <div className="side-footer">{colpased ? <MenuOutlined /> : <MenuOutlined rotate={90} />}</div>
+    </Styled_SiderMenuContainer>
   );
 }
 
