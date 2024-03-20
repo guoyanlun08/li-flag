@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, Button, FormProps } from 'antd';
+import { Form, Input, Button, FormProps, message } from 'antd';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 
 import api from '@/utils/httpRequest';
@@ -15,19 +15,22 @@ type PropsType = {
 type registerFieldType = {
   userId: string;
   password: string;
-  repectPassword: string;
+  repeatPassword: string;
 };
 
 const Register = (props: PropsType) => {
   const { switchOpType, triggerLoginHandle } = props;
 
   const registerHandle: FormProps<registerFieldType>['onFinish'] = async (values) => {
-    const { userId, password, repectPassword } = values;
-
-    const res = await api.post('/user/register', { userId, password, repectPassword });
-    if (res && res.code === 0) {
-      triggerLoginHandle({ userId, password });
-    } else {
+    try {
+      const { userId, password, repeatPassword } = values;
+      const res = await api.post('/user/register', { userId, password, repeatPassword });
+      if (res?.code === 0) {
+        triggerLoginHandle({ userId, password });
+      }
+    } catch (err: any) {
+      console.error(err.msg);
+      message.error(`注册失败: ${err.msg}`);
     }
   };
   return (
@@ -40,8 +43,8 @@ const Register = (props: PropsType) => {
           <Form.Item name="password" rules={[{ required: true, message: '请输入密码!' }]}>
             <Input.Password prefix={<LockOutlined className="site-form-item-icon" />} type="password" placeholder="Password" />
           </Form.Item>
-          <Form.Item name="repectPassword" rules={[{ required: true, message: '请输入确认密码!' }]}>
-            <Input.Password prefix={<LockOutlined className="site-form-item-icon" />} type="password" placeholder="RepectPassword" />
+          <Form.Item name="repeatPassword" rules={[{ required: true, message: '请输入确认密码!' }]}>
+            <Input.Password prefix={<LockOutlined className="site-form-item-icon" />} type="password" placeholder="repeatPassword" />
           </Form.Item>
           <Form.Item>
             <Button type="primary" htmlType="submit" className="register-form-button">

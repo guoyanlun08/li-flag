@@ -120,6 +120,7 @@ Redux Toolkit 是编写 Redux 逻辑的推荐方式
 | ~~navTools 激活状态样式~~                                                                                                   | allen    | allen          |
 | ~~项目里 type interface 定义首字母没大写，大写一下~~                                                                        | allen    | allen          |
 | ~~请求器需要优化响应处理~~                                                                                                  | allen    | allen          |
-| 对接口错误的处理                                                                                                            | allen    | allen          |
+| ~~对接口错误的处理~~                                                                                                        | allen    | allen          |
 | 调研前端有没有全局捕获错误的方法                                                                                            | allen    | allen          |
 | 右键菜单新增                                                                                                                | allen    | superB         |
+| 登录注册表单应有前端前置校验                                                                                                | allen    | superB         |

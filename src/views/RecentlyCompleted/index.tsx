@@ -61,10 +61,14 @@ function RecentlyCompleted() {
 
   // 获取 todoList 接口调用
   const apiGetTodoList = async (data: Partial<{ startTime: string; endTime: string; isSkip: boolean; moduleId: string }>) => {
-    const {
-      data: { list }
-    } = await api.get('/todoItem/getTodoList', { completed: 1, ...data });
-    setCompletedList(list);
+    try {
+      const {
+        data: { list }
+      } = await api.get('/todoItem/getTodoList', { completed: 1, ...data });
+      setCompletedList(list);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const resetRecentForm = () => {

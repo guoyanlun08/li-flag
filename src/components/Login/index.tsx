@@ -21,18 +21,20 @@ export default function LoginModal(props: LoginProps) {
 
   /** 登录逻辑实现 */
   const loginHandle: FormProps<{ userId: string; password: string }>['onFinish'] = async (values) => {
-    // 表单提交操作
-    const { data: res } = await api.post('/user/login', { ...values });
+    try {
+      const { data: res } = await api.post('/user/login', { ...values });
 
-    if (res.token) {
-      handleLogin(res.token);
-      const { payload: list } = await dispatch(getTodoListThunk({ today: true }));
-      dispatch(setTodoEntireModule({ list }));
+      if (res.token) {
+        handleLogin(res.token);
+        const { payload: list } = await dispatch(getTodoListThunk({ today: true }));
+        dispatch(setTodoEntireModule({ list }));
 
-      props.onLoginFinish(false);
-    } else {
-      // FIXME: 出错有问题需要看看 请求器逻辑
-      message.error('登陆失败');
+        props.onLoginFinish(false);
+      } else {
+        message.error('登陆失败');
+      }
+    } catch (err: any) {
+      message.error(`登陆失败: ${err.msg}`);
     }
   };
 
