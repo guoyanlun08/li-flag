@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import { Modal } from 'antd';
 
+import { LoginMode } from './constants';
+
 export const Styled_LoginModal = styled(Modal)`
   && {
     .ant-modal-header {
@@ -22,10 +24,10 @@ export const Styled_LoginModal = styled(Modal)`
   }
 `;
 
-export const Styled_LoginBox = styled.div<{ active: string; isLogin: boolean }>`
+export const Styled_LoginBox = styled.div<{ active: string }>`
   height: 300px;
   width: 100%;
-  display: ${(props) => (props.isLogin ? 'flex' : 'none')};
+  display: flex;
   justify-content: center;
   .pwd-login {
     height: 100%;
@@ -35,16 +37,15 @@ export const Styled_LoginBox = styled.div<{ active: string; isLogin: boolean }>`
     align-items: center;
     position: relative;
     transition: all 0.5s ease;
-    flex: ${(props) => (props.active == 'accountAndPhone' ? 3 : 1)};
+    flex: ${(props) => (props.active == LoginMode.ACCOUNT_AND_PHONE ? 3 : 1)};
     .pwd-login-unfold {
       width: 100%;
-      display: ${(props) => (props.active == 'accountAndPhone' ? 'block' : 'none')};
       transition: all 1s ease;
     }
     .pwd-login-fold {
       width: 100%;
       height: 100%;
-      display: ${(props) => (props.active == 'social' ? 'flex' : 'none')};
+      display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: space-evenly;
@@ -81,10 +82,10 @@ export const Styled_LoginBox = styled.div<{ active: string; isLogin: boolean }>`
   }
   .social-login {
     height: 100%;
-    flex: ${(props) => (props.active == 'social' ? 3 : 1)};
+    flex: ${(props) => (props.active == LoginMode.SOCIAL ? 3 : 1)};
     .social-login-unfold {
       height: 100%;
-      display: ${(props) => (props.active == 'social' ? 'flex' : 'none')};
+      display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
@@ -97,7 +98,7 @@ export const Styled_LoginBox = styled.div<{ active: string; isLogin: boolean }>`
     }
     .social-login-fold {
       height: 100%;
-      display: ${(props) => (props.active == 'social' ? 'none' : 'flex')};
+      display: flex;
       flex-direction: column;
       justify-content: space-evenly;
       align-items: center;
@@ -118,10 +119,10 @@ export const Styled_Agreement = styled.div`
   align-items: center;
   justify-content: center;
 `;
-export const Styled_Register = styled.div<{ isLogin: boolean }>`
+export const Styled_Register = styled.div`
   height: 300px;
   width: 100%;
-  display: ${(props) => (props.isLogin ? 'none' : 'flex')};
+  display: flex;
   justify-content: center;
   .user-register {
     flex: 1;
