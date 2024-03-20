@@ -3,7 +3,7 @@ import { message } from 'antd';
 
 import { getToken, removeToken } from '@/utils/localStorage';
 
-import { HttpCode, showMessage } from '@/constants/httpCode';
+import { HttpCode, HTTP_STATUS_TEXT } from '@/constants/httpCode';
 
 // 返回res.data的interface
 export interface IResponse {
@@ -12,67 +12,52 @@ export interface IResponse {
   msg: string;
 }
 
+// 请求api 函数签名
 type ReqFunction = (method: string, url: string, variables?: {}, options?: {}) => Promise<any>;
 
-const http: AxiosInstance = axios.create({
-  baseURL: process.env.REACT_APP_BASE_URL || 'http://localhost:3020/api',
-  headers: {
+// axios 默认配置项
+const defaults = {
+  baseURL: process.env.REACT_APP_BASE_URL || 'http://localhost:3000/api',
+  headers: () => ({
     Accept: 'application/json',
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    Authorization: getToken()
+  }),
+  error: {
+    code: 'INTERNAL_ERROR',
+    message: 'Something went wrong. Please check your internet connection or contact our support.',
+    status: HttpCode.SERVER_ERROR,
+    data: {}
   }
-});
+};
 
-// axios实例拦截响应
-http.interceptors.response.use(
-  (response: AxiosResponse) => {
-    if (response.status === HttpCode.SUCCESS) {
-      return response.data;
-    } else {
-      showMessage(response.status);
-      return response.data;
-    }
-  },
-  // 请求失败
-  (error: any) => {
-    const { response } = error;
-    if (response) {
-      // token 非法移除 token
-      response.status === HttpCode.FORBIDDEN && removeToken();
-      // 请求已发出，但是不在2xx的范围
-      showMessage(response.status);
-      return Promise.reject(response.data);
-    } else {
-      message.error('网络连接异常,请稍后再试!');
-    }
-  }
-);
-
-// axios实例拦截请求
-http.interceptors.request.use(
-  (config: InternalAxiosRequestConfig) => {
-    const token = getToken();
-    if (token) {
-      config.headers.Authorization = `${token}`;
-    }
-
-    return config;
-  },
-  (error: any) => {
-    return Promise.reject(error);
-  }
-);
-
+/** 请求api, 需要额外的 header 通过 options参数传递，再进行处理*/
 const api: ReqFunction = (method, url, variables, options) => {
   return new Promise((resolve, reject) => {
-    http({
-      url,
+    axios({
+      url: `${defaults.baseURL}${url}`,
       method,
+      headers: defaults.headers(),
       params: method === 'get' ? variables : undefined,
       data: method !== 'get' ? variables : undefined
-      // headers: options.header,
     }).then(
-      (data) => resolve(data),
-      (error) => reject(error)
+      (response) => {
+        resolve(response.data);
+      },
+      (error) => {
+        const { response } = error;
+        if (response) {
+          if (response.status === HttpCode.FORBIDDEN) {
+            removeToken();
+          } else {
+            // message.error(HTTP_STATUS_TEXT(response.status));
+            reject(response.data);
+          }
+        } else {
+          message.error(HTTP_STATUS_TEXT(HttpCode.SERVER_ERROR));
+          reject(defaults.error);
+        }
+      }
     );
   });
 };

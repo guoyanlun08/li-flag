@@ -11,7 +11,7 @@ export enum HttpCode {
 }
 
 /** http提示语 */
-export const showMessage = (status: number | string): string => {
+export const HTTP_STATUS_TEXT = (status: number | string): string => {
   let message: string = '';
   switch (status) {
     case HttpCode.SUCCESS:
@@ -35,5 +35,5 @@ export const showMessage = (status: number | string): string => {
     default:
       message = `连接出错(${status})!`;
   }
-  return `${message}，请检查网络或联系管理员！`;
+  return `${message}`;
 };

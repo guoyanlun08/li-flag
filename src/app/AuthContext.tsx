@@ -27,7 +27,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   // TODO: 先完善 httpRequest.ts 再看看 setLogin(false)应该什么时候执行
   useEffect(() => {
-    if (!getToken()) {
+    if (getToken()) {
+      setLogin(true);
+    } else {
       setLogin(false);
     }
   });

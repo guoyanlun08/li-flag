@@ -46,12 +46,9 @@ function EveryDay() {
     };
 
     if (isLogin) {
-      console.log('已登录数据回显');
       fetchTodoList();
-    } else {
-      console.log('未登录无调用');
     }
-  }, []);
+  }, [isLogin]);
 
   // 传递子元素 props
   const dailyProps = {

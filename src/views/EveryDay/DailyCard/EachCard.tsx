@@ -22,6 +22,7 @@ export function EachCard(props: PropsType) {
   const doubleAddItem = async (e: MouseEvent) => {
     if (!isLogin) {
       openLoginModal();
+      return;
     }
     const order = listData.length;
     await dispatch(addTodoItemThunk({ moduleId, order, type: 'tail' }));

@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import moment from 'moment';
 
 import api from '@/utils/httpRequest';
+import { AuthContext } from '@/app/AuthContext';
 import { TodoListItemType } from '@/types/todoType';
 
 import { Theme, Condition, CompletedList } from './comp';
@@ -32,13 +33,16 @@ const initRecentFormValue: RecentFormType = {
 
 /** 近期完成模块 */
 function RecentlyCompleted() {
+  const { isLogin } = useContext(AuthContext);
   const [completedList, setCompletedList] = useState<TodoListItemType[]>([]);
   const [isToday, setIsToday] = useState(false);
   const [recentForm, setRecentForm] = useState(initRecentFormValue);
 
   useEffect(() => {
-    fetchCompletedList();
-  }, []);
+    if (isLogin) {
+      fetchCompletedList();
+    }
+  }, [isLogin]);
 
   // 获取已完成 itemList ———— 时间、模块过滤
   const fetchCompletedList = async (changeValue?: Partial<RecentFormType>) => {
