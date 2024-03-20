@@ -1,13 +1,12 @@
 import React, { MouseEvent, useContext } from 'react';
-import { Styled_EachModuleContainer, Styled_Title, Styled_ListBox } from './Styles';
 import { Droppable } from 'react-beautiful-dnd';
 
-import { useAppDispatch } from '@/app/hooks';
-import { AuthContext } from '@/app/AuthContext';
-
+import { useAppDispatch, AuthContext } from '@/app/hooks';
 import { addTodoItemThunk } from '@/features/todo/dataAndMethods';
 import { TodoListItemType } from '@/types/todoType';
+
 import ListItemBox from '../ListItemBox';
+import { Styled_EachModuleContainer, Styled_Title, Styled_ListBox } from './Styles';
 
 interface PropsType {
   bgColor: string;

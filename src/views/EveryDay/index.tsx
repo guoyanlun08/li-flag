@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import qs from 'query-string';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { useContextMenu } from 'react-contexify';
 
 import { onBeforeDragStart, onDragEnd } from '@/views/EveryDay/common';
-import { useAppSelector, useAppDispatch } from '@/app/hooks';
-import { getToken } from '@/utils/localStorage';
+import { useAppSelector, useAppDispatch, AuthContext } from '@/app/hooks';
 import { getTodoListThunk, setTodoEntireModule } from '@/features/todo/todoSlice';
 
 import DailyCard from './DailyCard';
@@ -22,11 +21,12 @@ export const EveryDayContext = React.createContext<IEveryDayContext>({} as any);
 
 function EveryDay() {
   const { search } = useLocation();
-
+  const { isLogin } = useContext(AuthContext);
   const { eachModule, eachModuleOrder, selectedItem } = useAppSelector((state) => state.todo);
   const { id, moduleId } = selectedItem || {};
 
   const dispatch = useAppDispatch();
+  // item右键菜单
   const { show: showItemContextMenu } = useContextMenu({
     id: ITEM_MENU_ID,
     props: {
@@ -37,20 +37,19 @@ function EveryDay() {
 
   const [dragStatus, setDragStatus] = useState(false); // 当前拖拽状态
 
-  // todo: 应该需要抽离一个 hook
   useEffect(() => {
-    const fetchTodoListHadToken = async () => {
+    const fetchTodoList = async () => {
       const { payload: list } = await dispatch(getTodoListThunk({ today: true }));
       if (list) {
         dispatch(setTodoEntireModule({ list }));
       }
     };
 
-    if (getToken()) {
-      console.log('有token情况');
-      fetchTodoListHadToken();
+    if (isLogin) {
+      console.log('已登录数据回显');
+      fetchTodoList();
     } else {
-      console.log('无token情况');
+      console.log('未登录无调用');
     }
   }, []);
 

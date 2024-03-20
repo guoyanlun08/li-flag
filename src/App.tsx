@@ -1,10 +1,9 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Layout } from 'antd';
 
 import SiderMenu from '@/views/SiderMenu';
 import NavTools from '@/views/NavTools';
-import { AuthContext } from '@/app/AuthContext';
 
 const { Sider, Header, Content } = Layout;
 

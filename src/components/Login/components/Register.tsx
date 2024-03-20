@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, FormProps } from 'antd';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 
 import api from '@/utils/httpRequest';
@@ -9,15 +9,24 @@ import { OperationType } from '../constants';
 
 type PropsType = {
   switchOpType: (e: React.MouseEvent, type: OperationType) => void;
+  triggerLoginHandle: (values: { userId: string; password: string }) => void;
+};
+
+type registerFieldType = {
+  userId: string;
+  password: string;
+  repectPassword: string;
 };
 
 const Register = (props: PropsType) => {
-  const { switchOpType } = props;
+  const { switchOpType, triggerLoginHandle } = props;
 
-  const registerHandle = async (values: any) => {
-    const res = await api.post('/user/register', { ...values });
+  const registerHandle: FormProps<registerFieldType>['onFinish'] = async (values) => {
+    const { userId, password, repectPassword } = values;
+
+    const res = await api.post('/user/register', { userId, password, repectPassword });
     if (res && res.code === 0) {
-      console.log(res);
+      triggerLoginHandle({ userId, password });
     } else {
     }
   };

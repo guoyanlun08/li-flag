@@ -1,8 +1,7 @@
 import React, { useContext, useState } from 'react';
-import { ModalProps, FormProps } from 'antd';
+import { ModalProps, FormProps, message } from 'antd';
 
-import { AuthContext } from '@/app/AuthContext';
-import { useAppDispatch } from '@/app/hooks';
+import { useAppDispatch, AuthContext } from '@/app/hooks';
 import api from '@/utils/httpRequest';
 import { getTodoListThunk, setTodoEntireModule } from '@/features/todo/todoSlice';
 
@@ -32,7 +31,8 @@ export default function LoginModal(props: LoginProps) {
 
       props.onLoginFinish(false);
     } else {
-      // TODO: 登陆失败提示
+      // FIXME: 出错有问题需要看看 请求器逻辑
+      message.error('登陆失败');
     }
   };
 
@@ -58,7 +58,7 @@ export default function LoginModal(props: LoginProps) {
       footer={false}
       afterClose={afterDialogVisibleChange}>
       {opType === OperationType.REGISTER ? (
-        <Register switchOpType={swithLoginAndRegister} />
+        <Register switchOpType={swithLoginAndRegister} triggerLoginHandle={loginHandle} />
       ) : (
         <Login switchOpType={swithLoginAndRegister} loginHandle={loginHandle} />
       )}

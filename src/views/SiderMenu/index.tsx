@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { MenuOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 
-import { AuthContext } from '@/app/AuthContext';
+import { AuthContext } from '@/app/hooks';
 
 import IconFont from '@/components/iconFont';
 import { Styled_SiderMenuContainer, Styled_Header, Styled_MenuBox, Styled_Info, Styled_OptionsBar } from './Styles';
@@ -49,7 +49,7 @@ const menus: menuProps[] = [
 
 function SiderMenu(props: any) {
   const { getClose } = props;
-  const { openLoginModal } = useContext(AuthContext);
+  const { openLoginModal, isLogin } = useContext(AuthContext);
   const [colpased, setColpased] = useState(false);
   const triggle = (): void => {
     setColpased(!colpased);
@@ -57,7 +57,9 @@ function SiderMenu(props: any) {
   };
   const showLoginDialog = (e: any): void => {
     e.stopPropagation();
-    openLoginModal();
+    if (!isLogin) {
+      openLoginModal();
+    }
   };
 
   return (

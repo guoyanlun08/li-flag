@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { RouterProvider } from 'react-router-dom';
 
-import { AuthProvider } from '@/app/AuthContext';
+import { AuthProvider } from '@/app/hooks';
 import router from '@/routes';
 import store from '@/app/store';
 
