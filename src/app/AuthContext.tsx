@@ -1,6 +1,8 @@
 // 登录上下文
 import React, { ReactNode, createContext, useEffect, useState } from 'react';
 
+import { useAppDispatch } from './hooks';
+import { setUserInfo } from '@/features/user/userSlice';
 import { getToken, setToken } from '@/utils/localStorage';
 
 import LoginModal from '@/components/Login';
@@ -22,6 +24,7 @@ export const AuthContext = createContext<AuthContextType>({
 });
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
+  const dispatch = useAppDispatch();
   const [isLogin, setLogin] = useState(false);
   const [loginVisible, setLoginVisible] = useState(false);
 
@@ -29,6 +32,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     if (getToken()) {
       setLogin(true);
+      // TODO: 应该获取个人信息接口？？？
+      // dispatch()
     } else {
       setLogin(false);
     }

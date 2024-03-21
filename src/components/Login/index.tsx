@@ -4,6 +4,7 @@ import { ModalProps, FormProps, message } from 'antd';
 import { useAppDispatch, AuthContext } from '@/app/hooks';
 import api from '@/utils/httpRequest';
 import { getTodoListThunk, setTodoEntireModule } from '@/features/todo/todoSlice';
+import { setUserInfo } from '@/features/user/userSlice';
 
 import { Agreement, Register, Login } from './components';
 import { Styled_LoginModal } from './Styles';
@@ -26,6 +27,8 @@ export default function LoginModal(props: LoginProps) {
 
       if (res.token) {
         handleLogin(res.token);
+        dispatch(setUserInfo({ userInfo: res.userInfo }));
+
         const { payload: list } = await dispatch(getTodoListThunk({ today: true }));
         dispatch(setTodoEntireModule({ list }));
 
@@ -45,7 +48,7 @@ export default function LoginModal(props: LoginProps) {
   };
 
   /** 注册登录态转化 */
-  const swithLoginAndRegister = (e: React.MouseEvent, type: OperationType): void => {
+  const switchLoginAndRegister = (e: React.MouseEvent, type: OperationType): void => {
     e.preventDefault();
     setOpType(type);
   };
@@ -60,9 +63,9 @@ export default function LoginModal(props: LoginProps) {
       footer={false}
       afterClose={afterDialogVisibleChange}>
       {opType === OperationType.REGISTER ? (
-        <Register switchOpType={swithLoginAndRegister} triggerLoginHandle={loginHandle} />
+        <Register switchOpType={switchLoginAndRegister} triggerLoginHandle={loginHandle} />
       ) : (
-        <Login switchOpType={swithLoginAndRegister} loginHandle={loginHandle} />
+        <Login switchOpType={switchLoginAndRegister} loginHandle={loginHandle} />
       )}
       <Agreement />
     </Styled_LoginModal>
