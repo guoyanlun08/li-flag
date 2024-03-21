@@ -42,6 +42,13 @@ export const todoSlice = createSlice({
 
       state.eachModule[moduleId].listData = list;
     },
+    // 修改 item值时触发
+    setItemTodoValue: (state, action: PayloadAction<{ id: number; moduleId: string; todoValue: string }>) => {
+      const { id, moduleId, todoValue } = action.payload;
+
+      const modifyItem: TodoListItemType = state.eachModule[moduleId].listData.find((item) => item.id === id)!;
+      modifyItem.todoValue = todoValue;
+    },
     // 同一个模块中 Item 拖拽
     sameModuleItemDrag: (state, action: PayloadAction<{ moduleId: string; listData: TodoListItemType[] }>) => {
       const { moduleId, listData } = action.payload;
@@ -82,6 +89,7 @@ export const todoSlice = createSlice({
 export const {
   setTodoEntireModule,
   setTodoModule,
+  setItemTodoValue,
   sameModuleItemDrag,
   differentModuleItemDrag,
   addTodoItem,
