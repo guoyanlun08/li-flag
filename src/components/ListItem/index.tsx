@@ -34,20 +34,24 @@ export function ListItem(props: PropsType) {
 
   const isSelected = todoState.selectedItem?.id === id;
 
+  /** 选中 item 触发 */
   const selectItemFn = () => {
     dispatch(setSelectedItem({ todoItem }));
   };
 
+  /** 鼠标移入 hover */
   const mouseEnterItemFn = () => {
     if (context.dragStatus) return;
     setIsHover(true);
   };
 
+  /** 鼠标移出 取消hover */
   const mouseLeaveItemFn = () => {
     if (context.dragStatus) return;
     setIsHover(false);
   };
 
+  /** todoValue 显示于界面文本转化 */
   const todoValueFormat = (value: string) => {
     return JSON.parse(value)[0].children[0].text;
   };
@@ -70,8 +74,7 @@ export function ListItem(props: PropsType) {
           }
         }}
       />
-      <Styled_ItemContent selected={isSelected}>
-        {/* todo: 展示 value的 text需要处理 */}
+      <Styled_ItemContent completed={completed} selected={isSelected}>
         {editable ? <EditNode todoValue={todoValue} selected={isSelected} /> : <div>{todoValueFormat(todoValue)}</div>}
       </Styled_ItemContent>
     </Styled_Item>

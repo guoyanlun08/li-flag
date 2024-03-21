@@ -18,14 +18,24 @@ export const Styled_Item = styled.div<{ selected: boolean }>`
   .ant-checkbox {
     top: 0;
   }
+  .ant-checkbox-disabled {
+    background: rgb(204, 204, 204);
+    .ant-checkbox-inner {
+      border-color: rgb(204, 204, 204);
+    }
+    .ant-checkbox-inner:after {
+      border-color: rgba(255, 255, 255, 0.6);
+    }
+  }
 `;
-export const Styled_ItemContent = styled.div<{ selected: boolean }>`
+export const Styled_ItemContent = styled.div<{ selected: boolean; completed: number }>`
   border-bottom: ${(props) => (props.selected ? '1px solid transparent' : '1px solid rgba(255, 255, 255, 0.2)')};
   padding-left: 8px;
   width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
+  color: ${(props) => (props.completed ? 'rgb(255, 255, 255, 0.6)' : 'rgba(0, 0, 0)')};
 `;
 
 export const Styled_EditNode = styled.div`

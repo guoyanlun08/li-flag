@@ -79,7 +79,7 @@ export const Styled_ThemeBox = styled.div`
 `;
 
 export const Styled_ThemeTitle = styled.div<{ isToday: boolean }>`
-  background: rgb(255, 228, 78);
+  background: rgb(76, 60, 99);
   color: rgb(251, 248, 236);
   display: flex;
   justify-content: center;
@@ -93,7 +93,7 @@ export const Styled_ThemeIcon = styled.div`
 `;
 
 export const Styled_ThemeToday = styled.div<{ isToday: boolean }>`
-  background: rgb(183, 221, 208);
+  background: rgb(76, 60, 99);
   color: rgb(244, 243, 241);
   display: flex;
   justify-content: center;
@@ -109,7 +109,7 @@ const fadeOutTransition = css<{}>`
 `;
 /** ConditionBox */
 export const Styled_Condition = styled.div<{ isToday: boolean }>`
-  background: rgba(200, 200, 255, 0.8);
+  background: rgb(239, 229, 220);
   border-radius: 20px;
   padding-left: 20px;
   display: flex;
@@ -124,7 +124,7 @@ export const Styled_Condition = styled.div<{ isToday: boolean }>`
 
 /** ListBox */
 export const Styled_CompletedList = styled.div`
-  background: rgba(100, 200, 200, 0.8);
+  background: rgb(218, 189, 173);
   flex: 1;
   border-radius: 10px;
 `;
