@@ -189,7 +189,7 @@ export const addTodoItemThunk = createAsyncThunk<any, { moduleId: string; order:
 // 异步：更新 todoItem的数据
 export const updateTodoItemThunk = createAsyncThunk<any, { id: number; completed?: number; todoValue?: string }>(
   'todo/updateTodoItem',
-  async (payload, { dispatch }) => {
+  async (payload) => {
     try {
       const { id, todoValue, completed } = payload;
 

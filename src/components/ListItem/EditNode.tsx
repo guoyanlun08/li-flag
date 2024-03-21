@@ -4,7 +4,7 @@ import { Slate, Editable, withReact } from 'slate-react'; // 导入 Slate 组件
 
 import { useDebounce } from '@/hooks/efficientHooks';
 import { useAppSelector, useAppDispatch } from '@/app/hooks';
-import { updateTodoItemThunk } from '@/features/todo/todoSlice';
+import { setItemTodoValue, updateTodoItemThunk } from '@/features/todo/todoSlice';
 
 import { Toolbar } from './slate/Toolbar';
 import { DefaultElement } from './slate/DefaultElement';
@@ -17,6 +17,7 @@ interface PropsType {
 
 export function EditNode(props: PropsType) {
   const { todoValue } = props;
+
   const styleEditable = {
     height: '100%',
     width: '100%',
@@ -74,7 +75,13 @@ export function EditNode(props: PropsType) {
 
   // 实际 触发 slate text的保存文本变化
   const realTextChange = async (todoValue: string) => {
-    await dispatch(updateTodoItemThunk({ id: todoState.selectedItem!.id, todoValue }));
+    if (todoState.selectedItem) {
+      const { id, moduleId } = todoState.selectedItem;
+      const { payload: resp } = await dispatch(updateTodoItemThunk({ id, todoValue }));
+      if (resp) {
+        dispatch(setItemTodoValue({ id, moduleId, todoValue }));
+      }
+    }
   };
 
   return (
