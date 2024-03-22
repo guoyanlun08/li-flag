@@ -39,7 +39,7 @@ function App() {
           <Outlet />
         </Content>
       </Layout>
-      {/* <PersonalSettingsModal /> */}
+      <PersonalSettingsModal />
     </Layout>
   );
 }
