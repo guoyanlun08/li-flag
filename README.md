@@ -124,3 +124,4 @@ Redux Toolkit 是编写 Redux 逻辑的推荐方式
 | 调研前端有没有全局捕获错误的方法                                                                                            | allen    | allen          |
 | 右键菜单新增                                                                                                                | allen    | superB         |
 | 登录注册表单应有前端前置校验                                                                                                | allen    | superB         |
+| 个人信息页                                                                                                                  | allen    | allen          |
