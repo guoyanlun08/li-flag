@@ -1,15 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { UserStateType } from './type';
-
-const initialState: UserStateType = {
-  userId: 'FlagUser',
-  nickName: 'FlagUser',
-  updateTime: new Date(),
-  lastOnlineTime: new Date(),
-  createTime: new Date(),
-  avatarPath: ''
-};
+import { initialState } from './dataAndMethods';
 
 export const userSlice = createSlice({
   name: 'user',
@@ -19,11 +11,14 @@ export const userSlice = createSlice({
     setUserInfo: (state, action: PayloadAction<{ userInfo: UserStateType }>) => {
       const { userInfo } = action.payload;
 
-      state = userInfo;
+      return userInfo;
     }
   }
 });
 
 export const { setUserInfo } = userSlice.actions;
+
+// user: 异步动作
+export { getUserInfoThunk } from './dataAndMethods';
 
 export default userSlice.reducer;

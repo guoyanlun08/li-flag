@@ -3,14 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '@/app/store';
 import { TodoListItemType } from '@/types/todoType';
 
-import {
-  initialState,
-  getTodoListThunk,
-  addTodoItemThunk,
-  updateTodoItemThunk,
-  deleteTodoItemThunk,
-  updateTodoOrderAfterDragThunk
-} from './dataAndMethods';
+import { initialState } from './dataAndMethods';
 
 export const todoSlice = createSlice({
   name: 'todo',
@@ -98,7 +91,13 @@ export const {
 } = todoSlice.actions;
 
 // 导出 异步动作
-export { getTodoListThunk, addTodoItemThunk, updateTodoItemThunk, deleteTodoItemThunk, updateTodoOrderAfterDragThunk };
+export {
+  getTodoListThunk,
+  addTodoItemThunk,
+  updateTodoItemThunk,
+  deleteTodoItemThunk,
+  updateTodoOrderAfterDragThunk
+} from './dataAndMethods';
 
 // 导出 todo 的 state值, 用 useAppSelector 也行
 export const selectTodo = (state: RootState) => state.todo;

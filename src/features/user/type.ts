@@ -1,8 +1,8 @@
 export type UserStateType = {
   userId: string;
   nickName: string;
-  updateTime: Date;
-  lastOnlineTime: Date;
-  createTime: Date;
+  updateTime: number;
+  lastOnlineTime: number;
+  createTime: number;
   avatarPath: string;
 };

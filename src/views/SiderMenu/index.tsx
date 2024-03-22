@@ -54,10 +54,10 @@ function SiderMenu(props: any) {
   console.log(userState);
 
   const { openLoginModal, isLogin } = useContext(AuthContext);
-  const [colpased, setColpased] = useState(false);
-  const triggle = (): void => {
-    setColpased(!colpased);
-    getClose(colpased);
+  const [collapsed, setCollapsed] = useState(false);
+  const trigger = (): void => {
+    setCollapsed(!collapsed);
+    getClose(collapsed);
   };
   const showLoginDialog = (e: any): void => {
     e.stopPropagation();
@@ -67,24 +67,24 @@ function SiderMenu(props: any) {
   };
 
   return (
-    <Styled_SiderMenuContainer onClick={triggle}>
-      <Styled_Header fold={colpased}>
+    <Styled_SiderMenuContainer onClick={trigger}>
+      <Styled_Header fold={collapsed}>
         <span>Li-FLAG</span>
       </Styled_Header>
       <Styled_MenuBox>
-        <Styled_Info fold={colpased}>
+        <Styled_Info fold={collapsed}>
           <div className="info-avatar" onClick={(e) => showLoginDialog(e)}>
             <img src={require('../../assets/imgs/1_user5.png')} alt="" />
           </div>
           <div className="info-name">FlagUser</div>
         </Styled_Info>
-        <Styled_OptionsBar fold={colpased}>
+        <Styled_OptionsBar fold={collapsed}>
           {menus.map((menu) => {
             return <OptionItem key={menu.title} icon={menu.icon} title={menu.title} path={menu.path} />;
           })}
         </Styled_OptionsBar>
       </Styled_MenuBox>
-      <div className="side-footer">{colpased ? <MenuOutlined /> : <MenuOutlined rotate={90} />}</div>
+      <div className="side-footer">{collapsed ? <MenuOutlined /> : <MenuOutlined rotate={90} />}</div>
     </Styled_SiderMenuContainer>
   );
 }

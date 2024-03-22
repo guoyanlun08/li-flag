@@ -2,7 +2,7 @@
 import React, { ReactNode, createContext, useEffect, useState } from 'react';
 
 import { useAppDispatch } from './hooks';
-import { setUserInfo } from '@/features/user/userSlice';
+import { setUserInfo, getUserInfoThunk } from '@/features/user/userSlice';
 import { getToken, setToken } from '@/utils/localStorage';
 
 import LoginModal from '@/components/Login';
@@ -28,16 +28,19 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isLogin, setLogin] = useState(false);
   const [loginVisible, setLoginVisible] = useState(false);
 
-  // TODO: 先完善 httpRequest.ts 再看看 setLogin(false)应该什么时候执行
+  // XXX: 目前自行清除 localStorage 无法改变 isLogin 状态
   useEffect(() => {
-    if (getToken()) {
+    const loginInitInfo = async () => {
       setLogin(true);
-      // TODO: 应该获取个人信息接口？？？
-      // dispatch()
+      await dispatch(getUserInfoThunk());
+    };
+
+    if (getToken()) {
+      loginInitInfo();
     } else {
       setLogin(false);
     }
-  });
+  }, [isLogin]);
 
   /** 打开登录弹窗 */
   const openLoginModal = () => {
