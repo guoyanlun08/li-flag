@@ -5,7 +5,6 @@ import moment from 'moment';
 
 import SiderMenu from '@/views/SiderMenu';
 import NavTools from '@/views/NavTools';
-import PersonalSettingsModal from './views/PersonalSettingsModal';
 
 const { Sider, Header, Content } = Layout;
 
@@ -39,7 +38,6 @@ function App() {
           <Outlet />
         </Content>
       </Layout>
-      <PersonalSettingsModal />
     </Layout>
   );
 }

@@ -1,36 +1,93 @@
-import React, { useState } from 'react';
-import { Modal, Upload } from 'antd';
-import type { UploadFile } from 'antd';
-import { PlusOutlined } from '@ant-design/icons'; // 临时用
+import React, { useEffect, useState } from 'react';
+import { Modal, Form, Input, Button, FormProps } from 'antd';
 
-import { Styled_ModalBody } from './Styles';
+import { useAppSelector, useAppDispatch } from '@/app/hooks';
+import { updateUserInfoThunk } from '@/features/user/userSlice';
 
-const PersonalSettingsModal = () => {
-  const [open, setOpen] = useState(false);
-  const [fileList, setFileList] = useState<UploadFile[]>([
-    {
-      uid: '-1',
-      name: 'image.png',
-      status: 'done',
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
-    }
-  ]);
+import AvatarUpload from './AvatarUpload';
+import { Styled_ModalBody, Styled_EditZone } from './Styles';
+
+type PersonalSettingsProps = {
+  visible: boolean;
+  setOpen: (visible: boolean) => void;
+};
+
+type personalSettingsFieldType = {
+  avatarPath: string;
+  userId: string;
+  nickName: string;
+};
+
+const PersonalSettingsModal = (props: PersonalSettingsProps) => {
+  const { visible, setOpen } = props;
+
+  const userState = useAppSelector((store) => store.user);
+  const dispatch = useAppDispatch();
+
+  const { avatarPath, userId, nickName, lastOnlineTime } = userState;
+  const [editStatus, setEditStatus] = useState(false);
+  const [form] = Form.useForm();
+
+  useEffect(() => {
+    form.setFieldsValue({
+      avatarPath,
+      userId,
+      nickName
+    });
+  });
+
+  // 表单完成触发
+  const onFinish: FormProps<personalSettingsFieldType>['onFinish'] = async (values) => {
+    console.log('onFinish====', values);
+    await dispatch(updateUserInfoThunk({ userId: values.userId }));
+
+    setEditStatus(false);
+  };
+
   return (
-    <Modal className="wowoowowo" title="个人中心" open={true} onOk={() => setOpen(false)} onCancel={() => setOpen(false)} width={1000}>
+    <Modal
+      title="个人中心"
+      open={visible}
+      okText="确认修改"
+      cancelText="取消"
+      width={600}
+      styles={{ footer: { display: editStatus ? 'block' : 'none' } }}
+      onOk={() => form.submit()}
+      onCancel={() => setOpen(false)}>
       <Styled_ModalBody>
-        <Upload
-          // action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
-          listType="picture-card"
-          fileList={fileList}
-          // onPreview={handlePreview}
-          // onChange={handleChange}
-          showUploadList={false}
-          maxCount={1}>
-          <button style={{ border: 0, background: 'none' }} type="button">
-            <PlusOutlined />
-            <div style={{ marginTop: 8 }}>Upload</div>
-          </button>
-        </Upload>
+        <Form
+          labelCol={{ span: 8 }}
+          wrapperCol={{ span: 14 }}
+          layout="horizontal"
+          form={form}
+          name="personal-setting-form"
+          onFinish={onFinish}
+          style={{ width: 400, maxWidth: 800 }}>
+          <Form.Item style={{ display: 'flex', justifyContent: 'center' }} name="avatarPath">
+            <AvatarUpload />
+          </Form.Item>
+          <Styled_EditZone>
+            <Button size="small" type="primary" onClick={() => setEditStatus(!editStatus)}>
+              编 辑
+            </Button>
+          </Styled_EditZone>
+          <Form.Item name="userId" label="userId">
+            <Input disabled />
+          </Form.Item>
+          {/* 用小弹窗来呈现          
+          <Form.Item name="password" label="密码">
+            <Input disabled />
+          </Form.Item>
+          <Form.Item name="repeatPassword" label="确认密码">
+            <Input disabled />
+          </Form.Item> */}
+          <Form.Item name="nickName" label="昵称" rules={[{ required: true }]}>
+            {editStatus ? <Input spellCheck={false} /> : <div>{nickName}</div>}
+          </Form.Item>
+          <Form.Item label="上次登录时间">
+            <div>{lastOnlineTime}</div>
+          </Form.Item>
+        </Form>
       </Styled_ModalBody>
     </Modal>
   );

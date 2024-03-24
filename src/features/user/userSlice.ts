@@ -19,6 +19,6 @@ export const userSlice = createSlice({
 export const { setUserInfo } = userSlice.actions;
 
 // user: 异步动作
-export { getUserInfoThunk } from './dataAndMethods';
+export { getUserInfoThunk, updateUserInfoThunk } from './dataAndMethods';
 
 export default userSlice.reducer;

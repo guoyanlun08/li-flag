@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { AuthContext, useAppSelector } from '@/app/hooks';
 
+import PersonalSettingsModal from '@/views/PersonalSettingsModal';
 import IconFont from '@/components/iconFont';
 import { Styled_SiderMenuContainer, Styled_Header, Styled_MenuBox, Styled_Info, Styled_OptionsBar } from './Styles';
 
@@ -51,41 +52,56 @@ function SiderMenu(props: any) {
   const { getClose } = props;
 
   const userState = useAppSelector((store) => store.user);
-  console.log(userState);
 
   const { openLoginModal, isLogin } = useContext(AuthContext);
+
+  const [personalSettingsVisible, setPersonalSettingsVisible] = useState(false); // 个人设置弹窗 visible
   const [collapsed, setCollapsed] = useState(false);
-  const trigger = (): void => {
+
+  // 点击 siderMenu 触发
+  const handleClickSiderMenu = (): void => {
     setCollapsed(!collapsed);
     getClose(collapsed);
   };
-  const showLoginDialog = (e: any): void => {
+
+  // 个人设置弹窗 visible 的控制
+  const triggerPersonalSettingsModal = (visible: boolean) => {
+    setPersonalSettingsVisible(visible);
+  };
+
+  // 点击 头像触发。未登录，弹出登录框；已登录，弹出个人设置框；
+  const handleClickAvatar = (e: any): void => {
     e.stopPropagation();
     if (!isLogin) {
       openLoginModal();
+    } else {
+      triggerPersonalSettingsModal(true);
     }
   };
 
   return (
-    <Styled_SiderMenuContainer onClick={trigger}>
-      <Styled_Header fold={collapsed}>
-        <span>Li-FLAG</span>
-      </Styled_Header>
-      <Styled_MenuBox>
-        <Styled_Info fold={collapsed}>
-          <div className="info-avatar" onClick={(e) => showLoginDialog(e)}>
-            <img src={require('../../assets/imgs/1_user5.png')} alt="" />
-          </div>
-          <div className="info-name">FlagUser</div>
-        </Styled_Info>
-        <Styled_OptionsBar fold={collapsed}>
-          {menus.map((menu) => {
-            return <OptionItem key={menu.title} icon={menu.icon} title={menu.title} path={menu.path} />;
-          })}
-        </Styled_OptionsBar>
-      </Styled_MenuBox>
-      <div className="side-footer">{collapsed ? <MenuOutlined /> : <MenuOutlined rotate={90} />}</div>
-    </Styled_SiderMenuContainer>
+    <>
+      <Styled_SiderMenuContainer onClick={handleClickSiderMenu}>
+        <Styled_Header fold={collapsed}>
+          <span>Li-FLAG</span>
+        </Styled_Header>
+        <Styled_MenuBox>
+          <Styled_Info fold={collapsed}>
+            <div className="info-avatar" onClick={(e) => handleClickAvatar(e)}>
+              <img src={require('../../assets/imgs/1_user5.png')} alt="" />
+            </div>
+            <div className="info-name">{userState.nickName}</div>
+          </Styled_Info>
+          <Styled_OptionsBar fold={collapsed}>
+            {menus.map((menu) => {
+              return <OptionItem key={menu.title} icon={menu.icon} title={menu.title} path={menu.path} />;
+            })}
+          </Styled_OptionsBar>
+        </Styled_MenuBox>
+        <div className="side-footer">{collapsed ? <MenuOutlined /> : <MenuOutlined rotate={90} />}</div>
+      </Styled_SiderMenuContainer>
+      <PersonalSettingsModal visible={personalSettingsVisible} setOpen={triggerPersonalSettingsModal} />
+    </>
   );
 }
 
