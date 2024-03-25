@@ -112,9 +112,9 @@ Redux Toolkit 是编写 Redux 逻辑的推荐方式
 | ~~bug: 右键菜单需要已组件形式引入，且应是整个【每日模块】用一个右键菜单组件，不然导致多点右键，上一个渲染还在.~~            | allen    | HB             |
 | ~~list 的 order 从 0 开始~~                                                                                                 | allen    | allen          |
 | ~~router 引入~~                                                                                                             | allen    | allen          |
-| bug: 长文字输入 item 被换行，效果应该像 input 一样                                                                          |          | ???            |
+| ~~bug: 长文字输入 item 被换行，效果应该像 input 一样~~                                                                      |          | ???            |
 | ~~feat: ListItem 中的 checkbox disabled 样式调整~~                                                                          | allen    | ???            |
-| todoItem 增删改查测试(测试先清 TodoItem 库) ！！！！                                                                        |          | allen, HB      |
+| ~~todoItem 增删改查测试(测试先清 TodoItem 库) ！！！！~~                                                                    |          | allen, HB      |
 | feat: 每日模块的标题，背景颜色支持自定义                                                                                    | superBoy | ???            |
 | ~~12 点固定刷新每日模块~~                                                                                                   | allen    | allen          |
 | ~~navTools 激活状态样式~~                                                                                                   | allen    | allen          |
@@ -124,4 +124,4 @@ Redux Toolkit 是编写 Redux 逻辑的推荐方式
 | 调研前端有没有全局捕获错误的方法                                                                                            | allen    | allen          |
 | 右键菜单新增                                                                                                                | allen    | superB         |
 | 登录注册表单应有前端前置校验                                                                                                | allen    | superB         |
-| 个人信息页                                                                                                                  | allen    | allen          |
+| ~~个人信息页~~                                                                                                              | allen    | allen          |
