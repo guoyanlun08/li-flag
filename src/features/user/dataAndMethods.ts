@@ -26,17 +26,20 @@ export const getUserInfoThunk = createAsyncThunk<any>('user/getUserInfo', async 
   }
 });
 
-// 异步：更新用户信息
-export const updateUserInfoThunk = createAsyncThunk<
-  any,
-  // 这个类型 抽出来
-  { userId: string; password?: string; repeatPassword?: string; avatarPath?: string; nickName?: string }
->('user/updateUserInfo', async (payload, { dispatch }) => {
-  try {
-    const resp = await api.put('/user/updateUserInfo');
+// 异步：更新用户信息 (未处理密码部分)
+export const updateUserInfoThunk = createAsyncThunk<any, UserStateType & { password?: string; repeatPassword?: string }>(
+  'user/updateUserInfo',
+  async (payload, { dispatch }) => {
+    try {
+      const resp = await api.put('/user/updateUserInfo', payload);
 
-    console.log('updateUserInfoThunk==', resp);
-  } catch (e) {
-    console.error(`获取失败:: updateUserInfoThunk :: ${e}`);
+      if (resp?.code) {
+        throw new Error('更新有误');
+      }
+
+      dispatch(setUserInfo({ userInfo: payload }));
+    } catch (e) {
+      console.error(`更新失败:: updateUserInfoThunk :: ${e}`);
+    }
   }
-});
+);

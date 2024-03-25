@@ -38,8 +38,7 @@ const PersonalSettingsModal = (props: PersonalSettingsProps) => {
 
   // 表单完成触发
   const onFinish: FormProps<personalSettingsFieldType>['onFinish'] = async (values) => {
-    console.log('onFinish====', values);
-    await dispatch(updateUserInfoThunk({ userId: values.userId }));
+    await dispatch(updateUserInfoThunk(values));
 
     setEditStatus(false);
   };
@@ -50,8 +49,9 @@ const PersonalSettingsModal = (props: PersonalSettingsProps) => {
       open={visible}
       okText="确认修改"
       cancelText="取消"
-      width={600}
+      width={700}
       styles={{ footer: { display: editStatus ? 'block' : 'none' } }}
+      forceRender // modal中使用 useForm 需要加这个属性。modal 未渲染，antd 不知道 form 绑定在哪
       onOk={() => form.submit()}
       onCancel={() => setOpen(false)}>
       <Styled_ModalBody>
