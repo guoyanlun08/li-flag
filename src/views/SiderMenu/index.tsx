@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { MenuOutlined } from '@ant-design/icons';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import { AuthContext, useAppSelector } from '@/app/hooks';
 
@@ -12,6 +12,7 @@ type menuProps = {
   title: string;
   icon: string;
   path: string;
+  active?: boolean;
 };
 
 function OptionItem(props: menuProps) {
@@ -19,6 +20,7 @@ function OptionItem(props: menuProps) {
 
   return (
     <div
+      className={props.active === true ? 'active' : ''}
       onClick={(e) => {
         e.stopPropagation();
         navigate(`${props.path}`);
@@ -57,6 +59,7 @@ function SiderMenu(props: any) {
 
   const [personalSettingsVisible, setPersonalSettingsVisible] = useState(false); // 个人设置弹窗 visible
   const [collapsed, setCollapsed] = useState(false);
+  const { pathname, search } = useLocation();
 
   // 点击 siderMenu 触发
   const handleClickSiderMenu = (): void => {
@@ -94,7 +97,15 @@ function SiderMenu(props: any) {
           </Styled_Info>
           <Styled_OptionsBar fold={collapsed}>
             {menus.map((menu) => {
-              return <OptionItem key={menu.title} icon={menu.icon} title={menu.title} path={menu.path} />;
+              return (
+                <OptionItem
+                  key={menu.title}
+                  active={`${pathname}${search}` === menu.path}
+                  icon={menu.icon}
+                  title={menu.title}
+                  path={menu.path}
+                />
+              );
             })}
           </Styled_OptionsBar>
         </Styled_MenuBox>

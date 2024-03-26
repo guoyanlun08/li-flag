@@ -82,7 +82,8 @@ export const Styled_OptionsBar = styled.div<{ fold: boolean }>`
     display: flex;
     justify-content: center;
     align-items: center;
-    &:hover {
+    &:hover,
+    &.active {
       border-left: 2px solid ${mainColor.activeTab};
       color: ${mainColor.activeTab};
       font-weight: bold;
