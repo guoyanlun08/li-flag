@@ -1,6 +1,9 @@
 import React from 'react';
 import { Form, Modal, Input, FormProps } from 'antd';
 
+import { useAppDispatch } from '@/app/hooks';
+import { updateUserInfoThunk } from '@/features/user/userSlice';
+
 type ModifyPasswordProps = {
   userId: string;
   visible: boolean;
@@ -15,12 +18,13 @@ type modifyPasswordFieldType = {
 const ModifyPasswordModal = (props: ModifyPasswordProps) => {
   const { userId, visible, setOpen } = props;
 
+  const dispatch = useAppDispatch();
+
   const [form] = Form.useForm();
 
-  const onFinish: FormProps<modifyPasswordFieldType>['onFinish'] = (values) => {
-    console.log(values);
-    console.log(userId);
-    // 修改密码后台接口没写
+  const onFinish: FormProps<modifyPasswordFieldType>['onFinish'] = async (values) => {
+    await dispatch(updateUserInfoThunk({ userId, ...values }));
+    setOpen(false);
   };
 
   return (
