@@ -31,8 +31,6 @@ export const Styled_textNode = styled.p`
   padding-right: 15px;
   overflow-y: hidden;
   overflow-x: auto;
-  display: flex;
-  align-items: center;
   &::-webkit-scrollbar {
     display: none;
   }

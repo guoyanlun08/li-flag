@@ -22,7 +22,7 @@ export function EditNode(props: PropsType) {
     height: '100%',
     width: '100%',
     display: 'flex',
-    alignItems: 'stretch',
+    alignItems: 'center',
     border: 'none',
     outline: 'none'
   };
