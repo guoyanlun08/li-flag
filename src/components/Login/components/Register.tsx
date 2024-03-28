@@ -3,6 +3,7 @@ import { Form, Input, Button, FormProps, message } from 'antd';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 
 import api from '@/utils/httpRequest';
+import { passwordRules, confirmPasswordRules } from '@/utils/formRules';
 
 import { Styled_Register } from '../Styles';
 import { OperationType } from '../constants';
@@ -37,13 +38,13 @@ const Register = (props: PropsType) => {
     <Styled_Register>
       <div className="user-register">
         <Form name="normal_register" className="register-form" onFinish={registerHandle}>
-          <Form.Item name="userId" rules={[{ required: true, message: '请输入用户名!' }]}>
+          <Form.Item name="userId" hasFeedback rules={[{ required: true, message: '请输入用户名!' }]}>
             <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
           </Form.Item>
-          <Form.Item name="password" rules={[{ required: true, message: '请输入密码!' }]}>
+          <Form.Item name="password" hasFeedback rules={passwordRules}>
             <Input.Password prefix={<LockOutlined className="site-form-item-icon" />} type="password" placeholder="Password" />
           </Form.Item>
-          <Form.Item name="repeatPassword" rules={[{ required: true, message: '请输入确认密码!' }]}>
+          <Form.Item name="repeatPassword" hasFeedback rules={confirmPasswordRules}>
             <Input.Password prefix={<LockOutlined className="site-form-item-icon" />} type="password" placeholder="repeatPassword" />
           </Form.Item>
           <Form.Item>

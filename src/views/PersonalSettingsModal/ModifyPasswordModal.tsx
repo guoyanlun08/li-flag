@@ -3,6 +3,7 @@ import { Form, Modal, Input, FormProps } from 'antd';
 
 import { useAppDispatch } from '@/app/hooks';
 import { updateUserInfoThunk } from '@/features/user/userSlice';
+import { passwordRules, confirmPasswordRules } from '@/utils/formRules';
 
 type ModifyPasswordProps = {
   userId: string;
@@ -37,10 +38,10 @@ const ModifyPasswordModal = (props: ModifyPasswordProps) => {
         form={form}
         onFinish={onFinish}
         autoComplete="off">
-        <Form.Item label="密码" name="password" rules={[{ required: true, message: '请输入密码！' }]}>
+        <Form.Item label="密码" name="password" rules={passwordRules}>
           <Input.Password placeholder="input password" />
         </Form.Item>
-        <Form.Item label="重复密码" name="repeatPassword" rules={[{ required: true, message: '请输入重复密码！' }]}>
+        <Form.Item label="重复密码" name="repeatPassword" rules={confirmPasswordRules}>
           <Input.Password placeholder="input password" />
         </Form.Item>
       </Form>
