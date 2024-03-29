@@ -20,7 +20,6 @@ export function EditNode(props: PropsType) {
 
   const styleEditable = {
     height: '100%',
-    width: '100%',
     display: 'flex',
     alignItems: 'center',
     border: 'none',
@@ -35,7 +34,7 @@ export function EditNode(props: PropsType) {
   const [editor] = useState(() => withReact(createEditor()));
   const [toolbarTop, setToolbarTop] = useState(0);
   const [toolbarLeft, setToolbarLeft] = useState(0);
-  const [visiable, setVisable] = useState(false); // todo: visiable 确认写进 toolbar? 还是父组件上?
+  const [visible, setVisible] = useState(false); // todo: visible 确认写进 toolbar? 还是父组件上?
 
   const renderElement = useCallback((props: any) => {
     switch (props.element.type) {
@@ -60,7 +59,7 @@ export function EditNode(props: PropsType) {
       const rangeRect = range.getBoundingClientRect();
       const offsetX = rangeRect.width / 2;
 
-      setVisable(true);
+      setVisible(true);
       setToolbarTop(rangeRect.top);
       // 向左拖拽选中
       if (selection.anchorOffset > selection.focusOffset) {
@@ -69,7 +68,7 @@ export function EditNode(props: PropsType) {
         setToolbarLeft(rangeRect.left + offsetX);
       }
     } else {
-      setVisable(false);
+      setVisible(false);
     }
   };
 
@@ -102,7 +101,7 @@ export function EditNode(props: PropsType) {
         <div
           ref={editableContainer}
           style={{ position: 'relative', display: 'flex', alignItems: 'center', height: '100%', paddingRight: '10px' }}>
-          {visiable && <Toolbar left={toolbarLeft} top={toolbarTop} />}
+          {visible && <Toolbar left={toolbarLeft} top={toolbarTop} />}
           <Editable
             spellCheck={false}
             style={styleEditable}
@@ -111,7 +110,7 @@ export function EditNode(props: PropsType) {
             onSelect={handleSelect}
             onBlur={() => {
               window?.getSelection()?.removeAllRanges();
-              setVisable(false);
+              setVisible(false);
             }}
             onKeyDown={(event) => {
               // 不给换行
