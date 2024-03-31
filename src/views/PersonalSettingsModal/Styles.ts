@@ -10,6 +10,8 @@ export const Styled_ModalBody = styled.div`
 export const Styled_AvatarContainer = styled.div`
   width: 120px;
   height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
   .ant-upload-wrapper {
     height: 100%;
     .ant-upload.ant-upload-select {

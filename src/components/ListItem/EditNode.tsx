@@ -1,14 +1,13 @@
 import React, { useState, useCallback, useRef } from 'react';
-import { Editor, createEditor } from 'slate'; // 导入 Slate 编辑器工厂。
+import { createEditor } from 'slate'; // 导入 Slate 编辑器工厂。
 import { Slate, Editable, withReact } from 'slate-react'; // 导入 Slate 组件和 React 插件。
 
 import { useDebounce } from '@/hooks/efficientHooks';
 import { useAppSelector, useAppDispatch } from '@/app/hooks';
 import { setItemTodoValue, updateTodoItemThunk } from '@/features/todo/todoSlice';
 
-import { Toolbar } from './slate/Toolbar';
-import { DefaultElement } from './slate/DefaultElement';
-import { Leaf } from './slate/Leaf';
+import { Styled_EditNode } from './Styles';
+import { Toolbar, DefaultElement, Leaf } from './slate';
 
 interface PropsType {
   todoValue: string;
@@ -18,24 +17,19 @@ interface PropsType {
 export function EditNode(props: PropsType) {
   const { todoValue } = props;
 
-  const styleEditable = {
-    height: '100%',
-    display: 'flex',
-    alignItems: 'center',
-    border: 'none',
-    outline: 'none'
-  };
-
   const todoState = useAppSelector((store) => store.todo);
   const dispatch = useAppDispatch();
-  const debounce = useDebounce();
+  // XXX: 确认一下 防抖是否得这样执行
+  const inputDebounce = useDebounce();
+  const selectDebounce = useDebounce();
 
   const editableContainer = useRef<HTMLDivElement | null>(null);
   const [editor] = useState(() => withReact(createEditor()));
-  const [toolbarTop, setToolbarTop] = useState(0);
-  const [toolbarLeft, setToolbarLeft] = useState(0);
-  const [visible, setVisible] = useState(false); // todo: visible 确认写进 toolbar? 还是父组件上?
-
+  const [toolbarOptions, setToolbarOptions] = useState({
+    visible: false,
+    left: 0,
+    top: 0
+  });
   const renderElement = useCallback((props: any) => {
     switch (props.element.type) {
       // todo: 链接
@@ -53,22 +47,19 @@ export function EditNode(props: PropsType) {
 
   const handleSelect = (e: any) => {
     const selection: any = document.getSelection();
-
     if (selection.toString().length > 0 && editableContainer.current && props.selected) {
       const range = selection.getRangeAt(0);
       const rangeRect = range.getBoundingClientRect();
       const offsetX = rangeRect.width / 2;
-
-      setVisible(true);
-      setToolbarTop(rangeRect.top);
+      setToolbarOptions({ ...toolbarOptions, visible: true, top: rangeRect.top });
       // 向左拖拽选中
       if (selection.anchorOffset > selection.focusOffset) {
-        setToolbarLeft(rangeRect.left);
+        setToolbarOptions({ ...toolbarOptions, left: rangeRect.left });
       } else {
-        setToolbarLeft(rangeRect.left + offsetX);
+        setToolbarOptions({ ...toolbarOptions, left: rangeRect.left + offsetX });
       }
     } else {
-      setVisible(false);
+      setToolbarOptions({ ...toolbarOptions, visible: false });
     }
   };
 
@@ -83,6 +74,11 @@ export function EditNode(props: PropsType) {
     }
   };
 
+  const resetSelect = () => {
+    window?.getSelection()?.removeAllRanges();
+    setToolbarOptions({ ...toolbarOptions, visible: false });
+  };
+
   return (
     <div style={{ width: '100%', height: '100%', paddingRight: '15px' }}>
       <Slate
@@ -95,23 +91,19 @@ export function EditNode(props: PropsType) {
           const isTextChange = editor.operations.some((op) => op.type === 'insert_text' || op.type === 'remove_text');
 
           if (isTextChange) {
-            debounce(realTextChange, 1000, JSON.stringify(value));
+            inputDebounce(realTextChange, 1000, JSON.stringify(value));
           }
         }}>
         <div
           ref={editableContainer}
           style={{ position: 'relative', display: 'flex', alignItems: 'center', height: '100%', paddingRight: '10px' }}>
-          {visible && <Toolbar left={toolbarLeft} top={toolbarTop} />}
-          <Editable
+          <Toolbar visible={toolbarOptions.visible} left={toolbarOptions.left} top={toolbarOptions.top} />
+          <Styled_EditNode
             spellCheck={false}
-            style={styleEditable}
             renderElement={renderElement}
             renderLeaf={renderLeaf}
-            onSelect={handleSelect}
-            onBlur={() => {
-              window?.getSelection()?.removeAllRanges();
-              setVisible(false);
-            }}
+            onSelect={() => selectDebounce(handleSelect, 100)}
+            onBlur={resetSelect}
             onKeyDown={(event) => {
               // 不给换行
               if (event.key === 'Enter') {

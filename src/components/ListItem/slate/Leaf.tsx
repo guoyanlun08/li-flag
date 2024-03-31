@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function Leaf(props: any) {
+export default function Leaf(props: any) {
   return (
     <span
       {...props.attributes}

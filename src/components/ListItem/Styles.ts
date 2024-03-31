@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Editable } from 'slate-react'; // 导入 Slate 组件和 React 插件。
 
 export const Styled_Item = styled.div<{ selected: boolean }>`
   background: ${(props) => (props.selected ? 'rgba(255, 255, 255, 0.3)' : '')};
@@ -38,12 +39,17 @@ export const Styled_ItemContent = styled.div<{ selected: boolean; completed: num
   color: ${(props) => (props.completed ? 'rgb(255, 255, 255, 0.6)' : 'rgba(0, 0, 0)')};
 `;
 
-export const Styled_EditNode = styled.div`
+export const Styled_EditNode = styled(Editable)`
+  width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
-  &:focus {
-    border: none;
-    outline: none;
+  border: none;
+  outline: none;
+  p {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding-left: 1px;
   }
 `;

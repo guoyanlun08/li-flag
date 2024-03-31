@@ -4,11 +4,14 @@ import { useSlate } from 'slate-react';
 import { Styled_ToolBar } from './Styles';
 
 interface PropsType {
+  visible: boolean;
   left: number;
   top: number;
 }
 
-export function Toolbar(props: PropsType) {
+export default function Toolbar(props: PropsType) {
+  const { visible, left, top } = props;
+
   const editor = useSlate();
 
   const CustomEditor = {
@@ -39,13 +42,17 @@ export function Toolbar(props: PropsType) {
   };
 
   return (
-    <Styled_ToolBar left={props.left} top={props.top}>
-      <button className="tool-bold" onMouseDown={(event) => CustomEditor.toggleBoldMark(event, editor)}>
-        B
-      </button>
-      <button className="tool-italic" onMouseDown={(event) => CustomEditor.toggleItalicMark(event, editor)}>
-        I
-      </button>
-    </Styled_ToolBar>
+    <>
+      {visible ? (
+        <Styled_ToolBar left={left} top={top}>
+          <button className="tool-bold" onMouseDown={(event) => CustomEditor.toggleBoldMark(event, editor)}>
+            B
+          </button>
+          <button className="tool-italic" onMouseDown={(event) => CustomEditor.toggleItalicMark(event, editor)}>
+            I
+          </button>
+        </Styled_ToolBar>
+      ) : null}
+    </>
   );
 }

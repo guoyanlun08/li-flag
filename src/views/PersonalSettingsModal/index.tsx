@@ -45,6 +45,11 @@ const PersonalSettingsModal = (props: PersonalSettingsProps) => {
     setEditStatus(false);
   };
 
+  // 上传头像后，表单赋值
+  const setFormAvatarPath = (imgUrl: string) => {
+    form.setFieldValue('avatarPath', imgUrl);
+  };
+
   return (
     <>
       <Modal
@@ -67,7 +72,7 @@ const PersonalSettingsModal = (props: PersonalSettingsProps) => {
             onFinish={onFinish}
             style={{ width: 400, maxWidth: 800 }}>
             <Form.Item style={{ display: 'flex', justifyContent: 'center' }} name="avatarPath">
-              <AvatarUpload />
+              <AvatarUpload avatarPath={avatarPath || ''} disabled={!editStatus} onUploadAvatarFinish={setFormAvatarPath} />
             </Form.Item>
             <Styled_EditZone>
               <Space>
@@ -82,13 +87,6 @@ const PersonalSettingsModal = (props: PersonalSettingsProps) => {
             <Form.Item name="userId" label="userId">
               <Input disabled />
             </Form.Item>
-            {/* 用小弹窗来呈现
-            <Form.Item name="password" label="密码">
-              <Input disabled />
-            </Form.Item>
-            <Form.Item name="repeatPassword" label="确认密码">
-              <Input disabled />
-            </Form.Item> */}
             <Form.Item name="nickName" label="昵称" rules={[{ required: true }]}>
               {editStatus ? <Input spellCheck={false} /> : <div>{nickName}</div>}
             </Form.Item>

@@ -50,8 +50,8 @@ export const Styled_Info = styled.div<{ fold: boolean }>`
   .info-avatar {
     width: ${(props) => (props.fold ? '100px' : '50px')};
     height: ${(props) => (props.fold ? '100px' : '50px')};
-    border: 1px dashed red;
     border-radius: 50%;
+    overflow: hidden;
     cursor: pointer;
     transition-property: width height;
     transition-duration: 0.3s;

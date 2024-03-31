@@ -91,7 +91,7 @@ function SiderMenu(props: any) {
         <Styled_MenuBox>
           <Styled_Info fold={collapsed}>
             <div className="info-avatar" onClick={(e) => handleClickAvatar(e)}>
-              <img src={require('../../assets/imgs/1_user5.png')} alt="" />
+              <img src={userState.avatarPath ?? require('../../assets/imgs/1_user5.png')} alt="" />
             </div>
             <div className="info-name">{userState.nickName}</div>
           </Styled_Info>
