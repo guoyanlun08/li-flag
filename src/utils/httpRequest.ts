@@ -12,9 +12,9 @@ export interface IResponse {
   msg: string;
 }
 
-export const authorizationHeader = {
-  Authorization: getToken() || ''
-};
+export const authorizationHeader = () => ({
+  Authorization: getToken() ?? ''
+});
 
 // 请求api 函数签名
 type ReqFunction = (method: string, url: string, variables?: {}, options?: {}) => Promise<any>;
@@ -23,7 +23,7 @@ type ReqFunction = (method: string, url: string, variables?: {}, options?: {}) =
 const defaults = {
   baseURL: process.env.REACT_APP_BASE_URL || 'http://localhost:3000/api',
   headers: () => ({
-    ...authorizationHeader,
+    ...authorizationHeader(),
     Accept: 'application/json',
     'Content-Type': 'application/json'
   }),

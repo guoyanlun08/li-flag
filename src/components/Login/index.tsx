@@ -1,10 +1,8 @@
 import React, { useContext, useState } from 'react';
 import { ModalProps, FormProps, message } from 'antd';
 
-import { useAppDispatch, AuthContext } from '@/app/hooks';
+import { AuthContext } from '@/app/hooks';
 import api from '@/utils/httpRequest';
-import { getTodoListThunk, setTodoEntireModule } from '@/features/todo/todoSlice';
-import { setUserInfo } from '@/features/user/userSlice';
 
 import { Agreement, Register, Login } from './components';
 import { Styled_LoginModal } from './Styles';
@@ -16,7 +14,6 @@ interface LoginProps extends ModalProps {
 
 export default function LoginModal(props: LoginProps) {
   const { handleLogin } = useContext(AuthContext);
-  const dispatch = useAppDispatch();
   const [opType, setOpType] = useState<OperationType>(OperationType.LOGIN); // 登录或注册操作状态
   const [loginTitle, setLoginTitle] = useState(LOGIN_TITLE_LIST[Math.floor(Math.random() * LOGIN_TITLE_LIST.length)]);
 
@@ -26,12 +23,7 @@ export default function LoginModal(props: LoginProps) {
       const { data: res } = await api.post('/user/login', { ...values });
 
       if (res.token) {
-        handleLogin(res.token);
-        dispatch(setUserInfo({ userInfo: res.userInfo }));
-
-        const { payload: list } = await dispatch(getTodoListThunk({ today: true }));
-        dispatch(setTodoEntireModule({ list }));
-
+        handleLogin(res);
         props.onLoginFinish(false);
       } else {
         message.error('登陆失败');

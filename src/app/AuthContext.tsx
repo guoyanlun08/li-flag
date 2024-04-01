@@ -2,7 +2,7 @@
 import React, { ReactNode, createContext, useEffect, useState } from 'react';
 
 import { useAppDispatch } from './hooks';
-import { setUserInfo, getUserInfoThunk } from '@/features/user/userSlice';
+import { getUserInfoThunk } from '@/features/user/userSlice';
 import { getToken, setToken } from '@/utils/localStorage';
 
 import LoginModal from '@/components/Login';
@@ -49,9 +49,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   /** 登录操作 */
-  const handleLogin = (token: string) => {
+  const handleLogin = (res: any) => {
+    setToken(res.token);
     setLogin(true);
-    setToken(token);
   };
 
   return (
