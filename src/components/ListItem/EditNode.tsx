@@ -51,15 +51,16 @@ export function EditNode(props: PropsType) {
       const range = selection.getRangeAt(0);
       const rangeRect = range.getBoundingClientRect();
       const offsetX = rangeRect.width / 2;
-      setToolbarOptions({ ...toolbarOptions, visible: true, top: rangeRect.top });
+
+      setToolbarOptions((preState) => ({ ...preState, visible: true, top: rangeRect.top }));
       // 向左拖拽选中
       if (selection.anchorOffset > selection.focusOffset) {
-        setToolbarOptions({ ...toolbarOptions, left: rangeRect.left });
+        setToolbarOptions((preState) => ({ ...preState, left: rangeRect.left }));
       } else {
-        setToolbarOptions({ ...toolbarOptions, left: rangeRect.left + offsetX });
+        setToolbarOptions((preState) => ({ ...preState, left: rangeRect.left + offsetX }));
       }
     } else {
-      setToolbarOptions({ ...toolbarOptions, visible: false });
+      setToolbarOptions((preState) => ({ ...preState, visible: false }));
     }
   };
 
@@ -76,7 +77,7 @@ export function EditNode(props: PropsType) {
 
   const resetSelect = () => {
     window?.getSelection()?.removeAllRanges();
-    setToolbarOptions({ ...toolbarOptions, visible: false });
+    setToolbarOptions((preState) => ({ ...preState, visible: false }));
   };
 
   return (

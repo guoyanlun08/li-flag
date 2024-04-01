@@ -13,6 +13,7 @@ export const Styled_ToolBar = styled.div<{ left: number; top: number }>`
   background-color: #000;
   padding: 3px 5px;
   column-gap: 3px;
+  border-radius: 5px;
   & button {
     border: none;
     background-color: #000;

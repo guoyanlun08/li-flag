@@ -49,7 +49,7 @@ export const Styled_EditNode = styled(Editable)`
   border: none;
   outline: none;
   p {
-    height: 100%;
+    height: 90%;
     line-height: ${ITEM_HEIGHT};
   }
 `;
