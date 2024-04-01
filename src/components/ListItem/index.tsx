@@ -70,7 +70,7 @@ export function ListItem(props: PropsType) {
         onChange={async () => {
           const { payload: hadUpdated = false } = await dispatch(updateTodoItemThunk({ id, completed: Number(!completed) }));
           if (hadUpdated) {
-            dispatch(toggleItemCompletedStatus({ moduleId: moduleId, itemIndex: index }));
+            dispatch(toggleItemCompletedStatus({ moduleId, itemIndex: index }));
           }
         }}
       />

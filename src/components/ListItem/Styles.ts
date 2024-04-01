@@ -1,12 +1,14 @@
 import styled from 'styled-components';
 import { Editable } from 'slate-react'; // 导入 Slate 组件和 React 插件。
 
+const ITEM_HEIGHT = '35px';
+
 export const Styled_Item = styled.div<{ selected: boolean }>`
   background: ${(props) => (props.selected ? 'rgba(255, 255, 255, 0.3)' : '')};
   position: relative;
   display: flex;
   align-items: center;
-  height: 35px;
+  height: ${ITEM_HEIGHT};
   padding-left: 20px;
   .drag-handle {
     position: absolute;
@@ -48,8 +50,6 @@ export const Styled_EditNode = styled(Editable)`
   outline: none;
   p {
     height: 100%;
-    display: flex;
-    align-items: center;
-    padding-left: 1px;
+    line-height: ${ITEM_HEIGHT};
   }
 `;
