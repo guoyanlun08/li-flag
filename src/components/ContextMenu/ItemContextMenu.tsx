@@ -5,16 +5,18 @@ import 'react-contexify/dist/ReactContexify.css';
 import { useAppDispatch } from '@/app/hooks';
 import { getTodoListThunk, deleteTodoItemThunk, setTodoModule } from '@/features/todo/todoSlice';
 
-interface ContextMenuProps {
+interface ItemContextMenuProps {
   moduleId?: string;
   id?: number;
 }
 
-function ContextMenu(props: ContextMenuProps) {
+function ItemContextMenu(props: ItemContextMenuProps) {
   const dispatch = useAppDispatch();
 
   const deleteItemClick = async ({ event, props, triggerEvent, data }: ItemParams) => {
     const { id, moduleId } = props;
+    console.log(props);
+
     await dispatch(deleteTodoItemThunk({ id }));
     const { payload: list } = await dispatch(getTodoListThunk({ moduleId, today: true }));
     dispatch(setTodoModule({ list, moduleId }));
@@ -29,4 +31,4 @@ function ContextMenu(props: ContextMenuProps) {
 
 export const ITEM_MENU_ID = 'itemContextMenu';
 
-export default ContextMenu;
+export default ItemContextMenu;

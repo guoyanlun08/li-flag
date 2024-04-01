@@ -10,7 +10,7 @@ import { getTodoListThunk, setTodoEntireModule } from '@/features/todo/todoSlice
 
 import DailyCard from './DailyCard';
 import DailyList from './DailyList';
-import ContextMenu, { ITEM_MENU_ID } from '@/components/ContextMenu';
+import { ItemContextMenu, ITEM_MENU_ID } from '@/components/ContextMenu';
 
 interface IEveryDayContext {
   dragStatus: boolean;
@@ -64,7 +64,7 @@ function EveryDay() {
         onDragEnd={(result) => onDragEnd(result, setDragStatus, eachModule, dispatch)}>
         {qs.parse(search).listMode ? <DailyList {...dailyProps} /> : <DailyCard {...dailyProps} />}
       </DragDropContext>
-      <ContextMenu moduleId={moduleId} id={id} />
+      <ItemContextMenu moduleId={moduleId} id={id} />
     </EveryDayContext.Provider>
   );
 }
