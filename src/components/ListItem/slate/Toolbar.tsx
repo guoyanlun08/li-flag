@@ -1,6 +1,11 @@
 import React from 'react';
 import { Editor } from 'slate';
 import { useSlate } from 'slate-react';
+import { Tooltip } from 'antd';
+import { BoldOutlined, ItalicOutlined, CopyOutlined } from '@ant-design/icons';
+
+import useClipboard from '@/hooks/useClipboard';
+
 import { Styled_ToolBar } from './Styles';
 
 interface PropsType {
@@ -13,6 +18,7 @@ export default function Toolbar(props: PropsType) {
   const { visible, left, top } = props;
 
   const editor = useSlate();
+  const { copyToClipboard } = useClipboard();
 
   const CustomEditor = {
     isStyleMarkActive(editor: any, style: string) {
@@ -45,11 +51,16 @@ export default function Toolbar(props: PropsType) {
     <>
       {visible ? (
         <Styled_ToolBar left={left} top={top}>
-          <button className="tool-bold" onMouseDown={(event) => CustomEditor.toggleBoldMark(event, editor)}>
-            B
+          <button onMouseDown={(event) => CustomEditor.toggleBoldMark(event, editor)}>
+            <BoldOutlined />
           </button>
-          <button className="tool-italic" onMouseDown={(event) => CustomEditor.toggleItalicMark(event, editor)}>
-            I
+          <button onMouseDown={(event) => CustomEditor.toggleItalicMark(event, editor)}>
+            <ItalicOutlined />
+          </button>
+          <button onMouseDown={() => copyToClipboard(document.getSelection()?.toString() ?? '')}>
+            <Tooltip title="copy">
+              <CopyOutlined />
+            </Tooltip>
           </button>
         </Styled_ToolBar>
       ) : null}

@@ -6,6 +6,7 @@ const offsetY = 25;
 export const Styled_ToolBar = styled.div<{ left: number; top: number }>`
   position: fixed;
   display: flex;
+  font-size: 12px;
   z-index: 100;
   top: ${(props) => `${props.top - offsetY}px`};
   left: ${(props) => `${props.left}px`};
@@ -21,10 +22,6 @@ export const Styled_ToolBar = styled.div<{ left: number; top: number }>`
   & button:hover {
     background-color: #2b2b2b;
     border-radius: 2px;
-  }
-  .tool-italic {
-    font-style: italic;
-    font-family: serif;
   }
 `;
 export const Styled_textNode = styled.p`
