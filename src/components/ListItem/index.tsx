@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Checkbox } from 'antd';
 import { MenuOutlined } from '@ant-design/icons';
+import { useContextMenu } from 'react-contexify';
 
 import { useAppSelector, useAppDispatch } from '@/app/hooks';
 import { toggleItemCompletedStatus, setSelectedItem, updateTodoItemThunk } from '@/features/todo/todoSlice';
@@ -9,6 +10,8 @@ import { TodoListItemType } from '@/types/todoType';
 
 import { Styled_Item, Styled_ItemContent } from './Styles';
 import { EditNode } from './EditNode';
+import { ITEM_MENU_ID } from '@/components/ContextMenu';
+
 interface PropsType {
   index: number;
   editable: boolean;
@@ -23,6 +26,14 @@ export function ListItem(props: PropsType) {
   const context = useContext(EveryDayContext);
   const dispatch = useAppDispatch();
   const todoState = useAppSelector((store) => store.todo);
+  // item右键菜单
+  const { show: showItemContextMenu } = useContextMenu({
+    id: ITEM_MENU_ID,
+    props: {
+      id,
+      moduleId
+    }
+  });
 
   const [isHover, setIsHover] = useState(false);
 
@@ -33,6 +44,13 @@ export function ListItem(props: PropsType) {
   }, [context.dragStatus]);
 
   const isSelected = todoState.selectedItem?.id === id;
+
+  // 打开右键菜单
+  const onContextMenu = (e: React.MouseEvent) => {
+    if (isSelected) {
+      showItemContextMenu({ event: e });
+    }
+  };
 
   /** 选中 item 触发 */
   const selectItemFn = () => {
@@ -62,6 +80,7 @@ export function ListItem(props: PropsType) {
       onMouseDown={selectItemFn}
       onMouseEnter={mouseEnterItemFn}
       onMouseLeave={mouseLeaveItemFn}
+      onContextMenu={onContextMenu}
       onDoubleClick={(e) => e.stopPropagation()}>
       <MenuOutlined style={{ display: editable && isHover ? 'block' : 'none' }} className="drag-handle" {...dragHandle} />
       <Checkbox

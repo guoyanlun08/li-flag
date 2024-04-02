@@ -10,12 +10,11 @@ interface ItemContextMenuProps {
   id?: number;
 }
 
-function ItemContextMenu(props: ItemContextMenuProps) {
+function ItemContextMenu(contextMenuProps: ItemContextMenuProps) {
   const dispatch = useAppDispatch();
 
   const deleteItemClick = async ({ event, props, triggerEvent, data }: ItemParams) => {
     const { id, moduleId } = props;
-    console.log(props);
 
     await dispatch(deleteTodoItemThunk({ id }));
     const { payload: list } = await dispatch(getTodoListThunk({ moduleId, today: true }));
