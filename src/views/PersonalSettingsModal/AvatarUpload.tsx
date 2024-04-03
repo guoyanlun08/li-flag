@@ -54,7 +54,7 @@ const AvatarUpload = (props: PropsType) => {
         disabled={disabled}
         action="http://localhost:3020/api/upload/uploadAvatar"
         headers={{
-          ...authorizationHeader
+          ...authorizationHeader()
         }}
         listType="picture-circle"
         beforeUpload={beforeUpload}
