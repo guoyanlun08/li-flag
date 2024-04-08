@@ -14,7 +14,7 @@ export const initialState: TodoStateType = {
       bgColor: variables.mainRed,
       listData: [
         {
-          id: 1,
+          id: -1,
           moduleId: 'A',
           todoValue: JSON.stringify([
             {
@@ -28,7 +28,7 @@ export const initialState: TodoStateType = {
           updateTime: Date.now()
         },
         {
-          id: 2,
+          id: -2,
           moduleId: 'A',
           todoValue: JSON.stringify([
             {
@@ -48,7 +48,7 @@ export const initialState: TodoStateType = {
       bgColor: variables.mainBlue,
       listData: [
         {
-          id: 4,
+          id: -3,
           moduleId: 'B',
           todoValue: JSON.stringify([
             {
@@ -62,7 +62,7 @@ export const initialState: TodoStateType = {
           updateTime: Date.now()
         },
         {
-          id: 5,
+          id: -4,
           moduleId: 'B',
           todoValue: JSON.stringify([
             {
@@ -82,7 +82,7 @@ export const initialState: TodoStateType = {
       bgColor: variables.mainGreen,
       listData: [
         {
-          id: 7,
+          id: -5,
           moduleId: 'C',
           todoValue: JSON.stringify([
             {
@@ -96,7 +96,7 @@ export const initialState: TodoStateType = {
           updateTime: Date.now()
         },
         {
-          id: 8,
+          id: -6,
           moduleId: 'C',
           todoValue: JSON.stringify([
             {
@@ -116,7 +116,7 @@ export const initialState: TodoStateType = {
       bgColor: variables.mainGray,
       listData: [
         {
-          id: 10,
+          id: -7,
           moduleId: 'D',
           todoValue: JSON.stringify([
             {
@@ -130,7 +130,7 @@ export const initialState: TodoStateType = {
           updateTime: Date.now()
         },
         {
-          id: 11,
+          id: -8,
           moduleId: 'D',
           todoValue: JSON.stringify([
             {

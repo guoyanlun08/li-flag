@@ -30,6 +30,7 @@ export function EditNode(props: PropsType) {
     left: 0,
     top: 0
   });
+
   const renderElement = useCallback((props: any) => {
     switch (props.element.type) {
       // todo: 链接
@@ -75,6 +76,7 @@ export function EditNode(props: PropsType) {
     }
   };
 
+  // 重置选区
   const resetSelect = () => {
     window?.getSelection()?.removeAllRanges();
     setToolbarOptions((preState) => ({ ...preState, visible: false }));
