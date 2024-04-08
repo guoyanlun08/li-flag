@@ -19,12 +19,14 @@ export const Styled_SiderMenuContainer = styled.div`
 `;
 
 export const Styled_Header = styled.div<{ fold: boolean }>`
-  height: 54px;
+  height: ${(props) => (props.fold ? '54px' : '0')};
   text-align: center;
-  padding: 10px;
+  padding: ${(props) => (props.fold ? '10px' : '0')};
   font-size: 25px;
-  display: ${(props) => (props.fold ? 'block' : 'none')};
-
+  display: block;
+  visibility: ${(props) => (props.fold ? 'visible' : 'hidden')};
+  transition: all 0.1s ease;
+  transform: ${(props) => (props.fold ? 'translateX(0)' : 'translateX(-100%)')};
   font-family: fantasy;
   white-space: nowrap;
   text-overflow: clip;
@@ -37,6 +39,7 @@ export const Styled_MenuBox = styled.div`
   overflow-x: hidden;
   scrollbar-width: none; /* firefox */
   -ms-overflow-style: none; /* IE 10+ */
+  transition: all 0.3s ease;
   &::-webkit-scrollbar {
     display: none;
   }
@@ -46,16 +49,14 @@ export const Styled_Info = styled.div<{ fold: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: center;
-  transition: all 0.3 ease-in-out;
+  transition: all 0.3s ease;
   .info-avatar {
     width: ${(props) => (props.fold ? '100px' : '50px')};
     height: ${(props) => (props.fold ? '100px' : '50px')};
     border-radius: 50%;
     overflow: hidden;
     cursor: pointer;
-    transition-property: width height;
-    transition-duration: 0.3s;
-    transition-timing-function: ease-in-out;
+    transition: all 0.3s ease;
     img {
       width: 100%;
       height: 100%;

@@ -47,6 +47,6 @@
 - [x] 登录注册表单应有前端前置校验。简单处理：长度校验即可 ———— p0, (superB)
 - [ ] 每日模块的标题，背景颜色支持自定义 ———— p2
 - [x] bug: 键盘选中 item 文字选中不了 ———— p1, (allen)
-- [ ] 左侧菜单 sideMenu 缩小到展开状态，头像变大动画有点卡顿。———— p1, (superB)
-- [ ] 每日模块 DailyList 每个 Panel 填充背景色。 ———— p1, (superB)
+- [x] 左侧菜单 sideMenu 缩小到展开状态，头像变大动画有点卡顿。———— p1, (superB)
+- [x] 每日模块 DailyList 每个 Panel 填充背景色。 ———— p1, (superB)
 - [ ] 首页介绍, 有问题提 issue, todo 功能介绍（新增...） ———— p1, (superB)

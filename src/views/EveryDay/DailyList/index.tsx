@@ -7,16 +7,18 @@ const { Panel } = Collapse;
 
 function DailyList(props: any) {
   return (
-    <Collapse>
+    <>
       {props.eachModuleOrder.map((module: string) => {
         const item = props.eachModule[module];
         return (
-          <Panel header={item.moduleId} key={item.moduleId}>
-            <EachList key={item.moduleId} {...item} />
-          </Panel>
+          <Collapse defaultActiveKey={[item.moduleId]}>
+            <Panel header={item.moduleId} key={item.moduleId}>
+              <EachList key={item.moduleId} {...item} />
+            </Panel>
+          </Collapse>
         );
       })}
-    </Collapse>
+    </>
   );
 }
 
