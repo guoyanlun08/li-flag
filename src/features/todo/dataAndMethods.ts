@@ -224,13 +224,13 @@ export const deleteTodoItemThunk = createAsyncThunk<any, { id: number }>('todo/d
   }
 });
 
-// 异步： 更新 todo module
-export const updateTodoOrderAfterDragThunk = createAsyncThunk<any, { source: any; destination: any }>(
+// 异步： 更新 todo module ———— 只传 sourceListData 代表是同模块拖拽
+export const updateTodoOrderAfterDragThunk = createAsyncThunk<any, { sourceListData: any; destinationListData?: any }>(
   'todo/updateTodoOrderAfterDrag',
   async (payload, { dispatch }) => {
     try {
-      const { source, destination } = payload;
-      const resp = await api.put('/todoItem/updateTodoOrderAfterDrag', { source, destination });
+      const { sourceListData, destinationListData } = payload;
+      const resp = await api.put('/todoItem/updateTodoOrderAfterDrag', { sourceListData, destinationListData });
 
       if (resp?.code === 0) {
         return resp.data;

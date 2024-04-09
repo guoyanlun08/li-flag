@@ -4,7 +4,7 @@ import { DropResult } from 'react-beautiful-dnd';
 import { useAppDispatch, AuthContext, useAppSelector } from '@/app/hooks';
 import {
   addTodoItemThunk,
-  sameModuleItemDrag,
+  setTodoModule,
   getTodoListThunk,
   differentModuleItemDrag,
   updateTodoOrderAfterDragThunk,
@@ -74,52 +74,54 @@ export default function useItemOperation() {
       return;
     }
 
-    const sourceParam = {
-      moduleId: source.droppableId,
-      index: source.index,
-      id: eachModule[source.droppableId].listData[source.index].id
-    };
-
-    // 不同模块 destinationParam.id 为 undefined
-    const destinationParam = {
-      moduleId: destination.droppableId,
-      index: destination.index,
-      id: eachModule[destination.droppableId].listData?.[destination.index]?.id
-    };
-
     // 是同一 Droppable内的拖拽
     if (source.droppableId === destination.droppableId) {
       const { listData: beforeDragListData } = eachModule[source.droppableId];
       const afterDragListData = reorderList(beforeDragListData, source.index, destination.index);
 
-      dispatch(sameModuleItemDrag({ moduleId: source.droppableId, listData: afterDragListData }));
-      const { payload: resp } = await dispatch(
-        updateTodoOrderAfterDragThunk({ source: { ...sourceParam }, destination: { ...destinationParam } })
-      );
+      dispatch(setTodoModule({ moduleId: source.droppableId, list: afterDragListData }));
+      const { payload: resp } = await dispatch(updateTodoOrderAfterDragThunk({ sourceListData: afterDragListData }));
 
       if (resp) {
         await getTodoList({ today: true });
       } else {
         // 拖拽失败，数据回退
-        dispatch(sameModuleItemDrag({ moduleId: source.droppableId, listData: beforeDragListData }));
+        dispatch(setTodoModule({ moduleId: source.droppableId, list: beforeDragListData }));
+        // TODO: 交互提示失败
       }
-      // TODO: 交互提示失败
-      return;
-    }
-
-    // 两个不同的模块之间的拖拽
-    const sourceBeforeModule = eachModule[source.droppableId];
-
-    dispatch(differentModuleItemDrag({ source, destination, dragItem: sourceBeforeModule.listData[source.index] }));
-    const { payload: resp } = await dispatch(
-      updateTodoOrderAfterDragThunk({ source: { ...sourceParam }, destination: { ...destinationParam } })
-    );
-    if (resp) {
-      await getTodoList({ today: true });
     } else {
-      // 拖拽失败，数据回退
-      dispatch(differentModuleItemDrag({ source: destination, destination: source, dragItem: sourceBeforeModule.listData[source.index] }));
-      // TODO: 交互提示失败
+      /** 两个不同的模块之间的拖拽 */
+      // 拖拽前，源头模块
+      const {
+        listData: [...sourceList]
+      } = eachModule[source.droppableId];
+      const {
+        listData: [...destinationList]
+      } = eachModule[destination.droppableId];
+
+      // TODO: 将拖拽的 item改变 moduleId, 且通过 source.index在 sourceList 去除该拖拽 item, 通过 destination.index加进 destinationList
+      // 获取拖拽项，且改变 moduleId
+      const dragItem = { ...sourceList[source.index] };
+      dragItem.moduleId = destination.droppableId;
+
+      // 源头去除该拖拽 item; 终点插入 item
+      sourceList.splice(source.index, 1);
+      destinationList.splice(destination.index, 0, dragItem);
+      dispatch(setTodoModule({ moduleId: source.droppableId, list: sourceList }));
+      dispatch(setTodoModule({ moduleId: destination.droppableId, list: destinationList }));
+
+      // const { payload: resp } = await dispatch(
+      //   updateTodoOrderAfterDragThunk({ source: { ...sourceParam }, destination: { ...destinationParam } })
+      // );
+      // if (resp) {
+      //   await getTodoList({ today: true });
+      // } else {
+      //   // 拖拽失败，数据回退
+      //   dispatch(
+      //     differentModuleItemDrag({ source: destination, destination: source, dragItem: sourceBeforeModule.listData[source.index] })
+      //   );
+      //   // TODO: 交互提示失败
+      // }
     }
   };
 
