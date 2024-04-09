@@ -3,9 +3,8 @@ import { useLocation } from 'react-router-dom';
 import qs from 'query-string';
 import { DragDropContext } from 'react-beautiful-dnd';
 
-import { onBeforeDragStart, onDragEnd } from '@/views/EveryDay/common';
-import { useAppSelector, useAppDispatch, AuthContext } from '@/app/hooks';
-import { getTodoListThunk, setTodoEntireModule } from '@/features/todo/todoSlice';
+import { useAppSelector, AuthContext } from '@/app/hooks';
+import useItemOperation from '@/components/ListItem/useItemOperation';
 
 import DailyCard from './DailyCard';
 import DailyList from './DailyList';
@@ -13,7 +12,7 @@ import { ItemContextMenu } from '@/components/ContextMenu';
 
 interface IEveryDayContext {
   dragStatus: boolean;
-  setDragStatus: React.Dispatch<React.SetStateAction<boolean>>;
+  handleSetDragStatus: (val: boolean) => void;
 }
 
 export const EveryDayContext = React.createContext<IEveryDayContext>({} as any);
@@ -21,23 +20,25 @@ export const EveryDayContext = React.createContext<IEveryDayContext>({} as any);
 function EveryDay() {
   const { search } = useLocation();
   const { isLogin } = useContext(AuthContext);
-  const dispatch = useAppDispatch();
   const { eachModule, eachModuleOrder } = useAppSelector((state) => state.todo);
+  const { getTodoList, onBeforeDragStart, onDragEnd } = useItemOperation();
 
   const [dragStatus, setDragStatus] = useState(false); // 当前拖拽状态
 
   useEffect(() => {
     const fetchTodoList = async () => {
-      const { payload: list } = await dispatch(getTodoListThunk({ today: true }));
-      if (list) {
-        dispatch(setTodoEntireModule({ list }));
-      }
+      await getTodoList({ today: true });
     };
 
     if (isLogin) {
       fetchTodoList();
     }
   }, [isLogin]);
+
+  // 修改当前拖拽态
+  const handleSetDragStatus = (val: boolean) => {
+    setDragStatus(val);
+  };
 
   // 传递子元素 props
   const dailyProps = {
@@ -46,10 +47,10 @@ function EveryDay() {
   };
 
   return (
-    <EveryDayContext.Provider value={{ dragStatus, setDragStatus }}>
+    <EveryDayContext.Provider value={{ dragStatus, handleSetDragStatus }}>
       <DragDropContext
-        onBeforeDragStart={() => onBeforeDragStart(setDragStatus)}
-        onDragEnd={(result) => onDragEnd(result, setDragStatus, eachModule, dispatch)}>
+        onBeforeDragStart={() => onBeforeDragStart(handleSetDragStatus)}
+        onDragEnd={async (result) => await onDragEnd(result, handleSetDragStatus, eachModule)}>
         {qs.parse(search).listMode ? <DailyList {...dailyProps} /> : <DailyCard {...dailyProps} />}
       </DragDropContext>
       <ItemContextMenu />

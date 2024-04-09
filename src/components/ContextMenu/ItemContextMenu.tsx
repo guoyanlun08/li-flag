@@ -2,8 +2,7 @@ import React from 'react';
 import { Menu, Item, ItemParams } from 'react-contexify';
 import 'react-contexify/dist/ReactContexify.css';
 
-import { useAppDispatch } from '@/app/hooks';
-import { getTodoListThunk, deleteTodoItemThunk, setTodoModule } from '@/features/todo/todoSlice';
+import useItemOperation from '@/components/ListItem/useItemOperation';
 
 interface ItemContextMenuProps {
   moduleId?: string;
@@ -11,14 +10,14 @@ interface ItemContextMenuProps {
 }
 
 function ItemContextMenu(contextMenuProps: ItemContextMenuProps) {
-  const dispatch = useAppDispatch();
+  const { deleteTodoItem, getTodoList } = useItemOperation();
 
   const deleteItemClick = async ({ event, props, triggerEvent, data }: ItemParams) => {
     const { id, moduleId } = props;
 
-    await dispatch(deleteTodoItemThunk({ id }));
-    const { payload: list } = await dispatch(getTodoListThunk({ moduleId, today: true }));
-    dispatch(setTodoModule({ list, moduleId }));
+    await deleteTodoItem(id);
+
+    await getTodoList({ today: true });
   };
 
   return (
