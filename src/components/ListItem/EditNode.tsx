@@ -1,9 +1,10 @@
 import React, { useState, useCallback, useRef } from 'react';
 import { createEditor } from 'slate'; // 导入 Slate 编辑器工厂。
-import { Slate, Editable, withReact } from 'slate-react'; // 导入 Slate 组件和 React 插件。
+import { Slate, withReact } from 'slate-react'; // 导入 Slate 组件和 React 插件。
 
 import { useDebounce } from '@/hooks/efficientHooks';
 import { useAppSelector, useAppDispatch } from '@/app/hooks';
+import useItemOperation from './useItemOperation';
 import { setItemTodoValue, updateTodoItemThunk } from '@/features/todo/todoSlice';
 
 import { Styled_EditNode } from './Styles';
@@ -19,6 +20,7 @@ export function EditNode(props: PropsType) {
 
   const todoState = useAppSelector((store) => store.todo);
   const dispatch = useAppDispatch();
+  const { addNewTodoItem } = useItemOperation();
   // XXX: 确认一下 防抖是否得这样执行
   const inputDebounce = useDebounce();
   const selectDebounce = useDebounce();
@@ -76,7 +78,6 @@ export function EditNode(props: PropsType) {
     }
   };
 
-  // 重置选区
   const resetSelect = () => {
     window?.getSelection()?.removeAllRanges();
     setToolbarOptions((preState) => ({ ...preState, visible: false }));
@@ -107,10 +108,14 @@ export function EditNode(props: PropsType) {
             renderLeaf={renderLeaf}
             onSelect={() => selectDebounce(handleSelect, 100)}
             onBlur={resetSelect}
-            onKeyDown={(event) => {
+            onKeyDown={async (event) => {
               // 不给换行
               if (event.key === 'Enter') {
                 event.preventDefault();
+                if (todoState.selectedItem) {
+                  const { moduleId } = todoState.selectedItem;
+                  // await addNewTodoItem(moduleId);
+                }
               }
             }}
           />

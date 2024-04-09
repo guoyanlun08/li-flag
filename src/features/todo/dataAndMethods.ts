@@ -6,6 +6,15 @@ import { addTodoItem } from './todoSlice';
 
 import variables from '@/styles/variables.module.scss';
 
+export type getTodoListReqData = {
+  today: boolean;
+  moduleId: string;
+  completed: number;
+  startTime: string;
+  endTime: string;
+  isSkip: boolean;
+};
+
 // 初始化数据
 export const initialState: TodoStateType = {
   eachModule: {
@@ -151,20 +160,18 @@ export const initialState: TodoStateType = {
 };
 
 // 异步：设置 todoState的数据
-export const getTodoListThunk = createAsyncThunk<any, { today?: boolean; moduleId?: string }>(
-  'todo/getTodoList',
-  async (payload, { dispatch }) => {
-    try {
-      const { today = false, moduleId } = payload;
-      const resp = await api.get('/todoItem/getTodoList', { moduleId, today: Number(today) });
-      const { list } = resp.data;
+export const getTodoListThunk = createAsyncThunk<any, Partial<getTodoListReqData>>('todo/getTodoList', async (payload) => {
+  try {
+    const { today = false, ...data } = payload;
 
-      return list;
-    } catch (e) {
-      console.error(`获取失败:: getTodoListThunk :: ${e}`);
-    }
+    const resp = await api.get('/todoItem/getTodoList', { today: Number(today), ...data });
+    const { list } = resp.data;
+
+    return list;
+  } catch (e) {
+    console.error(`获取失败:: getTodoListThunk :: ${e}`);
   }
-);
+});
 
 // 异步：新增 todoItem的数据
 export const addTodoItemThunk = createAsyncThunk<any, { moduleId: string; order: number; type: string }>(

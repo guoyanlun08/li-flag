@@ -98,6 +98,7 @@ export {
   deleteTodoItemThunk,
   updateTodoOrderAfterDragThunk
 } from './dataAndMethods';
+export type { getTodoListReqData } from './dataAndMethods';
 
 // 导出 todo 的 state值, 用 useAppSelector 也行
 export const selectTodo = (state: RootState) => state.todo;

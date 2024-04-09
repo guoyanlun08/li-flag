@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import moment from 'moment';
 
-import api from '@/utils/httpRequest';
+import { useAppDispatch } from '@/app/hooks';
+import { getTodoListThunk, getTodoListReqData } from '@/features/todo/todoSlice';
 import { AuthContext } from '@/app/AuthContext';
 import { TodoListItemType } from '@/types/todoType';
 
@@ -33,6 +34,8 @@ const initRecentFormValue: RecentFormType = {
 
 /** 近期完成模块 */
 function RecentlyCompleted() {
+  const dispatch = useAppDispatch();
+
   const { isLogin } = useContext(AuthContext);
   const [completedList, setCompletedList] = useState<TodoListItemType[]>([]);
   const [isToday, setIsToday] = useState(false);
@@ -60,11 +63,10 @@ function RecentlyCompleted() {
   };
 
   // 获取 todoList 接口调用
-  const apiGetTodoList = async (data: Partial<{ startTime: string; endTime: string; isSkip: boolean; moduleId: string }>) => {
+  const apiGetTodoList = async (data: Partial<getTodoListReqData>) => {
     try {
-      const {
-        data: { list }
-      } = await api.get('/todoItem/getTodoList', { completed: 1, ...data });
+      const { payload: list } = await dispatch(getTodoListThunk({ completed: 1, ...data }));
+
       setCompletedList(list);
     } catch (err) {
       console.error(err);
