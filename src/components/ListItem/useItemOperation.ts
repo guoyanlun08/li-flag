@@ -82,46 +82,41 @@ export default function useItemOperation() {
       dispatch(setTodoModule({ moduleId: source.droppableId, list: afterDragListData }));
       const { payload: resp } = await dispatch(updateTodoOrderAfterDragThunk({ sourceListData: afterDragListData }));
 
-      if (resp) {
+      if (resp.updated) {
         await getTodoList({ today: true });
       } else {
         // 拖拽失败，数据回退
         dispatch(setTodoModule({ moduleId: source.droppableId, list: beforeDragListData }));
-        // TODO: 交互提示失败
       }
     } else {
       /** 两个不同的模块之间的拖拽 */
-      // 拖拽前，源头模块
       const {
-        listData: [...sourceList]
+        listData: [...sourceListData]
       } = eachModule[source.droppableId];
       const {
-        listData: [...destinationList]
+        listData: [...destinationListData]
       } = eachModule[destination.droppableId];
 
-      // TODO: 将拖拽的 item改变 moduleId, 且通过 source.index在 sourceList 去除该拖拽 item, 通过 destination.index加进 destinationList
       // 获取拖拽项，且改变 moduleId
-      const dragItem = { ...sourceList[source.index] };
+      const dragItem = { ...sourceListData[source.index] };
       dragItem.moduleId = destination.droppableId;
 
       // 源头去除该拖拽 item; 终点插入 item
-      sourceList.splice(source.index, 1);
-      destinationList.splice(destination.index, 0, dragItem);
-      dispatch(setTodoModule({ moduleId: source.droppableId, list: sourceList }));
-      dispatch(setTodoModule({ moduleId: destination.droppableId, list: destinationList }));
+      sourceListData.splice(source.index, 1);
+      destinationListData.splice(destination.index, 0, dragItem);
+      dispatch(setTodoModule({ moduleId: source.droppableId, list: sourceListData }));
+      dispatch(setTodoModule({ moduleId: destination.droppableId, list: destinationListData }));
 
-      // const { payload: resp } = await dispatch(
-      //   updateTodoOrderAfterDragThunk({ source: { ...sourceParam }, destination: { ...destinationParam } })
-      // );
-      // if (resp) {
-      //   await getTodoList({ today: true });
-      // } else {
-      //   // 拖拽失败，数据回退
-      //   dispatch(
-      //     differentModuleItemDrag({ source: destination, destination: source, dragItem: sourceBeforeModule.listData[source.index] })
-      //   );
-      //   // TODO: 交互提示失败
-      // }
+      const { payload: resp } = await dispatch(updateTodoOrderAfterDragThunk({ sourceListData, destinationListData, dragItem }));
+      if (resp.updated) {
+        await getTodoList({ today: true });
+      } else {
+        // 拖拽失败，数据回退
+        dispatch(setTodoModule({ moduleId: eachModule[source.droppableId].moduleId, list: eachModule[source.droppableId].listData }));
+        dispatch(
+          setTodoModule({ moduleId: eachModule[destination.droppableId].moduleId, list: eachModule[destination.droppableId].listData })
+        );
+      }
     }
   };
 

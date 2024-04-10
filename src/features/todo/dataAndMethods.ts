@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { TodoStateType } from '@/types/todoType';
+import { TodoListItemType, TodoStateType } from '@/types/todoType';
 import api from '@/utils/httpRequest';
 import { addTodoItem } from './todoSlice';
 
@@ -225,21 +225,21 @@ export const deleteTodoItemThunk = createAsyncThunk<any, { id: number }>('todo/d
 });
 
 // 异步： 更新 todo module ———— 只传 sourceListData 代表是同模块拖拽
-export const updateTodoOrderAfterDragThunk = createAsyncThunk<any, { sourceListData: any; destinationListData?: any }>(
-  'todo/updateTodoOrderAfterDrag',
-  async (payload, { dispatch }) => {
-    try {
-      const { sourceListData, destinationListData } = payload;
-      const resp = await api.put('/todoItem/updateTodoOrderAfterDrag', { sourceListData, destinationListData });
+export const updateTodoOrderAfterDragThunk = createAsyncThunk<
+  any,
+  { sourceListData: any; destinationListData?: any; dragItem?: TodoListItemType }
+>('todo/updateTodoOrderAfterDrag', async (payload, { dispatch }) => {
+  try {
+    const { sourceListData, destinationListData, dragItem } = payload;
+    const resp = await api.put('/todoItem/updateTodoOrderAfterDrag', { sourceListData, destinationListData, dragItem });
 
-      if (resp?.code === 0) {
-        return resp.data;
-      } else {
-        throw new Error('更新失败');
-      }
-    } catch (e) {
-      console.error(`更新失败:: updateTodoOrderAfterDragThunk :: ${e}`);
-      return false;
+    if (resp?.code === 0) {
+      return resp.data;
+    } else {
+      throw new Error('更新失败');
     }
+  } catch (e) {
+    console.error(`更新失败:: updateTodoOrderAfterDragThunk :: ${e}`);
+    return false;
   }
-);
+});
