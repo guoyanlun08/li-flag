@@ -36,23 +36,13 @@ const menus: menuProps[] = [
   {
     title: '首页',
     icon: 'icon-a-009_quanbugongneng',
-    path: ''
+    path: '/'
   },
   {
     title: '每日模块',
     icon: 'icon-a-009_wodedaiban',
     path: '/everyday'
   }
-  // {
-  //   title: 'Option1',
-  //   icon: 'icon-a-009_xinjianliucheng',
-  //   path: '/'
-  // },
-  // {
-  //   title: 'Option2',
-  //   icon: 'icon-a-009_wodericheng',
-  //   path: '/'
-  // }
 ];
 
 function SiderMenu(props: any) {
@@ -64,7 +54,7 @@ function SiderMenu(props: any) {
 
   const [personalSettingsVisible, setPersonalSettingsVisible] = useState(false); // 个人设置弹窗 visible
   const [collapsed, setCollapsed] = useState(false);
-  const { pathname, search } = useLocation();
+  const { pathname } = useLocation();
 
   // 点击 siderMenu 触发
   const handleClickSiderMenu = (): void => {
@@ -105,7 +95,7 @@ function SiderMenu(props: any) {
               return (
                 <OptionItem
                   key={menu.title}
-                  active={`${pathname}${search}` === menu.path}
+                  active={`/${pathname.split('/')[1]}` === menu.path}
                   icon={menu.icon}
                   title={menu.title}
                   path={menu.path}
