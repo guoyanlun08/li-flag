@@ -200,7 +200,7 @@ export const updateTodoItemThunk = createAsyncThunk<any, { id: number; completed
     try {
       const { id, todoValue, completed } = payload;
 
-      const resp = await api.post('/todoItem/updateTodoItem', { id, todoValue, completed });
+      const resp = await api.put('/todoItem/updateTodoItem', { id, todoValue, completed });
 
       if (resp?.code === 0) {
         return true;
@@ -218,7 +218,7 @@ export const deleteTodoItemThunk = createAsyncThunk<any, { id: number }>('todo/d
   try {
     const { id } = payload;
 
-    const resp = await api.post('/todoItem/deleteTodoItemById', { id });
+    const resp = await api.delete('/todoItem/deleteTodoItemById', { id });
   } catch (e) {
     console.error(`删除失败:: deleteTodoItemThunk :: ${e}`);
   }
