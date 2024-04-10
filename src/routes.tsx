@@ -1,8 +1,14 @@
 import { createBrowserRouter } from 'react-router-dom';
 
 import App from '@/App';
-import EveryDay from '@/views/EveryDay';
-import RecentlyCompleted from '@/views/RecentlyCompleted';
+
+// 首页
+import Home from '@/views/Home';
+
+// 每日模块
+import EveryDayOutlet from '@/views/EveryDay';
+import EveryDay from '@/views/EveryDay/EveryDay';
+import RecentlyCompleted from '@/views/EveryDay/RecentlyCompleted';
 
 const router = createBrowserRouter([
   {
@@ -10,12 +16,22 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       {
-        path: 'everyday',
-        element: <EveryDay />
+        path: '',
+        element: <Home />
       },
       {
-        path: 'recent-completed',
-        element: <RecentlyCompleted />
+        path: 'everyday',
+        element: <EveryDayOutlet />,
+        children: [
+          {
+            path: '',
+            element: <EveryDay />
+          },
+          {
+            path: 'recent-completed',
+            element: <RecentlyCompleted />
+          }
+        ]
       }
     ]
   }

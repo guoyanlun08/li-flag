@@ -14,7 +14,7 @@ const navToolList = [
   },
   {
     name: '近期完成',
-    path: '/recent-completed'
+    path: '/everyday/recent-completed'
   }
 ];
 

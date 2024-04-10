@@ -34,6 +34,11 @@ function OptionItem(props: menuProps) {
 // 左侧菜单
 const menus: menuProps[] = [
   {
+    title: '首页',
+    icon: 'icon-a-009_quanbugongneng',
+    path: ''
+  },
+  {
     title: '每日模块',
     icon: 'icon-a-009_wodedaiban',
     path: '/everyday'

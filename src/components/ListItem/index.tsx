@@ -5,7 +5,7 @@ import { useContextMenu } from 'react-contexify';
 
 import { useAppSelector, useAppDispatch } from '@/app/hooks';
 import { toggleItemCompletedStatus, setSelectedItem, updateTodoItemThunk } from '@/features/todo/todoSlice';
-import { EveryDayContext } from '@/views/EveryDay';
+import { EveryDayContext } from '@/views/EveryDay/EveryDay';
 import { TodoListItemType } from '@/types/todoType';
 
 import { Styled_Item, Styled_ItemContent } from './Styles';
