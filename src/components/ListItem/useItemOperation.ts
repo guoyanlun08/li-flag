@@ -30,8 +30,9 @@ export default function useItemOperation() {
   const dispatch = useAppDispatch();
 
   /** 新增 todoItem */
-  const addNewTodoItem = async (moduleId: string, type: 'tail' | 'insert' = 'tail') => {
+  const addNewTodoItem = async (moduleId: string, type: 'tail' | 'insert' = 'tail', insertIndex?: number) => {
     const listData = todoState.eachModule[moduleId].listData;
+    // tail 直接插入末尾
     let order = listData.length;
     if (!isLogin) {
       openLoginModal();
@@ -39,6 +40,7 @@ export default function useItemOperation() {
     }
 
     // 从中插入
+    // TODO: 后台也需要改动该 moduleId所有的 order
     if (type === 'insert') {
       // order =
     }

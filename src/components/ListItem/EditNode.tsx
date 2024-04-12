@@ -1,6 +1,6 @@
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { createEditor } from 'slate'; // 导入 Slate 编辑器工厂。
-import { Slate, withReact } from 'slate-react'; // 导入 Slate 组件和 React 插件。
+import { ReactEditor, Slate, withReact } from 'slate-react'; // 导入 Slate 组件和 React 插件。
 
 import { useDebounce } from '@/hooks/efficientHooks';
 import { useAppSelector, useAppDispatch } from '@/app/hooks';
@@ -16,12 +16,11 @@ interface PropsType {
 }
 
 export function EditNode(props: PropsType) {
-  const { todoValue } = props;
+  const { todoValue, selected } = props;
 
   const todoState = useAppSelector((store) => store.todo);
   const dispatch = useAppDispatch();
   const { addNewTodoItem } = useItemOperation();
-  // XXX: 确认一下 防抖是否得这样执行
   const inputDebounce = useDebounce();
   const selectDebounce = useDebounce();
 
@@ -32,6 +31,12 @@ export function EditNode(props: PropsType) {
     left: 0,
     top: 0
   });
+
+  useEffect(() => {
+    if (selected) {
+      ReactEditor.focus(editor);
+    }
+  }, [selected]);
 
   const renderElement = useCallback((props: any) => {
     switch (props.element.type) {
@@ -50,7 +55,7 @@ export function EditNode(props: PropsType) {
 
   const handleSelect = (e: any) => {
     const selection: any = document.getSelection();
-    if (selection.toString().length > 0 && editableContainer.current && props.selected) {
+    if (selection.toString().length > 0 && editableContainer.current && selected) {
       const range = selection.getRangeAt(0);
       const rangeRect = range.getBoundingClientRect();
       const offsetX = rangeRect.width / 2;
@@ -113,8 +118,8 @@ export function EditNode(props: PropsType) {
               if (event.key === 'Enter') {
                 event.preventDefault();
                 if (todoState.selectedItem) {
-                  const { moduleId } = todoState.selectedItem;
-                  // await addNewTodoItem(moduleId);
+                  const { moduleId, order } = todoState.selectedItem;
+                  // await addNewTodoItem(moduleId, 'insert', order);
                 }
               }
             }}
