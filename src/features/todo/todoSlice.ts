@@ -42,22 +42,6 @@ export const todoSlice = createSlice({
       const modifyItem: TodoListItemType = state.eachModule[moduleId].listData.find((item) => item.id === id)!;
       modifyItem.todoValue = todoValue;
     },
-    // 不同模块中 Item 拖拽
-    differentModuleItemDrag: (state, action: PayloadAction<{ source: any; destination: any; dragItem: TodoListItemType }>) => {
-      const { source, destination, dragItem } = action.payload;
-
-      state.eachModule[source.droppableId].listData.splice(source.index, 1);
-      state.eachModule[destination.droppableId].listData.splice(destination.index, 0, dragItem);
-    },
-    // 增加 Item 项
-    addTodoItem: (state, action: PayloadAction<{ newTodoItem: any; type: string; insertIndex?: number }>) => {
-      const { newTodoItem, type, insertIndex } = action.payload;
-
-      if (type === 'tail') {
-        state.eachModule[newTodoItem.moduleId].listData.push(newTodoItem);
-        state.selectedItem = newTodoItem;
-      }
-    },
     // 设置 selectedItem
     setSelectedItem: (state, action: PayloadAction<{ todoItem: TodoListItemType }>) => {
       const { todoItem } = action.payload;
@@ -74,15 +58,7 @@ export const todoSlice = createSlice({
 });
 
 // 导出 分发动作
-export const {
-  setTodoEntireModule,
-  setTodoModule,
-  setItemTodoValue,
-  differentModuleItemDrag,
-  addTodoItem,
-  setSelectedItem,
-  toggleItemCompletedStatus
-} = todoSlice.actions;
+export const { setTodoEntireModule, setTodoModule, setItemTodoValue, setSelectedItem, toggleItemCompletedStatus } = todoSlice.actions;
 
 // 导出 异步动作
 export {

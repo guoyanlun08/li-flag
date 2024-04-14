@@ -2,7 +2,6 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { TodoListItemType, TodoStateType } from '@/types/todoType';
 import api from '@/utils/httpRequest';
-import { addTodoItem } from './todoSlice';
 
 import variables from '@/styles/variables.module.scss';
 
@@ -33,8 +32,8 @@ export const initialState: TodoStateType = {
           ]),
           completed: 0,
           order: 1,
-          createTime: Date.now(),
-          updateTime: Date.now()
+          createTime: new Date().toLocaleString(),
+          updateTime: new Date().toLocaleString()
         },
         {
           id: -2,
@@ -47,8 +46,8 @@ export const initialState: TodoStateType = {
           ]),
           completed: 1,
           order: 2,
-          createTime: Date.now(),
-          updateTime: Date.now()
+          createTime: new Date().toLocaleString(),
+          updateTime: new Date().toLocaleString()
         }
       ]
     },
@@ -67,8 +66,8 @@ export const initialState: TodoStateType = {
           ]),
           completed: 0,
           order: 1,
-          createTime: Date.now(),
-          updateTime: Date.now()
+          createTime: new Date().toLocaleString(),
+          updateTime: new Date().toLocaleString()
         },
         {
           id: -4,
@@ -81,8 +80,8 @@ export const initialState: TodoStateType = {
           ]),
           completed: 1,
           order: 2,
-          createTime: Date.now(),
-          updateTime: Date.now()
+          createTime: new Date().toLocaleString(),
+          updateTime: new Date().toLocaleString()
         }
       ]
     },
@@ -101,8 +100,8 @@ export const initialState: TodoStateType = {
           ]),
           completed: 0,
           order: 1,
-          createTime: Date.now(),
-          updateTime: Date.now()
+          createTime: new Date().toLocaleString(),
+          updateTime: new Date().toLocaleString()
         },
         {
           id: -6,
@@ -115,8 +114,8 @@ export const initialState: TodoStateType = {
           ]),
           completed: 1,
           order: 2,
-          createTime: Date.now(),
-          updateTime: Date.now()
+          createTime: new Date().toLocaleString(),
+          updateTime: new Date().toLocaleString()
         }
       ]
     },
@@ -135,8 +134,8 @@ export const initialState: TodoStateType = {
           ]),
           completed: 0,
           order: 1,
-          createTime: Date.now(),
-          updateTime: Date.now()
+          createTime: new Date().toLocaleString(),
+          updateTime: new Date().toLocaleString()
         },
         {
           id: -8,
@@ -149,8 +148,8 @@ export const initialState: TodoStateType = {
           ]),
           completed: 1,
           order: 2,
-          createTime: Date.now(),
-          updateTime: Date.now()
+          createTime: new Date().toLocaleString(),
+          updateTime: new Date().toLocaleString()
         }
       ]
     }
@@ -174,24 +173,22 @@ export const getTodoListThunk = createAsyncThunk<any, Partial<getTodoListReqData
 });
 
 // 异步：新增 todoItem的数据
-export const addTodoItemThunk = createAsyncThunk<any, { moduleId: string; order: number; type: string }>(
-  'todo/addTodoItem',
-  async (payload, { dispatch }) => {
-    try {
-      const { moduleId, order, type } = payload;
-      const resp = await api.post('/todoItem/addTodoItem', { moduleId, order });
-      if (resp?.code === 0) {
-        const { newTodoItem } = resp.data;
-
-        dispatch(addTodoItem({ newTodoItem, type, insertIndex: order }));
-      } else {
-        throw new Error('新增失败');
-      }
-    } catch (e) {
-      console.error(`新增失败:: addTodoItemThunk :: ${e}`);
+export const addTodoItemThunk = createAsyncThunk<
+  any,
+  { moduleId: string; order: number; type: 'tail' | 'insert'; listData?: TodoListItemType[] }
+>('todo/addTodoItem', async (payload) => {
+  try {
+    const { moduleId, order, type, listData } = payload;
+    const resp = await api.post('/todoItem/addTodoItem', { moduleId, order, type, listData });
+    if (resp?.code === 0) {
+      return resp.data;
+    } else {
+      throw new Error('新增失败');
     }
+  } catch (e) {
+    console.error(`新增失败:: addTodoItemThunk :: ${e}`);
   }
-);
+});
 
 // 异步：更新 todoItem的数据
 export const updateTodoItemThunk = createAsyncThunk<any, { id: number; completed?: number; todoValue?: string }>(

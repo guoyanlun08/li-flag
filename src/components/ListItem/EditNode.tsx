@@ -119,7 +119,7 @@ export function EditNode(props: PropsType) {
                 event.preventDefault();
                 if (todoState.selectedItem) {
                   const { moduleId, order } = todoState.selectedItem;
-                  // await addNewTodoItem(moduleId, 'insert', order);
+                  await addNewTodoItem(moduleId, 'insert', order + 1);
                 }
               }
             }}

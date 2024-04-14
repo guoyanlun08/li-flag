@@ -20,6 +20,6 @@ export interface TodoListItemType {
   todoValue: string;
   completed: number;
   order: number;
-  createTime?: number;
-  updateTime?: number;
+  createTime?: string;
+  updateTime?: string;
 }
