@@ -16,3 +16,4 @@
 - [x] Bug: todoItem 空格输入有问题 ———— p1, allen
 - [x] 体验：回车新增功能，新增后自动聚焦（包括双击的新增）———— p1, allen
 - [ ] 体验：页面有控制缩放功能(localStorage 存储)，PC 端太小了 ———— p2, (待处理 allen)
+- [ ] 每日模块 UI 修改 ———— p0, (处理中 allen)
