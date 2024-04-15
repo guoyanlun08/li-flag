@@ -32,12 +32,6 @@ export function EditNode(props: PropsType) {
     top: 0
   });
 
-  useEffect(() => {
-    if (selected) {
-      ReactEditor.focus(editor);
-    }
-  }, [selected]);
-
   const renderElement = useCallback((props: any) => {
     switch (props.element.type) {
       // todo: 链接
@@ -108,6 +102,7 @@ export function EditNode(props: PropsType) {
           style={{ position: 'relative', display: 'flex', alignItems: 'center', height: '100%', paddingRight: '10px' }}>
           <Toolbar visible={toolbarOptions.visible} left={toolbarOptions.left} top={toolbarOptions.top} />
           <Styled_EditNode
+            autoFocus={selected}
             spellCheck={false}
             renderElement={renderElement}
             renderLeaf={renderLeaf}

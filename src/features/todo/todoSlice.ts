@@ -42,6 +42,7 @@ export const todoSlice = createSlice({
       const modifyItem: TodoListItemType = state.eachModule[moduleId].listData.find((item) => item.id === id)!;
       modifyItem.todoValue = todoValue;
     },
+    // XXX: 这里的 satet.selectedItem中的 todoValue不一定是准确的
     // 设置 selectedItem
     setSelectedItem: (state, action: PayloadAction<{ todoItem: TodoListItemType }>) => {
       const { todoItem } = action.payload;
