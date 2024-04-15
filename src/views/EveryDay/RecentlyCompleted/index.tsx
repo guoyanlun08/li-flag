@@ -65,6 +65,9 @@ function RecentlyCompleted() {
   // 获取 todoList 接口调用
   const apiGetTodoList = async (data: Partial<getTodoListReqData>) => {
     try {
+      if (!isLogin) {
+        return;
+      }
       const { payload: list } = await dispatch(getTodoListThunk({ completed: 1, ...data }));
 
       setCompletedList(list);
