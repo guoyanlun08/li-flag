@@ -17,7 +17,10 @@ export function EachCard(props: PropsType) {
 
   return (
     <Styled_EachModuleContainer onDoubleClick={() => addNewTodoItem(moduleId)}>
-      <Styled_Title color={color}>(icon){title}</Styled_Title>
+      <Styled_Title color={color}>
+        <div className="title-icon">{moduleId}</div>
+        <div>{title}</div>
+      </Styled_Title>
       <Droppable droppableId={moduleId} type="listType">
         {(provided, snapshot) => (
           <Styled_ListBox ref={provided.innerRef} {...provided.droppableProps}>

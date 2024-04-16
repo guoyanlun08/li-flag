@@ -25,13 +25,29 @@ export const Styled_Title = styled.div<{ color: string }>`
   user-select: none;
   height: 40px;
   line-height: 25px;
-  font-weight: bold;
   font-size: 20px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  .title-icon {
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    font-size: 16px;
+    border-radius: 50%;
+    margin-right: 6px;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: normal;
+    display: flex;
+    justify-content: center;
+    background: ${(props) => props.color};
+    color: #fff;
+  }
 `;
 
 export const Styled_ListBox = styled.div`
   flex: 1;
-  padding: 0 15px 80px;
+  padding: 0 15px 80px 0;
   overflow-y: auto;
   ::-webkit-scrollbar {
     display: none;

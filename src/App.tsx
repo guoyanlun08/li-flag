@@ -17,7 +17,7 @@ function App() {
       <Sider collapsed={close}>
         <SiderMenu getClose={expAndCloseMenu} />
       </Sider>
-      <Layout>
+      <Layout style={{ background: '#fff' }}>
         <Content className="hiddenScroll" style={{ margin: '10px' }}>
           <Outlet />
         </Content>

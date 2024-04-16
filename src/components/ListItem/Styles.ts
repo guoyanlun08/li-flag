@@ -6,12 +6,16 @@ import { MODULE_CONFIG_MAP, ModuleFields } from '@/features/todo/todoSlice';
 const ITEM_HEIGHT = '35px';
 
 export const Styled_Item = styled.div<{ selected: boolean; moduleId: ModuleFields }>`
-  background: ${(props) => (props.selected ? 'rgba(255, 255, 255, 0.3)' : '')};
+  // 如果后面有主题色的需求，这里的 71,114,250 应是主题色
+  background: ${(props) => (props.selected ? 'rgba(71,114,250, 0.1)' : '')};
   position: relative;
   display: flex;
   align-items: center;
   height: ${ITEM_HEIGHT};
   padding-left: 20px;
+  &:hover {
+    background: ${(props) => (props.selected ? 'rgba(71,114,250, 0.1)' : 'rgba(25, 25, 25, 0.08)')};
+  }
   .drag-handle {
     position: absolute;
     left: 2px;
