@@ -1,9 +1,11 @@
 import styled from 'styled-components';
-import { Editable } from 'slate-react'; // 导入 Slate 组件和 React 插件。
+import { Editable } from 'slate-react';
+
+import { MODULE_CONFIG_MAP, ModuleFields } from '@/features/todo/todoSlice';
 
 const ITEM_HEIGHT = '35px';
 
-export const Styled_Item = styled.div<{ selected: boolean }>`
+export const Styled_Item = styled.div<{ selected: boolean; moduleId: ModuleFields }>`
   background: ${(props) => (props.selected ? 'rgba(255, 255, 255, 0.3)' : '')};
   position: relative;
   display: flex;
@@ -18,7 +20,36 @@ export const Styled_Item = styled.div<{ selected: boolean }>`
     color: #000;
     font-size: 12px;
   }
-  .ant-checkbox {
+
+  // checkbox
+  .ant-checkbox-wrapper {
+    .ant-checkbox-inner {
+      border: 1px solid ${(props) => MODULE_CONFIG_MAP[props.moduleId].color};
+    }
+    &:hover {
+      .ant-checkbox-inner {
+        border: 1px solid ${(props) => MODULE_CONFIG_MAP[props.moduleId].color};
+        background: ${(props) => MODULE_CONFIG_MAP[props.moduleId].color};
+        opacity: 0.3;
+      }
+    }
+  }
+  // checkbox 选中
+  .ant-checkbox-wrapper.ant-checkbox-wrapper-checked {
+    .ant-checkbox-inner {
+      border-color: #909399;
+      background-color: #909399;
+    }
+    &:hover {
+      .ant-checkbox-checked .ant-checkbox-inner {
+        border-color: #304352;
+        background-color: #304352;
+        opacity: 1;
+      }
+    }
+  }
+  // 待【近期完成】验证 再删除下面注释代码
+  /* .ant-checkbox {
     top: 0;
   }
   .ant-checkbox-disabled {
@@ -29,7 +60,7 @@ export const Styled_Item = styled.div<{ selected: boolean }>`
     .ant-checkbox-inner:after {
       border-color: rgba(255, 255, 255, 0.6);
     }
-  }
+  } */
 `;
 export const Styled_ItemContent = styled.div<{ selected: boolean; completed: number }>`
   border-bottom: ${(props) => (props.selected ? '1px solid transparent' : '1px solid rgba(255, 255, 255, 0.2)')};
@@ -38,7 +69,7 @@ export const Styled_ItemContent = styled.div<{ selected: boolean; completed: num
   height: 100%;
   display: flex;
   align-items: center;
-  color: ${(props) => (props.completed ? 'rgb(255, 255, 255, 0.6)' : 'rgba(0, 0, 0)')};
+  color: ${(props) => (props.completed ? '#909399' : 'rgba(0, 0, 0)')};
 `;
 
 export const Styled_EditNode = styled(Editable)`

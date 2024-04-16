@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '@/app/store';
 import { TodoListItemType } from '@/types/todoType';
 
-import { initialState } from './dataAndMethods';
+import { initialState } from './constants';
 
 export const todoSlice = createSlice({
   name: 'todo',
@@ -70,6 +70,7 @@ export {
   updateTodoOrderAfterDragThunk
 } from './dataAndMethods';
 export type { getTodoListReqData } from './dataAndMethods';
+export { ModuleFields, MODULE_CONFIG_MAP, initialState } from './constants';
 
 // 导出 todo 的 state值, 用 useAppSelector 也行
 export const selectTodo = (state: RootState) => state.todo;

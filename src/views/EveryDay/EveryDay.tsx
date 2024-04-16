@@ -10,6 +10,7 @@ import useItemOperation from '@/components/ListItem/useItemOperation';
 import DailyCard from './DailyCard';
 import DailyList from './DailyList';
 import { ItemContextMenu } from '@/components/ContextMenu';
+import { EachModuleType } from '@/types/todoType';
 
 interface IEveryDayContext {
   dragStatus: boolean;
@@ -17,6 +18,11 @@ interface IEveryDayContext {
 }
 
 export const EveryDayContext = React.createContext<IEveryDayContext>({} as any);
+
+export type DailyPropsType = {
+  eachModule: EachModuleType;
+  eachModuleOrder: string[];
+};
 
 function EveryDay() {
   const { search } = useLocation();
@@ -51,7 +57,7 @@ function EveryDay() {
   };
 
   // 传递子元素 props
-  const dailyProps = {
+  const dailyProps: DailyPropsType = {
     eachModule,
     eachModuleOrder
   };
@@ -60,7 +66,7 @@ function EveryDay() {
     <EveryDayContext.Provider value={{ dragStatus, handleSetDragStatus }}>
       <DragDropContext
         onBeforeDragStart={() => onBeforeDragStart(handleSetDragStatus)}
-        onDragEnd={async (result) => await onDragEnd(result, handleSetDragStatus, eachModule)}>
+        onDragEnd={async (result: any) => await onDragEnd(result, handleSetDragStatus, eachModule)}>
         {qs.parse(search).listMode ? <DailyList {...dailyProps} /> : <DailyCard {...dailyProps} />}
       </DragDropContext>
       <ItemContextMenu />

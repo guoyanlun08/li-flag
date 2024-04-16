@@ -77,6 +77,7 @@ export function ListItem(props: PropsType) {
   return (
     <Styled_Item
       selected={isSelected}
+      moduleId={moduleId}
       onMouseDown={selectItemFn}
       onMouseEnter={mouseEnterItemFn}
       onMouseLeave={mouseLeaveItemFn}

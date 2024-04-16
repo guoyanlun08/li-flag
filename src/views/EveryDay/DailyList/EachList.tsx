@@ -5,15 +5,15 @@ import ListItemBox from '../ListItemBox';
 
 import { TodoListItemType } from '@/types/todoType';
 interface PropsType {
-  bgColor: string;
+  color: string;
   moduleId: string;
   listData: TodoListItemType[];
 }
 
 export function EachList(props: PropsType) {
-  const { bgColor, moduleId, listData } = props;
+  const { color, moduleId, listData } = props;
   return (
-    <Styled_DailyListContainer bgColor={bgColor}>
+    <Styled_DailyListContainer color={color}>
       <Droppable droppableId={moduleId} type="listType">
         {(provided) => (
           <Styled_ListBox ref={provided.innerRef} {...provided.droppableProps}>

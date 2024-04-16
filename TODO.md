@@ -16,3 +16,6 @@
 - [x] Bug: todoItem 空格输入有问题 ———— p1, allen
 - [x] 体验：回车新增功能，新增后自动聚焦（包括双击的新增）———— p1, allen
 - [ ] 体验：页面有控制缩放功能(localStorage 存储)，PC 端太小了 ———— p2, (待处理 allen)
+
+<!-- 触发完成调用传 index？ dispatch(toggleItemCompletedStatus({ moduleId, itemIndex: index })); -->
+<!-- 右键菜单放在 ListItem？ -->

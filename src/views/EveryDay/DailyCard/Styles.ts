@@ -9,8 +9,8 @@ export const Styled_EveryDayContainer = styled.div`
 `;
 
 // EachModule
-export const Styled_EachModuleContainer = styled.div<{ bgColor: string }>`
-  background: ${(props) => props.bgColor};
+export const Styled_EachModuleContainer = styled.div<{ color?: string }>`
+  background: ${(props) => props.color};
   width: 50%;
   height: 50%;
   border-radius: 20px;
@@ -19,9 +19,14 @@ export const Styled_EachModuleContainer = styled.div<{ bgColor: string }>`
   user-select: none;
 `;
 
-export const Styled_Title = styled.div`
+export const Styled_Title = styled.div<{ color: string }>`
+  color: ${(props) => props.color};
   padding: 10px 10px 0px;
   user-select: none;
+  height: 40px;
+  line-height: 25px;
+  font-weight: bold;
+  font-size: 20px;
 `;
 
 export const Styled_ListBox = styled.div`
