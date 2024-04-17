@@ -9,11 +9,7 @@ function Home() {
   return (
     <Styled_Home>
       <Styled_Header>
-        <h1>LI-FLAG！！！欢迎来到我们，二人帮！！！ 处女作！！！ 史诗级！！！最伟大的作品 </h1>
-        <p style={{ fontSize: '1.2em', marginTop: '20px' }}>
-          你准备好踏上让自己变优秀！！的 "变形记" 之旅了吗? 还没有找到得力助手？那不用再找了，因为你刚刚找到了最酷，最适合你的
-          "良师益友"了！！！
-        </p>
+        <h1>! LI-FLAG !</h1>
       </Styled_Header>
 
       <Styled_Introduce>
@@ -48,8 +44,6 @@ function Home() {
         <div className="intro-title">公告:</div>
         <div className="intro-content">
           <p>&nbsp;&nbsp;&nbsp;&nbsp;LI-Flag 还会不断的完善呢，已经有第二期的想法啦！</p>
-          <br />
-          <p>（进度是有点小慢，只有下班的时间搞呐，那个骑行佬周末要骑车磨蛋的）</p>
           <br />
           <p>
             欢迎大家对 LI-Flag有什么点子，想法，BUG(骑行佬写的)，可以
