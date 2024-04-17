@@ -7,6 +7,7 @@ export const Styled_EveryDayContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   position: relative;
+  background: rgba(71, 114, 250, 0.1);
 `;
 
 // 坐标系
@@ -16,12 +17,12 @@ export const Styled_CoordinateSystem = styled.div`
     background-color: rgb(178, 178, 178);
     .axis-arrow {
       position: absolute;
-      width: 0;
-      height: 0;
+      width: 10px;
+      height: 10px;
     }
     .axis-name {
       position: absolute;
-      font-size: 16px;
+      font-size: 14px;
       font-weight: bold;
     }
   }
@@ -32,14 +33,14 @@ export const Styled_CoordinateSystem = styled.div`
     left: 2%;
     .x-arrow {
       right: -4px;
-      top: -15px;
-      border-left: 15px solid rgb(178, 178, 178);
-      border-top: 15px solid transparent;
-      border-bottom: 15px solid transparent;
+      top: -5px;
+      border-top: 4px solid rgb(178, 178, 178);
+      border-right: 4px solid rgb(178, 178, 178);
+      transform: rotate(45deg);
     }
     .x-name {
       right: -2%;
-      top: -30px;
+      top: -25px;
       color: #ffb000;
     }
   }
@@ -49,24 +50,24 @@ export const Styled_CoordinateSystem = styled.div`
     top: 2%;
     left: 50%;
     .y-arrow {
-      right: -15px;
-      top: -4px;
-      border-left: 15px solid transparent;
-      border-right: 15px solid transparent;
-      border-bottom: 15px solid rgb(178, 178, 178);
+      right: -4px;
+      top: -2px;
+      border-top: 4px solid rgb(178, 178, 178);
+      border-right: 4px solid rgb(178, 178, 178);
+      transform: rotate(-45deg);
     }
     .y-name {
       width: 40px;
-      right: 15px;
-      top: -2%;
+      right: 0px;
+      top: -3%;
       color: #ff4d4f;
     }
   }
 `;
 
 // EachModule
-export const Styled_EachModuleContainer = styled.div<{ color?: string; index: number }>`
-  background: ${(props) => props.color};
+export const Styled_EachModuleContainer = styled.div<{ index: number }>`
+  background: #fff;
   margin-bottom: ${(props) => (props.index === 0 || props.index === 1 ? '1%' : '0px')};
   margin-right: ${(props) => (props.index === 0 || props.index === 2 ? '2%' : '0px')};
   width: 49%;
