@@ -6,7 +6,6 @@ export const Styled_EveryDayOutlet = styled.div`
   flex-direction: column;
   .nav-tools {
     height: 50px;
-    background: #fff;
   }
   .everyday-outlet {
     flex: 1;

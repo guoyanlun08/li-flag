@@ -9,10 +9,16 @@ import {
   updateTodoOrderAfterDragThunk,
   setTodoEntireModule,
   deleteTodoItemThunk,
-  setSelectedItem
+  setSelectedItem,
+  ModuleFields
 } from '@/features/todo/todoSlice';
 
 import { EachModuleType, TodoListItemType } from '@/types/todoType';
+
+type DropResultSelf = DropResult & {
+  source: { droppableId: ModuleFields };
+  destination: { droppableId: ModuleFields };
+};
 
 /** 调整拖拽后的 todoItemList */
 function reorderList(list: TodoListItemType[], startIndex: number, endIndex: number) {
@@ -74,7 +80,7 @@ export default function useItemOperation() {
   };
 
   /** 拖拽后触发 */
-  const onDragEnd = async (result: DropResult, handleSetDragStatus: (value: boolean) => void, eachModule: EachModuleType) => {
+  const onDragEnd = async (result: DropResultSelf, handleSetDragStatus: (value: boolean) => void, eachModule: EachModuleType) => {
     const { source, destination } = result;
     handleSetDragStatus(false);
 

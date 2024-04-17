@@ -1,22 +1,55 @@
 import React from 'react';
-import { Collapse } from 'antd';
+import { Collapse, CollapseProps } from 'antd';
 
+import { ModuleFields } from '@/features/todo/todoSlice';
+
+import { ModuleDataType } from '@/types/todoType';
+import { DailyPropsType } from '../EveryDay';
 import { EachList } from './EachList';
+import { Styled_ListCollapse } from './Styles';
 
-// https://ant-design.antgroup.com/components/collapse-cn  控制台有报提示，antd文档建议 5.6 换种写法
-const { Panel } = Collapse;
+function DailyList(props: DailyPropsType) {
+  // 模块顺序
+  const MODULE_ORDER = [
+    ModuleFields.IMPORTANT_URGENT,
+    ModuleFields.IMPORTANT_NOT_URGENT,
+    ModuleFields.NOT_IMPORTANT_URGENT,
+    ModuleFields.NOT_IMPORTANT_NOT_URGENT
+  ];
 
-function DailyList(props: any) {
+  const getItemsMap = (item: ModuleDataType) => {
+    let ItemsMap: { [key in ModuleFields]: CollapseProps['items'] } = {
+      [ModuleFields.IMPORTANT_URGENT]: undefined,
+      [ModuleFields.IMPORTANT_NOT_URGENT]: undefined,
+      [ModuleFields.NOT_IMPORTANT_URGENT]: undefined,
+      [ModuleFields.NOT_IMPORTANT_NOT_URGENT]: undefined
+    };
+    MODULE_ORDER.forEach((moduleId) => {
+      ItemsMap[moduleId] = [
+        {
+          key: moduleId,
+          label: (
+            <div className="list-label">
+              <div className="list-label-icon">{item.moduleId}</div>
+              <div className="list-label-title">{item.title}</div>
+            </div>
+          ),
+          children: <EachList item={item} />
+        }
+      ];
+    });
+
+    return ItemsMap[item.moduleId];
+  };
+
   return (
     <>
-      {props.eachModuleOrder.map((module: string) => {
+      {MODULE_ORDER.map((module: string) => {
         const item = props.eachModule[module];
         return (
-          <Collapse key={item.moduleId} defaultActiveKey={[item.moduleId]}>
-            <Panel header={item.moduleId} key={item.moduleId}>
-              <EachList {...item} />
-            </Panel>
-          </Collapse>
+          <Styled_ListCollapse key={item.moduleId} color={item.color}>
+            <Collapse items={getItemsMap(item)} defaultActiveKey={[item.moduleId]} />
+          </Styled_ListCollapse>
         );
       })}
     </>

@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '@/app/store';
 import { TodoListItemType } from '@/types/todoType';
 
-import { initialState } from './dataAndMethods';
+import { initialState } from './constants';
 
 export const todoSlice = createSlice({
   name: 'todo',
@@ -42,7 +42,6 @@ export const todoSlice = createSlice({
       const modifyItem: TodoListItemType = state.eachModule[moduleId].listData.find((item) => item.id === id)!;
       modifyItem.todoValue = todoValue;
     },
-    // XXX: 这里的 satet.selectedItem中的 todoValue不一定是准确的
     // 设置 selectedItem
     setSelectedItem: (state, action: PayloadAction<{ todoItem: TodoListItemType }>) => {
       const { todoItem } = action.payload;
@@ -70,6 +69,7 @@ export {
   updateTodoOrderAfterDragThunk
 } from './dataAndMethods';
 export type { getTodoListReqData } from './dataAndMethods';
+export { ModuleFields, MODULE_CONFIG_MAP, initialState } from './constants';
 
 // 导出 todo 的 state值, 用 useAppSelector 也行
 export const selectTodo = (state: RootState) => state.todo;

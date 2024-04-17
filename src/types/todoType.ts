@@ -1,6 +1,7 @@
+import { ModuleFields } from '@/features/todo/constants';
+
 export type TodoStateType = {
   eachModule: EachModuleType;
-  eachModuleOrder: string[];
   selectedItem?: TodoListItemType;
 };
 
@@ -9,14 +10,15 @@ export type EachModuleType = {
 };
 
 export type ModuleDataType = {
-  moduleId: string;
-  bgColor: string;
+  moduleId: ModuleFields;
+  color: string;
+  title: string;
   listData: TodoListItemType[];
 };
 
 export interface TodoListItemType {
   id: number;
-  moduleId: string;
+  moduleId: ModuleFields;
   todoValue: string;
   completed: number;
   order: number;

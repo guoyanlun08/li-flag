@@ -1,25 +1,27 @@
 import React from 'react';
 import { Droppable } from 'react-beautiful-dnd';
 
-import { TodoListItemType } from '@/types/todoType';
+import { ModuleDataType } from '@/types/todoType';
 import useItemOperation from '@/components/ListItem/useItemOperation';
 
 import ListItemBox from '../ListItemBox';
 import { Styled_EachModuleContainer, Styled_Title, Styled_ListBox } from './Styles';
 
 interface PropsType {
-  bgColor: string;
-  moduleId: string;
-  listData: TodoListItemType[];
+  item: ModuleDataType;
+  index: number;
 }
 
 export function EachCard(props: PropsType) {
-  const { bgColor, moduleId, listData } = props;
+  const { color, moduleId, listData, title } = props.item;
   const { addNewTodoItem } = useItemOperation();
 
   return (
-    <Styled_EachModuleContainer bgColor={bgColor} onDoubleClick={() => addNewTodoItem(moduleId)}>
-      <Styled_Title>{moduleId}</Styled_Title>
+    <Styled_EachModuleContainer index={props.index} onDoubleClick={() => addNewTodoItem(moduleId)}>
+      <Styled_Title color={color}>
+        <div className="title-icon">{moduleId}</div>
+        <div>{title}</div>
+      </Styled_Title>
       <Droppable droppableId={moduleId} type="listType">
         {(provided, snapshot) => (
           <Styled_ListBox ref={provided.innerRef} {...provided.droppableProps}>
