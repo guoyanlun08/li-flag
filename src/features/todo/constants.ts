@@ -8,7 +8,6 @@ export enum ModuleFields {
   NOT_IMPORTANT_NOT_URGENT = 'D'
 }
 
-// TODO: variables.module.scss Card 和 List 组件处理完要去除掉 variables.module.scss文件
 export const MODULE_CONFIG_MAP = {
   [ModuleFields.IMPORTANT_URGENT]: {
     color: '#ff4d4f',

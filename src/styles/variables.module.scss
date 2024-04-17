@@ -1,17 +1,9 @@
 // 项目中主要的颜色
 
-$fl-red: #ff4d4f;
-$fl-blue: #1677ff;
-$fl-green: #31c27c;
 $fl-gray: #909399;
-$fa-yellow: #ffb000;
 $f1-activeTab: #fa7547eb;
 
 :export {
-  mainRed: $fl-red;
-  mainBlue: $fl-blue;
-  mainGreen: $fl-green;
-  mainYellow: $fa-yellow;
   mainGray: $fl-gray;
   activeTab: $f1-activeTab;
 }

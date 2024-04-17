@@ -1,7 +1,7 @@
 import React from 'react';
 import { Droppable } from 'react-beautiful-dnd';
 
-import { ModuleDataType, TodoListItemType } from '@/types/todoType';
+import { ModuleDataType } from '@/types/todoType';
 import useItemOperation from '@/components/ListItem/useItemOperation';
 
 import ListItemBox from '../ListItemBox';
@@ -9,6 +9,7 @@ import { Styled_EachModuleContainer, Styled_Title, Styled_ListBox } from './Styl
 
 interface PropsType {
   item: ModuleDataType;
+  index: number;
 }
 
 export function EachCard(props: PropsType) {
@@ -16,7 +17,7 @@ export function EachCard(props: PropsType) {
   const { addNewTodoItem } = useItemOperation();
 
   return (
-    <Styled_EachModuleContainer onDoubleClick={() => addNewTodoItem(moduleId)}>
+    <Styled_EachModuleContainer index={props.index} onDoubleClick={() => addNewTodoItem(moduleId)}>
       <Styled_Title color={color}>
         <div className="title-icon">{moduleId}</div>
         <div>{title}</div>

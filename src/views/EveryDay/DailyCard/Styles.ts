@@ -6,13 +6,71 @@ export const Styled_EveryDayContainer = styled.div`
   height: 100%;
   display: flex;
   flex-wrap: wrap;
+  position: relative;
+`;
+
+// 坐标系
+export const Styled_CoordinateSystem = styled.div`
+  .axis {
+    position: absolute;
+    background-color: rgb(178, 178, 178);
+    .axis-arrow {
+      position: absolute;
+      width: 0;
+      height: 0;
+    }
+    .axis-name {
+      position: absolute;
+      font-size: 16px;
+      font-weight: bold;
+    }
+  }
+  .x-axis {
+    width: 96%;
+    height: 2px;
+    top: 50%;
+    left: 2%;
+    .x-arrow {
+      right: -4px;
+      top: -15px;
+      border-left: 15px solid rgb(178, 178, 178);
+      border-top: 15px solid transparent;
+      border-bottom: 15px solid transparent;
+    }
+    .x-name {
+      right: -2%;
+      top: -30px;
+      color: #ffb000;
+    }
+  }
+  .y-axis {
+    width: 2px;
+    height: 96%;
+    top: 2%;
+    left: 50%;
+    .y-arrow {
+      right: -15px;
+      top: -4px;
+      border-left: 15px solid transparent;
+      border-right: 15px solid transparent;
+      border-bottom: 15px solid rgb(178, 178, 178);
+    }
+    .y-name {
+      width: 40px;
+      right: 15px;
+      top: -2%;
+      color: #ff4d4f;
+    }
+  }
 `;
 
 // EachModule
-export const Styled_EachModuleContainer = styled.div<{ color?: string }>`
+export const Styled_EachModuleContainer = styled.div<{ color?: string; index: number }>`
   background: ${(props) => props.color};
-  width: 50%;
-  height: 50%;
+  margin-bottom: ${(props) => (props.index === 0 || props.index === 1 ? '1%' : '0px')};
+  margin-right: ${(props) => (props.index === 0 || props.index === 2 ? '2%' : '0px')};
+  width: 49%;
+  height: 49%;
   border-radius: 20px;
   display: flex;
   flex-direction: column;
