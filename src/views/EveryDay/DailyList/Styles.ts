@@ -1,10 +1,23 @@
 import styled from 'styled-components';
 
-export const Styled_DailyListContainer = styled.div<{ color: string }>`
+export const Styled_ListCollapse = styled.div<{ color: string }>`
+  .list-label {
+    font-size: 18px;
+    color: ${(props) => props.color};
+    display: flex;
+    .list-label-icon {
+      margin-right: 6px;
+    }
+    .list-label-title {
+      font-weight: bold;
+    }
+  }
+`;
+
+export const Styled_DailyListContainer = styled.div`
   width: 100%;
   height: 100%;
   min-height: 35px;
-  background-color: ${(props) => props.color};
   display: flex;
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;

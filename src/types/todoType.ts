@@ -2,7 +2,6 @@ import { ModuleFields } from '@/features/todo/constants';
 
 export type TodoStateType = {
   eachModule: EachModuleType;
-  eachModuleOrder: string[];
   selectedItem?: TodoListItemType;
 };
 

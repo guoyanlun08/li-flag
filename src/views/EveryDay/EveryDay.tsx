@@ -21,13 +21,12 @@ export const EveryDayContext = React.createContext<IEveryDayContext>({} as any);
 
 export type DailyPropsType = {
   eachModule: EachModuleType;
-  eachModuleOrder: string[];
 };
 
 function EveryDay() {
   const { search } = useLocation();
   const { isLogin } = useContext(AuthContext);
-  const { eachModule, eachModuleOrder } = useAppSelector((state) => state.todo);
+  const { eachModule } = useAppSelector((state) => state.todo);
   const { getTodoList, onBeforeDragStart, onDragEnd } = useItemOperation();
 
   const [dragStatus, setDragStatus] = useState(false); // 当前拖拽状态
@@ -58,8 +57,7 @@ function EveryDay() {
 
   // 传递子元素 props
   const dailyProps: DailyPropsType = {
-    eachModule,
-    eachModuleOrder
+    eachModule
   };
 
   return (

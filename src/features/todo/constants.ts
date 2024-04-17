@@ -172,6 +172,6 @@ export const initialState: TodoStateType = {
       ]
     }
   },
-  eachModuleOrder: ['A', 'B', 'C', 'D'],
+  // XXX: 这里的 satet.selectedItem中的 todoValue不一定是准确的
   selectedItem: undefined
 };
