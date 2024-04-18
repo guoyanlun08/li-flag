@@ -32,6 +32,7 @@ export const Styled_CoordinateSystem = styled.div`
     height: 2px;
     top: 50%;
     left: 2%;
+    transform: translateY(-50%);
     .x-arrow {
       right: -4px;
       top: -5px;
@@ -50,6 +51,7 @@ export const Styled_CoordinateSystem = styled.div`
     height: 96%;
     top: 2%;
     left: 50%;
+    transform: translateX(-50%);
     .y-arrow {
       right: -4px;
       top: -2px;

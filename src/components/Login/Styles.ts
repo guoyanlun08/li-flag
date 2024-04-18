@@ -17,7 +17,7 @@ export const Styled_LoginModal = styled(Modal)`
       }
     }
     .ant-modal-content {
-      background: linear-gradient(45deg, rgb(228, 136, 188), rgb(130, 199, 226));
+      background: #fdfbfb;
       transform-origin: center center;
       transition: all 2s ease 0s;
     }
