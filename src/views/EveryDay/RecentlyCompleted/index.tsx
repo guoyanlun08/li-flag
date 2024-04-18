@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import moment from 'moment';
+import dayjs from 'dayjs';
 
 import { useAppDispatch } from '@/app/hooks';
 import { getTodoListThunk, getTodoListReqData } from '@/features/todo/todoSlice';
@@ -18,11 +18,11 @@ export type RecentFormType = {
 /** 近 x 天的数据 */
 const recentDaysFormat = (days: number) => {
   return {
-    startTime: moment()
+    startTime: dayjs()
       .subtract(days - 1, 'days')
       .startOf('day')
       .format(),
-    endTime: moment().endOf('day').format()
+    endTime: dayjs().endOf('day').format()
   };
 };
 /** recentForm 初始化 */

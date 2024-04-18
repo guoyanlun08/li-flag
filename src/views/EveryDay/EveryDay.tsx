@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import qs from 'query-string';
 import { DragDropContext } from 'react-beautiful-dnd';
-import moment from 'moment';
+import dayjs from 'dayjs';
 
 import { useAppSelector, AuthContext } from '@/app/hooks';
 import useItemOperation from '@/components/ListItem/useItemOperation';
@@ -40,8 +40,8 @@ function EveryDay() {
     }
 
     // XXX：晚上 12点都会强制刷新，目前是强制的。后期这个需求再整理。
-    const now = moment().valueOf();
-    const endOfDay = moment().endOf('day').valueOf() + 1;
+    const now = dayjs().valueOf();
+    const endOfDay = dayjs().endOf('day').valueOf() + 1;
 
     const freshDataTimer = setTimeout(() => {
       console.log('12点刷新页面，更新新一天数据');
