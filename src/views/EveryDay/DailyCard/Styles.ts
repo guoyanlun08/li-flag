@@ -4,6 +4,7 @@ import styled from 'styled-components';
 export const Styled_EveryDayContainer = styled.div`
   width: 100%;
   height: 100%;
+  padding: 10px;
   display: flex;
   flex-wrap: wrap;
   position: relative;
@@ -58,8 +59,8 @@ export const Styled_CoordinateSystem = styled.div`
     }
     .y-name {
       width: 40px;
-      right: 0px;
-      top: -3%;
+      right: -6px;
+      top: -2%;
       color: #ff4d4f;
     }
   }
