@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Checkbox } from 'antd';
+import { Checkbox, DatePicker } from 'antd';
 import { MenuOutlined } from '@ant-design/icons';
 import { useContextMenu } from 'react-contexify';
 
@@ -26,6 +26,7 @@ export function ListItem(props: PropsType) {
   const context = useContext(EveryDayContext);
   const dispatch = useAppDispatch();
   const todoState = useAppSelector((store) => store.todo);
+
   // item右键菜单
   const { show: showItemContextMenu } = useContextMenu({
     id: ITEM_MENU_ID,
@@ -97,6 +98,13 @@ export function ListItem(props: PropsType) {
       <Styled_ItemContent completed={completed} selected={isSelected}>
         {editable ? <EditNode todoValue={todoValue} selected={isSelected} /> : <div>{todoValueFormat(todoValue)}</div>}
       </Styled_ItemContent>
+      <div
+        onClick={(e) => {
+          e.stopPropagation();
+          // setOpen(true);
+        }}>
+        日期选择
+      </div>
     </Styled_Item>
   );
 }

@@ -69,7 +69,7 @@ export const Styled_Item = styled.div<{ selected: boolean; moduleId: ModuleField
 export const Styled_ItemContent = styled.div<{ selected: boolean; completed: number }>`
   border-bottom: ${(props) => (props.selected ? '1px solid transparent' : '1px solid rgba(255, 255, 255, 0.2)')};
   padding-left: 8px;
-  width: 100%;
+  width: 90%;
   height: 100%;
   display: flex;
   align-items: center;
