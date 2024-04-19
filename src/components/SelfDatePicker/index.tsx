@@ -4,8 +4,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Styled_SelfDatePicker } from './Styles';
 
 type SelfDatePickProps = {
-  open: boolean;
-  setOpen: (val: boolean) => void;
+  open?: boolean;
+  setOpen?: (val: boolean) => void;
 };
 
 // 将其设置成一个弹窗，有日期选择，和时间段选择
@@ -14,10 +14,18 @@ export const SelfDatePicker = (props: SelfDatePickProps) => {
 
   return (
     <Styled_SelfDatePicker>
+      <div className="date-tab">
+        <div className="date-tab-box">
+          <div>日期</div>
+        </div>
+        <div className="date-tab-box">
+          <div>时间段</div>
+        </div>
+      </div>
       <DatePicker
         open={open}
         onChange={() => {
-          setOpen(false);
+          // setOpen(false);
         }}
       />
     </Styled_SelfDatePicker>

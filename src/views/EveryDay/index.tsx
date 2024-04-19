@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom';
 
 import NavTools from './NavTools';
 import { Styled_EveryDayOutlet } from './Styles';
+import { SelfDatePicker } from '@/components/SelfDatePicker';
 
 function EveryDayOutlet() {
   return (
@@ -11,7 +12,8 @@ function EveryDayOutlet() {
         <NavTools />
       </div>
       <div className="everyday-outlet">
-        <Outlet></Outlet>
+        {/* <Outlet></Outlet> */}
+        <SelfDatePicker />
       </div>
     </Styled_EveryDayOutlet>
   );
