@@ -11,6 +11,7 @@ import { TodoListItemType } from '@/types/todoType';
 import { Styled_Item, Styled_ItemContent } from './Styles';
 import { EditNode } from './EditNode';
 import { ITEM_MENU_ID } from '@/components/ContextMenu';
+import { SelfDatePicker } from '@/components/SelfDatePicker';
 
 interface PropsType {
   index: number;
@@ -97,6 +98,7 @@ export function ListItem(props: PropsType) {
       <Styled_ItemContent completed={completed} selected={isSelected}>
         {editable ? <EditNode todoValue={todoValue} selected={isSelected} /> : <div>{todoValueFormat(todoValue)}</div>}
       </Styled_ItemContent>
+      <SelfDatePicker />
     </Styled_Item>
   );
 }
