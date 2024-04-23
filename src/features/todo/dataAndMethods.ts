@@ -4,7 +4,6 @@ import { TodoListItemType, TodoStateType } from '@/types/todoType';
 import api from '@/utils/httpRequest';
 
 export type getTodoListReqData = {
-  today: boolean;
   moduleId: string;
   completed: number;
   startTime: string;
@@ -15,9 +14,9 @@ export type getTodoListReqData = {
 // 异步：设置 todoState的数据
 export const getTodoListThunk = createAsyncThunk<any, Partial<getTodoListReqData>>('todo/getTodoList', async (payload) => {
   try {
-    const { today = false, ...data } = payload;
+    const { ...data } = payload;
 
-    const resp = await api.get('/todoItem/getTodoList', { today: Number(today), ...data });
+    const resp = await api.get('/todoItem/getTodoList', { ...data });
     const { list } = resp.data;
 
     return list;

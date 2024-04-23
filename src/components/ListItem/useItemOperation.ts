@@ -67,7 +67,7 @@ export default function useItemOperation() {
   };
 
   /** 获取 todoList 数据 */
-  const getTodoList = async (data: { today?: boolean }) => {
+  const getTodoList = async (data: {}) => {
     const { payload: list } = await dispatch(getTodoListThunk(data));
     if (list) {
       dispatch(setTodoEntireModule({ list }));
@@ -97,7 +97,7 @@ export default function useItemOperation() {
       const { payload: resp } = await dispatch(updateTodoOrderAfterDragThunk({ sourceListData: afterDragListData }));
 
       if (resp.updated) {
-        await getTodoList({ today: true });
+        await getTodoList({});
       } else {
         // 拖拽失败，数据回退
         dispatch(setTodoModule({ moduleId: source.droppableId, list: beforeDragListData }));
@@ -123,7 +123,7 @@ export default function useItemOperation() {
 
       const { payload: resp } = await dispatch(updateTodoOrderAfterDragThunk({ sourceListData, destinationListData, dragItem }));
       if (resp.updated) {
-        await getTodoList({ today: true });
+        await getTodoList({});
       } else {
         // 拖拽失败，数据回退
         dispatch(setTodoModule({ moduleId: eachModule[source.droppableId].moduleId, list: eachModule[source.droppableId].listData }));

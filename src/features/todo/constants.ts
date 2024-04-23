@@ -47,7 +47,9 @@ export const initialState: TodoStateType = {
           completed: 0,
           order: 1,
           createTime: new Date().toLocaleString(),
-          updateTime: new Date().toLocaleString()
+          updateTime: new Date().toLocaleString(),
+          startTime: new Date().toLocaleString(),
+          endTime: new Date().toLocaleString()
         },
         {
           id: -2,
@@ -61,7 +63,9 @@ export const initialState: TodoStateType = {
           completed: 1,
           order: 2,
           createTime: new Date().toLocaleString(),
-          updateTime: new Date().toLocaleString()
+          updateTime: new Date().toLocaleString(),
+          startTime: new Date().toLocaleString(),
+          endTime: new Date().toLocaleString()
         }
       ]
     },
@@ -82,7 +86,9 @@ export const initialState: TodoStateType = {
           completed: 0,
           order: 1,
           createTime: new Date().toLocaleString(),
-          updateTime: new Date().toLocaleString()
+          updateTime: new Date().toLocaleString(),
+          startTime: new Date().toLocaleString(),
+          endTime: new Date().toLocaleString()
         },
         {
           id: -4,
@@ -96,7 +102,9 @@ export const initialState: TodoStateType = {
           completed: 1,
           order: 2,
           createTime: new Date().toLocaleString(),
-          updateTime: new Date().toLocaleString()
+          updateTime: new Date().toLocaleString(),
+          startTime: new Date().toLocaleString(),
+          endTime: new Date().toLocaleString()
         }
       ]
     },
@@ -117,7 +125,9 @@ export const initialState: TodoStateType = {
           completed: 0,
           order: 1,
           createTime: new Date().toLocaleString(),
-          updateTime: new Date().toLocaleString()
+          updateTime: new Date().toLocaleString(),
+          startTime: new Date().toLocaleString(),
+          endTime: new Date().toLocaleString()
         },
         {
           id: -6,
@@ -131,7 +141,9 @@ export const initialState: TodoStateType = {
           completed: 1,
           order: 2,
           createTime: new Date().toLocaleString(),
-          updateTime: new Date().toLocaleString()
+          updateTime: new Date().toLocaleString(),
+          startTime: new Date().toLocaleString(),
+          endTime: new Date().toLocaleString()
         }
       ]
     },
@@ -152,7 +164,9 @@ export const initialState: TodoStateType = {
           completed: 0,
           order: 1,
           createTime: new Date().toLocaleString(),
-          updateTime: new Date().toLocaleString()
+          updateTime: new Date().toLocaleString(),
+          startTime: new Date().toLocaleString(),
+          endTime: new Date().toLocaleString()
         },
         {
           id: -8,
@@ -166,7 +180,9 @@ export const initialState: TodoStateType = {
           completed: 1,
           order: 2,
           createTime: new Date().toLocaleString(),
-          updateTime: new Date().toLocaleString()
+          updateTime: new Date().toLocaleString(),
+          startTime: new Date().toLocaleString(),
+          endTime: new Date().toLocaleString()
         }
       ]
     }

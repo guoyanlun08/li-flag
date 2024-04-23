@@ -26,11 +26,11 @@ const router = createBrowserRouter([
           {
             path: '',
             element: <EveryDay />
-          },
-          {
-            path: 'recent-completed',
-            element: <RecentlyCompleted />
           }
+          // {
+          //   path: 'recent-completed',
+          //   element: <RecentlyCompleted />
+          // }
         ]
       }
     ]

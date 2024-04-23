@@ -11,11 +11,11 @@ const navToolList = [
   {
     name: '列表形式',
     path: '/everyday?listMode=true'
-  },
-  {
-    name: '近期完成',
-    path: '/everyday/recent-completed'
   }
+  // {
+  //   name: '近期完成',
+  //   path: '/everyday/recent-completed'
+  // }
 ];
 
 function NavTools() {

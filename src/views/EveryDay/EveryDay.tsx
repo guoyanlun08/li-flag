@@ -33,7 +33,7 @@ function EveryDay() {
 
   useEffect(() => {
     const fetchTodoList = async () => {
-      await getTodoList({ today: true });
+      await getTodoList({});
     };
     if (isLogin) {
       fetchTodoList();

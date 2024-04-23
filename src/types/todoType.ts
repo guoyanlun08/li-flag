@@ -24,4 +24,6 @@ export interface TodoListItemType {
   order: number;
   createTime?: string;
   updateTime?: string;
+  startTime?: string;
+  endTime?: string;
 }
