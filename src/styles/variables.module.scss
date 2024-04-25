@@ -2,8 +2,10 @@
 
 $fl-gray: #909399;
 $f1-activeTab: #fa7547eb;
+$fl-blue: #409eff;
 
 :export {
+  mainBlue: $fl-blue;
   mainGray: $fl-gray;
   activeTab: $f1-activeTab;
 }

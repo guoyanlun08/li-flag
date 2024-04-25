@@ -4,10 +4,11 @@ import { MenuOutlined } from '@ant-design/icons';
 import { useContextMenu } from 'react-contexify';
 
 import { useAppSelector, useAppDispatch } from '@/app/hooks';
-import { toggleItemCompletedStatus, setSelectedItem, updateTodoItemThunk } from '@/features/todo/todoSlice';
+import { toggleItemCompletedStatus, setSelectedItem } from '@/features/todo/todoSlice';
+import useItemOperation from './useItemOperation';
+
 import { EveryDayContext } from '@/views/EveryDay/EveryDay';
 import { TodoListItemType } from '@/types/todoType';
-
 import { Styled_Item, Styled_ItemContent } from './Styles';
 import { EditNode } from './EditNode';
 import { ITEM_MENU_ID } from '@/components/ContextMenu';
@@ -27,6 +28,8 @@ export function ListItem(props: PropsType) {
   const context = useContext(EveryDayContext);
   const dispatch = useAppDispatch();
   const todoState = useAppSelector((store) => store.todo);
+  const { updateTodoItem } = useItemOperation();
+
   // item右键菜单
   const { show: showItemContextMenu } = useContextMenu({
     id: ITEM_MENU_ID,
@@ -89,7 +92,7 @@ export function ListItem(props: PropsType) {
         checked={Boolean(completed)}
         disabled={!editable}
         onChange={async () => {
-          const { payload: hadUpdated = false } = await dispatch(updateTodoItemThunk({ id, completed: Number(!completed) }));
+          const hadUpdated = await updateTodoItem({ id, completed: Number(!completed) });
           if (hadUpdated) {
             dispatch(toggleItemCompletedStatus({ moduleId, itemIndex: index }));
           }
@@ -98,7 +101,7 @@ export function ListItem(props: PropsType) {
       <Styled_ItemContent completed={completed} selected={isSelected}>
         {editable ? <EditNode todoValue={todoValue} selected={isSelected} /> : <div>{todoValueFormat(todoValue)}</div>}
       </Styled_ItemContent>
-      <SelfDatePicker />
+      <SelfDatePicker todoItem={todoItem} />
     </Styled_Item>
   );
 }

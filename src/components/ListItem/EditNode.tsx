@@ -1,11 +1,11 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { createEditor } from 'slate'; // 导入 Slate 编辑器工厂。
-import { ReactEditor, Slate, withReact } from 'slate-react'; // 导入 Slate 组件和 React 插件。
+import { Slate, withReact } from 'slate-react'; // 导入 Slate 组件和 React 插件。
 
 import { useDebounce } from '@/hooks/efficientHooks';
 import { useAppSelector, useAppDispatch } from '@/app/hooks';
 import useItemOperation from './useItemOperation';
-import { setItemTodoValue, updateTodoItemThunk } from '@/features/todo/todoSlice';
+import { setItemTodoValue } from '@/features/todo/todoSlice';
 
 import { Styled_EditNode } from './Styles';
 import { Toolbar, DefaultElement, Leaf } from './slate';
@@ -20,7 +20,7 @@ export function EditNode(props: PropsType) {
 
   const todoState = useAppSelector((store) => store.todo);
   const dispatch = useAppDispatch();
-  const { addNewTodoItem } = useItemOperation();
+  const { addNewTodoItem, updateTodoItem } = useItemOperation();
   const inputDebounce = useDebounce();
   const selectDebounce = useDebounce();
 
@@ -70,8 +70,9 @@ export function EditNode(props: PropsType) {
   const realTextChange = async (todoValue: string) => {
     if (todoState.selectedItem) {
       const { id, moduleId } = todoState.selectedItem;
-      const { payload: resp } = await dispatch(updateTodoItemThunk({ id, todoValue }));
-      if (resp) {
+      const hadUpdated = await updateTodoItem({ id, todoValue });
+
+      if (hadUpdated) {
         dispatch(setItemTodoValue({ id, moduleId, todoValue }));
       }
     }

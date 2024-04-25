@@ -60,15 +60,6 @@ export const todoSlice = createSlice({
 // 导出 分发动作
 export const { setTodoEntireModule, setTodoModule, setItemTodoValue, setSelectedItem, toggleItemCompletedStatus } = todoSlice.actions;
 
-// 导出 异步动作
-export {
-  getTodoListThunk,
-  addTodoItemThunk,
-  updateTodoItemThunk,
-  deleteTodoItemThunk,
-  updateTodoOrderAfterDragThunk
-} from './dataAndMethods';
-export type { getTodoListReqData } from './dataAndMethods';
 export { ModuleFields, MODULE_CONFIG_MAP, initialState } from './constants';
 
 // 导出 todo 的 state值, 用 useAppSelector 也行

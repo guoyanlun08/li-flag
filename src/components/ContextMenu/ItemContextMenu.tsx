@@ -17,7 +17,7 @@ function ItemContextMenu(contextMenuProps: ItemContextMenuProps) {
 
     await deleteTodoItem(id);
 
-    await getTodoList({});
+    await getTodoList();
   };
 
   return (

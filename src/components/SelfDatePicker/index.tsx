@@ -1,15 +1,37 @@
 // XXX: 看没有办法处理 弹出日历 点击 Styled_SelfDatePickerPop外的元素不会关闭 datePickerPop
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
+import dayjs from 'dayjs';
 
+import { TodoListItemType } from '@/types/todoType';
 import { SelfDatePickerPop } from './SelfDatePickerPop';
 import { Styled_SelfDatePicker, DATE_PICKER_POP_WIDTH, DATE_PICKER_POP_HEIGHT } from './Styles';
 
 const viewportWidth = window.innerWidth;
 const viewportHeight = window.innerHeight;
 
-export const SelfDatePicker = () => {
+type SelfDatePickerProps = {
+  todoItem: TodoListItemType;
+};
+
+export const SelfDatePicker = (props: SelfDatePickerProps) => {
+  const {
+    todoItem: { id, startTime, endTime }
+  } = props;
   const [visible, setVisible] = useState(false);
   const [coordinate, setCoordinate] = useState({ x: 0, y: 0 });
+  // 处理 todoItem中 startTime, endTime 用于 .date-picker-title文本显示
+  const dateTitle = useMemo(() => {
+    const ds_startTime = dayjs(startTime);
+    const ds_endTime = dayjs(endTime);
+
+    if (ds_startTime.isSame(ds_endTime, 'day')) {
+      // 是同一天 显示 今天
+      return '今天';
+    } else {
+      // 其余之间显示时间段 MM-DD ~ MM-DD
+      return `${ds_startTime.format('MM-DD')} ~ ${ds_endTime.format('MM-DD')}`;
+    }
+  }, [startTime, endTime]);
 
   // 点击选择 item 日期，打开 pop
   const clickDatePicker = (e: React.MouseEvent) => {
@@ -40,9 +62,11 @@ export const SelfDatePicker = () => {
   return (
     <Styled_SelfDatePicker>
       <div className="date-picker-title" onClick={(e) => clickDatePicker(e)}>
-        日期选择
+        {dateTitle}
       </div>
-      {visible ? <SelfDatePickerPop coordinate={coordinate} changeVisible={changeVisible} /> : null}
+      {visible ? (
+        <SelfDatePickerPop todoId={id} startTime={startTime} endTime={endTime} coordinate={coordinate} changeVisible={changeVisible} />
+      ) : null}
     </Styled_SelfDatePicker>
   );
 };

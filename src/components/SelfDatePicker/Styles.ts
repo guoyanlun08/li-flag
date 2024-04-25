@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import mainColor from '@/styles/variables.module.scss';
 
 // 弹窗的宽度
 export const DATE_PICKER_POP_WIDTH = 220;
@@ -8,6 +9,9 @@ export const Styled_SelfDatePicker = styled.div`
   .date-picker-title {
     width: 60px;
     font-size: 12px;
+    cursor: pointer;
+    color: ${mainColor.mainBlue};
+    text-align: center;
   }
 `;
 

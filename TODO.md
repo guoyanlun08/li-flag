@@ -11,10 +11,15 @@
 
 ---
 
-- [ ] item 回车新增，新增应该自动聚焦新的 item ———— p1, (待处理 allen)
-- [ ] 每日模块的标题，背景颜色支持自定义 ———— p2
+- [x] item 回车新增，新增应该自动聚焦新的 item ———— p1, (待处理 allen)
 - [x] Bug: todoItem 空格输入有问题 ———— p1, allen
 - [x] 体验：回车新增功能，新增后自动聚焦（包括双击的新增）———— p1, allen
 - [x] 每日模块 ui 重设计 ———— p1, allen
 - [ ] 体验：页面有控制缩放功能(localStorage 存储)，PC 端太小了 ———— p2, (待处理 allen)
-- [ ] 每日模块 UI 修改 ———— p0, (处理中 allen)
+- [x] 每日模块 UI 修改 ———— p0, allen
+- [x] 改掉 todoStore 里的异步函数, 放进 apis 文件夹管理 ———— p2, allen
+- [ ] user 的 api 需要放到 apis 文件夹管理 ———— p2, (待处理 allen)
+- [ ] 个人设置页样式调整 ———— p2, (待处理 allen)
+- [ ] 登出功能 ———— p2, (待处理 allen)
+- [ ] 开始时间不能大于结束时间 item，已经完成禁止打开时间选择弹窗，看看是否用一个 rangePicker 会好一点，且直接设置 明天的选项 ———— p1, (待处理 allen)
+- [ ] todoItem 的 store 需要重新整理，略乱 ———— p1, (待处理 allen)

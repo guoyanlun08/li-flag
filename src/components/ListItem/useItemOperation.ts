@@ -1,17 +1,11 @@
 import { useContext } from 'react';
 import { DropResult } from 'react-beautiful-dnd';
 
+import api from '@/utils/httpRequest';
+import { apiAddNewTodoItem, apiDeleteTodoItem, apiUpdateTodoItem, apiGetTodoList, apiUpdateTodoOrderAfterDrag } from '@/apis/todoItem';
+import { apiAddTodoItemData, apiUpdateTodoItemData, apiGetTodoListData } from '@/apis/todoItem.type';
 import { useAppDispatch, AuthContext, useAppSelector } from '@/app/hooks';
-import {
-  addTodoItemThunk,
-  setTodoModule,
-  getTodoListThunk,
-  updateTodoOrderAfterDragThunk,
-  setTodoEntireModule,
-  deleteTodoItemThunk,
-  setSelectedItem,
-  ModuleFields
-} from '@/features/todo/todoSlice';
+import { setTodoModule, setTodoEntireModule, setSelectedItem, ModuleFields } from '@/features/todo/todoSlice';
 
 import { EachModuleType, TodoListItemType } from '@/types/todoType';
 
@@ -51,26 +45,34 @@ export default function useItemOperation() {
       order = insertIndex ?? order;
     }
 
-    const { payload } = await dispatch(addTodoItemThunk({ moduleId, order, type, listData }));
+    const { hadAdd } = await apiAddNewTodoItem({ moduleId, order, type });
 
-    if (payload) {
-      dispatch(setTodoModule({ moduleId, list: payload.listData }));
-      dispatch(setSelectedItem({ todoItem: payload.listData[order] }));
+    if (hadAdd) {
+      await getTodoList();
+      // dispatch(setTodoModule({ moduleId, list: resp.listData }));
+      // dispatch(setSelectedItem({ todoItem: resp.listData[order] }));
     }
   };
 
   /** 删除 todoItem */
   const deleteTodoItem = async (id: number) => {
-    try {
-      await dispatch(deleteTodoItemThunk({ id }));
-    } catch (e) {}
+    await apiDeleteTodoItem(id);
+  };
+
+  /** 更改 todoItem */
+  const updateTodoItem = async (data: apiUpdateTodoItemData) => {
+    const resp = await apiUpdateTodoItem(data);
+
+    return resp;
   };
 
   /** 获取 todoList 数据 */
-  const getTodoList = async (data: {}) => {
-    const { payload: list } = await dispatch(getTodoListThunk(data));
+  const getTodoList = async (data?: apiGetTodoListData) => {
+    const { list } = await apiGetTodoList(data);
+
     if (list) {
       dispatch(setTodoEntireModule({ list }));
+      return list;
     }
   };
 
@@ -94,10 +96,10 @@ export default function useItemOperation() {
       const afterDragListData = reorderList(beforeDragListData, source.index, destination.index);
 
       dispatch(setTodoModule({ moduleId: source.droppableId, list: afterDragListData }));
-      const { payload: resp } = await dispatch(updateTodoOrderAfterDragThunk({ sourceListData: afterDragListData }));
+      const resp = await apiUpdateTodoOrderAfterDrag({ sourceListData: afterDragListData });
 
       if (resp.updated) {
-        await getTodoList({});
+        await getTodoList();
       } else {
         // 拖拽失败，数据回退
         dispatch(setTodoModule({ moduleId: source.droppableId, list: beforeDragListData }));
@@ -121,9 +123,9 @@ export default function useItemOperation() {
       dispatch(setTodoModule({ moduleId: source.droppableId, list: sourceListData }));
       dispatch(setTodoModule({ moduleId: destination.droppableId, list: destinationListData }));
 
-      const { payload: resp } = await dispatch(updateTodoOrderAfterDragThunk({ sourceListData, destinationListData, dragItem }));
+      const resp = await apiUpdateTodoOrderAfterDrag({ sourceListData, destinationListData, dragItem });
       if (resp.updated) {
-        await getTodoList({});
+        await getTodoList();
       } else {
         // 拖拽失败，数据回退
         dispatch(setTodoModule({ moduleId: eachModule[source.droppableId].moduleId, list: eachModule[source.droppableId].listData }));
@@ -134,5 +136,5 @@ export default function useItemOperation() {
     }
   };
 
-  return { addNewTodoItem, deleteTodoItem, getTodoList, onBeforeDragStart, onDragEnd };
+  return { addNewTodoItem, deleteTodoItem, updateTodoItem, getTodoList, onBeforeDragStart, onDragEnd };
 }
