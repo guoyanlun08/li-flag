@@ -2,7 +2,8 @@
 import React, { ReactNode, createContext, useEffect, useState } from 'react';
 
 import { useAppDispatch } from './hooks';
-import { getUserInfoThunk } from '@/features/user/userSlice';
+import { getUserInfo } from '@/apis/user';
+import { setUserInfo } from '@/features/user/userSlice';
 import { getToken, setToken } from '@/utils/localStorage';
 
 import LoginModal from '@/components/Login';
@@ -32,7 +33,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const loginInitInfo = async () => {
       setLogin(true);
-      await dispatch(getUserInfoThunk());
+      const { userInfo } = await getUserInfo();
+      if (userInfo) {
+        dispatch(setUserInfo({ userInfo }));
+      }
     };
 
     if (getToken()) {

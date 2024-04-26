@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Modal, Form, Input, Button, Space, FormProps } from 'antd';
 
 import { useAppSelector, useAppDispatch } from '@/app/hooks';
-import { updateUserInfoThunk } from '@/features/user/userSlice';
+import { setUserInfo } from '@/features/user/userSlice';
+import { updateUserInfo } from '@/apis/user';
 
 import AvatarUpload from './AvatarUpload';
 import ModifyPasswordModal from './ModifyPasswordModal';
@@ -40,7 +41,10 @@ const PersonalSettingsModal = (props: PersonalSettingsProps) => {
 
   // 表单完成触发
   const onFinish: FormProps<personalSettingsFieldType>['onFinish'] = async (values) => {
-    await dispatch(updateUserInfoThunk(values));
+    const resp = await updateUserInfo(values);
+    if (resp.hadUpdated) {
+      dispatch(setUserInfo({ userInfo: values }));
+    }
 
     setEditStatus(false);
   };

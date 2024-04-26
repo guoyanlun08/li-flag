@@ -2,7 +2,8 @@ import React from 'react';
 import { Form, Modal, Input, FormProps } from 'antd';
 
 import { useAppDispatch } from '@/app/hooks';
-import { updateUserInfoThunk } from '@/features/user/userSlice';
+import { updateUserInfo } from '@/apis/user';
+import { setUserInfo } from '@/features/user/userSlice';
 import { passwordRules, confirmPasswordRules } from '@/utils/formRules';
 
 type ModifyPasswordProps = {
@@ -24,8 +25,12 @@ const ModifyPasswordModal = (props: ModifyPasswordProps) => {
   const [form] = Form.useForm();
 
   const onFinish: FormProps<modifyPasswordFieldType>['onFinish'] = async (values) => {
-    await dispatch(updateUserInfoThunk({ userId, ...values }));
-    setOpen(false);
+    const data = { userId, ...values };
+    const resp = await updateUserInfo(data);
+    if (resp.hadUpdated) {
+      dispatch(setUserInfo({ userInfo: data }));
+      setOpen(false);
+    }
   };
 
   return (

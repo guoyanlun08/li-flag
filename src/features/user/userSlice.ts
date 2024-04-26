@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { UserStateType } from './type';
-import { initialState } from './dataAndMethods';
+import { initialState } from './constants';
 
 export const userSlice = createSlice({
   name: 'user',
@@ -17,8 +17,5 @@ export const userSlice = createSlice({
 });
 
 export const { setUserInfo } = userSlice.actions;
-
-// user: 异步动作
-export { getUserInfoThunk, updateUserInfoThunk } from './dataAndMethods';
 
 export default userSlice.reducer;
