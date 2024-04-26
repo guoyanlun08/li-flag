@@ -52,24 +52,15 @@ export const Styled_Item = styled.div<{ selected: boolean; moduleId: ModuleField
       }
     }
   }
-  // 待【近期完成】验证 再删除下面注释代码
-  /* .ant-checkbox {
-    top: 0;
+  .item-content-date {
+    width: 100%;
+    display: flex;
   }
-  .ant-checkbox-disabled {
-    background: rgb(204, 204, 204);
-    .ant-checkbox-inner {
-      border-color: rgb(204, 204, 204);
-    }
-    .ant-checkbox-inner:after {
-      border-color: rgba(255, 255, 255, 0.6);
-    }
-  } */
 `;
 export const Styled_ItemContent = styled.div<{ selected: boolean; completed: number }>`
   border-bottom: ${(props) => (props.selected ? '1px solid transparent' : '1px solid rgba(255, 255, 255, 0.2)')};
   padding-left: 8px;
-  width: 90%;
+  width: 92%;
   height: 100%;
   display: flex;
   align-items: center;

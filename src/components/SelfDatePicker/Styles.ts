@@ -6,12 +6,14 @@ export const DATE_PICKER_POP_WIDTH = 220;
 export const DATE_PICKER_POP_HEIGHT = 180;
 
 export const Styled_SelfDatePicker = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
   .date-picker-title {
-    width: 60px;
     font-size: 12px;
     cursor: pointer;
     color: ${mainColor.mainBlue};
-    text-align: center;
   }
 `;
 

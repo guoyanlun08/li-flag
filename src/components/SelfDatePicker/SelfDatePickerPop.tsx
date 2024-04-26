@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Button, DatePicker } from 'antd';
+import { Button, DatePicker, message } from 'antd';
 import dayjs from 'dayjs';
 
 import { Styled_SelfDatePickerPop } from './Styles';
@@ -32,6 +32,10 @@ export const SelfDatePickerPop = (props: SelfDatePickerPopProps) => {
 
   // 确认 todoItem startTime, endTime
   const confirmDate = async () => {
+    if (!pickStartTime || !pickEndTime) {
+      return message.error('需补充时间段');
+    }
+
     const data = {
       id: todoId,
       startTime: pickStartTime,
@@ -59,7 +63,7 @@ export const SelfDatePickerPop = (props: SelfDatePickerPopProps) => {
           <div>开始</div>
           <div className="date-pop-antd-date">
             <DatePicker
-              onChange={(date) => setPickStartTime(date.format())}
+              onChange={(date) => setPickStartTime(date?.format())}
               defaultValue={dayjs(startTime, 'YYYY-MM-DD')}
               getPopupContainer={() => datePickerPopRef.current!}
             />
@@ -69,7 +73,7 @@ export const SelfDatePickerPop = (props: SelfDatePickerPopProps) => {
           <div>结束</div>
           <div className="date-pop-antd-date">
             <DatePicker
-              onChange={(date) => setPickEndTime(date.format())}
+              onChange={(date) => setPickEndTime(date?.format())}
               defaultValue={dayjs(endTime, 'YYYY-MM-DD')}
               getPopupContainer={() => datePickerPopRef.current!}
             />

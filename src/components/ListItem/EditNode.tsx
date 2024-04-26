@@ -84,7 +84,7 @@ export function EditNode(props: PropsType) {
   };
 
   return (
-    <div style={{ width: '100%', height: '100%', paddingRight: '15px' }}>
+    <div style={{ width: '100%', height: '100%', paddingRight: '10px' }}>
       <Slate
         editor={editor}
         initialValue={JSON.parse(todoValue)}
@@ -98,9 +98,7 @@ export function EditNode(props: PropsType) {
             inputDebounce(realTextChange, 1000, JSON.stringify(value));
           }
         }}>
-        <div
-          ref={editableContainer}
-          style={{ position: 'relative', display: 'flex', alignItems: 'center', height: '100%', paddingRight: '10px' }}>
+        <div ref={editableContainer} style={{ position: 'relative', display: 'flex', alignItems: 'center', height: '100%' }}>
           <Toolbar visible={toolbarOptions.visible} left={toolbarOptions.left} top={toolbarOptions.top} />
           <Styled_EditNode
             autoFocus={selected}
