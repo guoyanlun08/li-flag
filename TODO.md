@@ -18,7 +18,7 @@
 - [ ] 体验：页面有控制缩放功能(localStorage 存储)，PC 端太小了 ———— p2, (待处理 allen)
 - [x] 每日模块 UI 修改 ———— p0, allen
 - [x] 改掉 todoStore 里的异步函数, 放进 apis 文件夹管理 ———— p2, allen
-- [ ] user 的 api 需要放到 apis 文件夹管理 ———— p2, (待处理 allen)
+- [x] user 的 api 需要放到 apis 文件夹管理 ———— p2, (待处理 allen)
 - [ ] 个人设置页样式调整 ———— p2, (待处理 allen)
 - [ ] 登出功能 ———— p2, (待处理 allen)
 - [ ] 开始时间不能大于结束时间 item，已经完成禁止打开时间选择弹窗，且直接设置 今天，明天的选项 ———— p1, (待处理 allen)
