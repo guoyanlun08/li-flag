@@ -1,9 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Button, DatePicker, message } from 'antd';
+import { Button, DatePicker, message, Tooltip } from 'antd';
 import dayjs from 'dayjs';
 
-import { Styled_SelfDatePickerPop } from './Styles';
+import IconFont from '@/components/iconFont';
 import useItemOperation from '@/components/ListItem/useItemOperation';
+
+import { Styled_SelfDatePickerPop } from './Styles';
 
 type SelfDatePickerPopProps = {
   todoId: number;
@@ -18,8 +20,8 @@ export const SelfDatePickerPop = (props: SelfDatePickerPopProps) => {
 
   const { getTodoList, updateTodoItem } = useItemOperation();
 
-  const [pickStartTime, setPickStartTime] = useState(startTime);
-  const [pickEndTime, setPickEndTime] = useState(endTime);
+  const [pickStartTime, setPickStartTime] = useState(dayjs(startTime));
+  const [pickEndTime, setPickEndTime] = useState(dayjs(endTime));
   const datePickerPopRef = useRef<HTMLDivElement>(null);
 
   // 关闭 datePickerPop 事件监听
@@ -32,19 +34,26 @@ export const SelfDatePickerPop = (props: SelfDatePickerPopProps) => {
 
   // 确认 todoItem startTime, endTime
   const confirmDate = async () => {
-    if (!pickStartTime || !pickEndTime) {
+    const dataStartTime = pickStartTime.format();
+    const dataEndTime = pickEndTime.format();
+
+    if (!dataStartTime || !dataEndTime) {
       return message.error('需补充时间段');
     }
 
     const data = {
       id: todoId,
-      startTime: pickStartTime,
-      endTime: pickEndTime
+      startTime: dataStartTime,
+      endTime: dataEndTime
     };
-    const hadUpdated = await updateTodoItem(data);
-    await getTodoList({});
 
+    const hadUpdated = await updateTodoItem(data);
     changeVisible(false);
+
+    // 先关掉弹窗一段时间，再刷新数据
+    setTimeout(() => {
+      getTodoList({});
+    }, 200);
   };
 
   useEffect(() => {
@@ -63,8 +72,10 @@ export const SelfDatePickerPop = (props: SelfDatePickerPopProps) => {
           <div>开始</div>
           <div className="date-pop-antd-date">
             <DatePicker
-              onChange={(date) => setPickStartTime(date?.format())}
-              defaultValue={dayjs(startTime, 'YYYY-MM-DD')}
+              defaultValue={pickStartTime}
+              value={pickStartTime}
+              maxDate={pickEndTime}
+              onChange={(date) => setPickStartTime(date)}
               getPopupContainer={() => datePickerPopRef.current!}
             />
           </div>
@@ -73,11 +84,35 @@ export const SelfDatePickerPop = (props: SelfDatePickerPopProps) => {
           <div>结束</div>
           <div className="date-pop-antd-date">
             <DatePicker
-              onChange={(date) => setPickEndTime(date?.format())}
-              defaultValue={dayjs(endTime, 'YYYY-MM-DD')}
+              defaultValue={pickEndTime}
+              value={pickEndTime}
+              minDate={pickStartTime}
+              onChange={(date) => setPickEndTime(date)}
               getPopupContainer={() => datePickerPopRef.current!}
             />
           </div>
+        </div>
+        <div className="date-pop-item date-quick-icon">
+          <Tooltip placement="top" title="今天">
+            <IconFont
+              name="icon-jintian"
+              style={{ fontSize: '20px' }}
+              onClick={() => {
+                setPickStartTime(dayjs().startOf('day'));
+                setPickEndTime(dayjs().endOf('day'));
+              }}
+            />
+          </Tooltip>
+          <Tooltip placement="top" title="明天">
+            <IconFont
+              name="icon-mingtian"
+              style={{ fontSize: '20px' }}
+              onClick={() => {
+                setPickStartTime(dayjs().add(1, 'day').startOf('day'));
+                setPickEndTime(dayjs().add(1, 'day').endOf('day'));
+              }}
+            />
+          </Tooltip>
         </div>
       </div>
       <div className="date-pop-footer">

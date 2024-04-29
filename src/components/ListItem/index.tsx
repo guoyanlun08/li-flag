@@ -102,7 +102,7 @@ export function ListItem(props: PropsType) {
         <Styled_ItemContent completed={completed} selected={isSelected}>
           {editable ? <EditNode todoValue={todoValue} selected={isSelected} /> : <div>{todoValueFormat(todoValue)}</div>}
         </Styled_ItemContent>
-        <SelfDatePicker todoItem={todoItem} />
+        <SelfDatePicker todoItem={todoItem} completed={Boolean(completed)} />
       </div>
     </Styled_Item>
   );

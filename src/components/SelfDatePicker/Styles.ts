@@ -3,9 +3,9 @@ import mainColor from '@/styles/variables.module.scss';
 
 // 弹窗的宽度
 export const DATE_PICKER_POP_WIDTH = 220;
-export const DATE_PICKER_POP_HEIGHT = 180;
+export const DATE_PICKER_POP_HEIGHT = 210;
 
-export const Styled_SelfDatePicker = styled.div`
+export const Styled_SelfDatePicker = styled.div<{ completed: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -13,7 +13,7 @@ export const Styled_SelfDatePicker = styled.div`
   .date-picker-title {
     font-size: 12px;
     cursor: pointer;
-    color: ${mainColor.mainBlue};
+    color: ${(props) => (props.completed ? mainColor.mainGray : mainColor.mainBlue)};
   }
 `;
 
@@ -50,6 +50,9 @@ export const Styled_SelfDatePickerPop = styled.div<{ coordinate: { x: number; y:
       .date-pop-antd-date {
         width: 120px;
       }
+    }
+    .date-pop-item.date-quick-icon {
+      margin-bottom: 0px;
     }
   }
   .date-pop-footer {
