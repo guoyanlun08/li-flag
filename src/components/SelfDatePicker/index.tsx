@@ -6,9 +6,6 @@ import { TodoListItemType } from '@/types/todoType';
 import { SelfDatePickerPop } from './SelfDatePickerPop';
 import { Styled_SelfDatePicker, DATE_PICKER_POP_WIDTH, DATE_PICKER_POP_HEIGHT } from './Styles';
 
-const viewportWidth = window.innerWidth;
-const viewportHeight = window.innerHeight;
-
 type SelfDatePickerProps = {
   todoItem: TodoListItemType;
   completed: boolean;
@@ -39,6 +36,9 @@ export const SelfDatePicker = (props: SelfDatePickerProps) => {
 
   // 点击选择 item 日期，打开 pop
   const clickDatePicker = (e: React.MouseEvent) => {
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+
     // 已完成不能选择时间
     if (completed) return;
 
