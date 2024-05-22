@@ -4,7 +4,7 @@ import { MenuOutlined } from '@ant-design/icons';
 import { useContextMenu } from 'react-contexify';
 
 import { useAppSelector, useAppDispatch } from '@/app/hooks';
-import { toggleItemCompletedStatus, setSelectedItem } from '@/features/todo/todoSlice';
+import { toggleItemCompletedStatus, setSelectedId } from '@/features/todo/todoSlice';
 import useItemOperation from './useItemOperation';
 
 import { EveryDayContext } from '@/views/EveryDay/EveryDay';
@@ -47,7 +47,7 @@ export function ListItem(props: PropsType) {
     }
   }, [context.dragStatus]);
 
-  const isSelected = todoState.selectedItem?.id === id;
+  const isSelected = todoState.selectedId === id;
 
   // 打开右键菜单
   const onContextMenu = (e: React.MouseEvent) => {
@@ -58,7 +58,7 @@ export function ListItem(props: PropsType) {
 
   /** 选中 item 触发 */
   const selectItemFn = () => {
-    dispatch(setSelectedItem({ todoItem }));
+    dispatch(setSelectedId({ id }));
   };
 
   /** 鼠标移入 hover */
@@ -100,7 +100,7 @@ export function ListItem(props: PropsType) {
       />
       <div className="item-content-date">
         <Styled_ItemContent completed={completed} selected={isSelected}>
-          {editable ? <EditNode todoValue={todoValue} selected={isSelected} /> : <div>{todoValueFormat(todoValue)}</div>}
+          {editable ? <EditNode todoItem={todoItem} index={index} selected={isSelected} /> : <div>{todoValueFormat(todoValue)}</div>}
         </Styled_ItemContent>
         <SelfDatePicker todoItem={todoItem} completed={Boolean(completed)} />
       </div>

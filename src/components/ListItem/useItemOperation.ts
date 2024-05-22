@@ -5,7 +5,7 @@ import api from '@/utils/httpRequest';
 import { apiAddNewTodoItem, apiDeleteTodoItem, apiUpdateTodoItem, apiGetTodoList, apiUpdateTodoOrderAfterDrag } from '@/apis/todoItem';
 import { apiAddTodoItemData, apiUpdateTodoItemData, apiGetTodoListData } from '@/apis/todoItem.type';
 import { useAppDispatch, AuthContext, useAppSelector } from '@/app/hooks';
-import { setTodoModule, setTodoEntireModule, setSelectedItem, ModuleFields } from '@/features/todo/todoSlice';
+import { setTodoModule, setTodoEntireModule, setSelectedId, ModuleFields } from '@/features/todo/todoSlice';
 
 import { EachModuleType, TodoListItemType } from '@/types/todoType';
 
@@ -45,12 +45,11 @@ export default function useItemOperation() {
       order = insertIndex ?? order;
     }
 
-    const { hadAdd } = await apiAddNewTodoItem({ moduleId, order, type });
+    const { hadAdd, newId } = await apiAddNewTodoItem({ moduleId, order, type });
 
     if (hadAdd) {
       await getTodoList();
-      // dispatch(setTodoModule({ moduleId, list: resp.listData }));
-      // dispatch(setSelectedItem({ todoItem: resp.listData[order] }));
+      dispatch(setSelectedId({ id: newId }));
     }
   };
 

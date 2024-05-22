@@ -42,10 +42,10 @@ export const todoSlice = createSlice({
       const modifyItem: TodoListItemType = state.eachModule[moduleId].listData.find((item) => item.id === id)!;
       modifyItem.todoValue = todoValue;
     },
-    // 设置 selectedItem
-    setSelectedItem: (state, action: PayloadAction<{ todoItem: TodoListItemType }>) => {
-      const { todoItem } = action.payload;
-      state.selectedItem = todoItem;
+    // 设置 selectedId
+    setSelectedId: (state, action: PayloadAction<{ id: number }>) => {
+      const { id } = action.payload;
+      state.selectedId = id;
     },
     // Item 中完成状态改变
     toggleItemCompletedStatus: (state, action: PayloadAction<{ moduleId: string; itemIndex: number }>) => {
@@ -58,7 +58,7 @@ export const todoSlice = createSlice({
 });
 
 // 导出 分发动作
-export const { setTodoEntireModule, setTodoModule, setItemTodoValue, setSelectedItem, toggleItemCompletedStatus } = todoSlice.actions;
+export const { setTodoEntireModule, setTodoModule, setItemTodoValue, setSelectedId, toggleItemCompletedStatus } = todoSlice.actions;
 
 export { ModuleFields, MODULE_CONFIG_MAP, initialState } from './constants';
 

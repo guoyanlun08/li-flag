@@ -76,6 +76,7 @@ export const Styled_EachModuleContainer = styled.div<{ index: number }>`
   width: 49%;
   height: 49%;
   border-radius: 20px;
+  padding: 5px;
   display: flex;
   flex-direction: column;
   user-select: none;

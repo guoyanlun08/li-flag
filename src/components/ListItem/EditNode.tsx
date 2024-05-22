@@ -9,14 +9,17 @@ import { setItemTodoValue } from '@/features/todo/todoSlice';
 
 import { Styled_EditNode } from './Styles';
 import { Toolbar, DefaultElement, Leaf } from './slate';
+import { TodoListItemType } from '@/types/todoType';
 
 interface PropsType {
-  todoValue: string;
   selected: boolean;
+  todoItem: TodoListItemType;
+  index: number;
 }
 
 export function EditNode(props: PropsType) {
-  const { todoValue, selected } = props;
+  const { selected, todoItem, index } = props;
+  const { moduleId, todoValue } = todoItem;
 
   const todoState = useAppSelector((store) => store.todo);
   const dispatch = useAppDispatch();
@@ -68,8 +71,8 @@ export function EditNode(props: PropsType) {
 
   // 实际 触发 slate text的保存文本变化
   const realTextChange = async (todoValue: string) => {
-    if (todoState.selectedItem) {
-      const { id, moduleId } = todoState.selectedItem;
+    if (todoState.selectedId) {
+      const id = todoState.selectedId;
       const hadUpdated = await updateTodoItem({ id, todoValue });
 
       if (hadUpdated) {
@@ -78,6 +81,7 @@ export function EditNode(props: PropsType) {
     }
   };
 
+  // 重置选择区 selection
   const resetSelect = () => {
     window?.getSelection()?.removeAllRanges();
     setToolbarOptions((preState) => ({ ...preState, visible: false }));
@@ -111,9 +115,8 @@ export function EditNode(props: PropsType) {
               // 不给换行
               if (event.key === 'Enter') {
                 event.preventDefault();
-                if (todoState.selectedItem) {
-                  const { moduleId, order } = todoState.selectedItem;
-                  await addNewTodoItem(moduleId, 'insert', order + 1);
+                if (todoState.selectedId) {
+                  await addNewTodoItem(moduleId, 'insert', index + 1);
                 }
               }
             }}
