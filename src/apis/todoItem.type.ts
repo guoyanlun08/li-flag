@@ -12,16 +12,16 @@ export type apiUpdateTodoItemData = {
   id: number;
   completed?: number;
   todoValue?: string;
-  startTime?: string;
-  endTime?: string;
+  startTime?: number;
+  endTime?: number;
 };
 
 /** 获取 todoItem 数据参数  */
 export type apiGetTodoListData = {
   moduleId?: string;
   completed?: number;
-  startTime?: string;
-  endTime?: string;
+  startTime?: number;
+  endTime?: number;
   isSkip?: boolean;
   isDefault?: number;
 };

@@ -9,8 +9,8 @@ import { Styled_SelfDatePickerPop } from './Styles';
 
 type SelfDatePickerPopProps = {
   todoId: number;
-  startTime: string;
-  endTime: string;
+  startTime: number;
+  endTime: number;
   coordinate: { x: number; y: number };
   changeVisible: (val: boolean) => void;
 };
@@ -34,8 +34,8 @@ export const SelfDatePickerPop = (props: SelfDatePickerPopProps) => {
 
   // 确认 todoItem startTime, endTime
   const confirmDate = async () => {
-    const dataStartTime = pickStartTime.format();
-    const dataEndTime = pickEndTime.format();
+    const dataStartTime = pickStartTime.valueOf();
+    const dataEndTime = pickEndTime.valueOf();
 
     if (!dataStartTime || !dataEndTime) {
       return message.error('需补充时间段');

@@ -52,7 +52,7 @@ export async function apiUpdateTodoItem(data: apiUpdateTodoItemData) {
  * @returns
  */
 export async function apiGetTodoList(data?: apiGetTodoListData) {
-  const resp = await api.get('/todoItem/getTodoList', { isDefault: 1, ...data });
+  const resp = await api.get('/todoItem/getTodoList', { ...data });
 
   if (resp?.code) {
     console.error('apiGetTodoList 获取失败');

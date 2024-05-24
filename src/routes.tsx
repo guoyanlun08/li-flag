@@ -8,7 +8,6 @@ import Home from '@/views/Home';
 // 每日模块
 import EveryDayOutlet from '@/views/EveryDay';
 import EveryDay from '@/views/EveryDay/EveryDay';
-import RecentlyCompleted from '@/views/EveryDay/RecentlyCompleted';
 
 const router = createBrowserRouter([
   {
@@ -27,10 +26,6 @@ const router = createBrowserRouter([
             path: '',
             element: <EveryDay />
           }
-          // {
-          //   path: 'recent-completed',
-          //   element: <RecentlyCompleted />
-          // }
         ]
       }
     ]

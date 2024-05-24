@@ -1,4 +1,5 @@
 import { TodoStateType } from '@/types/todoType';
+import dayjs from 'dayjs';
 
 // 每日模块 —— moduleId 枚举
 export enum ModuleFields {
@@ -46,10 +47,10 @@ export const initialState: TodoStateType = {
           ]),
           completed: 0,
           order: 1,
-          createTime: new Date().toLocaleString(),
-          updateTime: new Date().toLocaleString(),
-          startTime: new Date().toLocaleString(),
-          endTime: new Date().toLocaleString()
+          createTime: dayjs().valueOf(),
+          updateTime: dayjs().valueOf(),
+          startTime: dayjs().valueOf(),
+          endTime: dayjs().valueOf()
         },
         {
           id: -2,
@@ -62,10 +63,10 @@ export const initialState: TodoStateType = {
           ]),
           completed: 1,
           order: 2,
-          createTime: new Date().toLocaleString(),
-          updateTime: new Date().toLocaleString(),
-          startTime: new Date().toLocaleString(),
-          endTime: new Date().toLocaleString()
+          createTime: dayjs().valueOf(),
+          updateTime: dayjs().valueOf(),
+          startTime: dayjs().valueOf(),
+          endTime: dayjs().valueOf()
         }
       ]
     },
@@ -85,10 +86,10 @@ export const initialState: TodoStateType = {
           ]),
           completed: 0,
           order: 1,
-          createTime: new Date().toLocaleString(),
-          updateTime: new Date().toLocaleString(),
-          startTime: new Date().toLocaleString(),
-          endTime: new Date().toLocaleString()
+          createTime: dayjs().valueOf(),
+          updateTime: dayjs().valueOf(),
+          startTime: dayjs().valueOf(),
+          endTime: dayjs().valueOf()
         },
         {
           id: -4,
@@ -101,10 +102,10 @@ export const initialState: TodoStateType = {
           ]),
           completed: 1,
           order: 2,
-          createTime: new Date().toLocaleString(),
-          updateTime: new Date().toLocaleString(),
-          startTime: new Date().toLocaleString(),
-          endTime: new Date().toLocaleString()
+          createTime: dayjs().valueOf(),
+          updateTime: dayjs().valueOf(),
+          startTime: dayjs().valueOf(),
+          endTime: dayjs().valueOf()
         }
       ]
     },
@@ -124,10 +125,10 @@ export const initialState: TodoStateType = {
           ]),
           completed: 0,
           order: 1,
-          createTime: new Date().toLocaleString(),
-          updateTime: new Date().toLocaleString(),
-          startTime: new Date().toLocaleString(),
-          endTime: new Date().toLocaleString()
+          createTime: dayjs().valueOf(),
+          updateTime: dayjs().valueOf(),
+          startTime: dayjs().valueOf(),
+          endTime: dayjs().valueOf()
         },
         {
           id: -6,
@@ -140,10 +141,10 @@ export const initialState: TodoStateType = {
           ]),
           completed: 1,
           order: 2,
-          createTime: new Date().toLocaleString(),
-          updateTime: new Date().toLocaleString(),
-          startTime: new Date().toLocaleString(),
-          endTime: new Date().toLocaleString()
+          createTime: dayjs().valueOf(),
+          updateTime: dayjs().valueOf(),
+          startTime: dayjs().valueOf(),
+          endTime: dayjs().valueOf()
         }
       ]
     },
@@ -163,10 +164,10 @@ export const initialState: TodoStateType = {
           ]),
           completed: 0,
           order: 1,
-          createTime: new Date().toLocaleString(),
-          updateTime: new Date().toLocaleString(),
-          startTime: new Date().toLocaleString(),
-          endTime: new Date().toLocaleString()
+          createTime: dayjs().valueOf(),
+          updateTime: dayjs().valueOf(),
+          startTime: dayjs().valueOf(),
+          endTime: dayjs().valueOf()
         },
         {
           id: -8,
@@ -179,10 +180,10 @@ export const initialState: TodoStateType = {
           ]),
           completed: 1,
           order: 2,
-          createTime: new Date().toLocaleString(),
-          updateTime: new Date().toLocaleString(),
-          startTime: new Date().toLocaleString(),
-          endTime: new Date().toLocaleString()
+          createTime: dayjs().valueOf(),
+          updateTime: dayjs().valueOf(),
+          startTime: dayjs().valueOf(),
+          endTime: dayjs().valueOf()
         }
       ]
     }

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
-// index
-export const Styled_EveryDayContainer = styled.div`
+/** DailyCard/index 主容器 */
+export const Styled_CardModuleBox = styled.div`
   width: 100%;
   height: 100%;
   padding: 10px;
@@ -68,15 +68,13 @@ export const Styled_CoordinateSystem = styled.div`
   }
 `;
 
-// EachModule
-export const Styled_EachModuleContainer = styled.div<{ index: number }>`
+/** DailyCard/EachCard 主容器 */
+export const Styled_EachCardContainer = styled.div<{ index: number }>`
   background: #fff;
-  margin-bottom: ${(props) => (props.index === 0 || props.index === 1 ? '1%' : '0px')};
   margin-right: ${(props) => (props.index === 0 || props.index === 2 ? '2%' : '0px')};
   width: 49%;
   height: 49%;
   border-radius: 20px;
-  padding: 5px;
   display: flex;
   flex-direction: column;
   user-select: none;
@@ -105,14 +103,5 @@ export const Styled_Title = styled.div<{ color: string }>`
     justify-content: center;
     background: ${(props) => props.color};
     color: #fff;
-  }
-`;
-
-export const Styled_ListBox = styled.div`
-  flex: 1;
-  padding: 0 15px 80px 0;
-  overflow-y: auto;
-  ::-webkit-scrollbar {
-    display: none;
   }
 `;
