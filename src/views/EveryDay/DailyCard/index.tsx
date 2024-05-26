@@ -21,15 +21,17 @@ function DailyCard(props: DailyPropsType) {
 
   const { addNewTodoItem } = useItemOperation();
   useEffect(() => {
-    // 获取 todoList 昨日未完成的数据
+    // 获取 todoList 昨日是deadline 未完成的数据
     async function getYesterdayDelayTodoList() {
       const data = {
         completed: 0,
         startTime: dayjs().subtract(1, 'day').startOf('day').valueOf(),
         endTime: dayjs().subtract(1, 'day').endOf('day').valueOf()
       };
-      const { delayList } = await apiGetTodoList(data);
-      console.log('delayList== 后台还未写', delayList);
+      const { list: delayList } = await apiGetTodoList(data);
+      console.log('delayList === ', delayList);
+
+      return delayList;
     }
 
     getYesterdayDelayTodoList();

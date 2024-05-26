@@ -67,7 +67,7 @@ export default function useItemOperation() {
 
   /** 获取 todoList 数据 */
   const getTodoList = async (data?: apiGetTodoListData) => {
-    const { list } = await apiGetTodoList(data);
+    const { list } = await apiGetTodoList({ ...data, isDefault: 1 });
 
     if (list) {
       dispatch(setTodoEntireModule({ list }));
