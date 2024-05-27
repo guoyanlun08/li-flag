@@ -15,10 +15,11 @@ interface PropsType {
   selected: boolean;
   todoItem: TodoListItemType;
   index: number;
+  readOnly: boolean;
 }
 
 export function EditNode(props: PropsType) {
-  const { selected, todoItem, index } = props;
+  const { selected, todoItem, index, readOnly } = props;
   const { moduleId, todoValue } = todoItem;
 
   const todoState = useAppSelector((store) => store.todo);
@@ -102,9 +103,12 @@ export function EditNode(props: PropsType) {
             inputDebounce(realTextChange, 1000, JSON.stringify(value));
           }
         }}>
-        <div ref={editableContainer} style={{ position: 'relative', display: 'flex', alignItems: 'center', height: '100%' }}>
+        <div
+          ref={editableContainer}
+          style={{ position: 'relative', display: 'flex', alignItems: 'center', height: '100%' }}>
           <Toolbar visible={toolbarOptions.visible} left={toolbarOptions.left} top={toolbarOptions.top} />
           <Styled_EditNode
+            readOnly={readOnly}
             autoFocus={selected}
             spellCheck={false}
             renderElement={renderElement}

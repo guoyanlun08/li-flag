@@ -87,7 +87,11 @@ export function ListItem(props: PropsType) {
       onMouseLeave={mouseLeaveItemFn}
       onContextMenu={onContextMenu}
       onDoubleClick={(e) => e.stopPropagation()}>
-      <MenuOutlined style={{ display: editable && isHover ? 'block' : 'none' }} className="drag-handle" {...dragHandle} />
+      <MenuOutlined
+        style={{ display: editable && isHover ? 'block' : 'none' }}
+        className="drag-handle"
+        {...dragHandle}
+      />
       <Checkbox
         checked={Boolean(completed)}
         disabled={!editable}
@@ -100,7 +104,7 @@ export function ListItem(props: PropsType) {
       />
       <div className="item-content-date">
         <Styled_ItemContent completed={completed} selected={isSelected}>
-          {editable ? <EditNode todoItem={todoItem} index={index} selected={isSelected} /> : <div>{todoValueFormat(todoValue)}</div>}
+          <EditNode todoItem={todoItem} index={index} selected={isSelected} readOnly={!editable} />
         </Styled_ItemContent>
         <SelfDatePicker todoItem={todoItem} completed={Boolean(completed)} />
       </div>

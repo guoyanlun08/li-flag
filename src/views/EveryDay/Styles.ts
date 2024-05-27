@@ -17,7 +17,6 @@ export const Styled_EachModuleContent = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding-bottom: 6px;
 `;
 
 /** eachModule 的内容区 - 显示 todo列表 */

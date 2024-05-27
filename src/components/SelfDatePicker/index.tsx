@@ -73,7 +73,13 @@ export const SelfDatePicker = (props: SelfDatePickerProps) => {
         {dateTitle}
       </div>
       {visible ? (
-        <SelfDatePickerPop todoId={id} startTime={startTime} endTime={endTime} coordinate={coordinate} changeVisible={changeVisible} />
+        <SelfDatePickerPop
+          todoId={id}
+          startTime={startTime}
+          endTime={endTime}
+          coordinate={coordinate}
+          changeVisible={changeVisible}
+        />
       ) : null}
     </Styled_SelfDatePicker>
   );

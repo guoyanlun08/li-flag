@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 
 import useItemOperation from '@/components/ListItem/useItemOperation';
@@ -7,17 +7,33 @@ import { ModuleFields } from '@/features/todo/todoSlice';
 import { apiGetTodoList } from '@/apis/todoItem';
 
 import { Styled_CardModuleBox, Styled_EachCardContainer, Styled_Title, Styled_CoordinateSystem } from './Styles';
+import { TodoListItemType } from '@/types/todoType';
 import EachModuleContent from '../EachModuleContent';
 import { DailyPropsType } from '../EveryDay';
 
+type ListDataMapType = {
+  [property in ModuleFields]: TodoListItemType[];
+};
+
+// 模块顺序
+const MODULE_ORDER = [
+  ModuleFields.IMPORTANT_NOT_URGENT,
+  ModuleFields.IMPORTANT_URGENT,
+  ModuleFields.NOT_IMPORTANT_NOT_URGENT,
+  ModuleFields.NOT_IMPORTANT_URGENT
+];
+
+// 根据对应模块分类
+function classifyTodoList(list: TodoListItemType[]) {
+  const obj: ListDataMapType = {} as any;
+  list.forEach((todo) => {
+    obj[todo.moduleId] ? obj[todo.moduleId].push(todo) : (obj[todo.moduleId] = [todo]);
+  });
+  return obj;
+}
+
 function DailyCard(props: DailyPropsType) {
-  // 模块顺序
-  const MODULE_ORDER = [
-    ModuleFields.IMPORTANT_NOT_URGENT,
-    ModuleFields.IMPORTANT_URGENT,
-    ModuleFields.NOT_IMPORTANT_NOT_URGENT,
-    ModuleFields.NOT_IMPORTANT_URGENT
-  ];
+  const [delayListDataMap, setDelayListDataMap] = useState<ListDataMapType>();
 
   const { addNewTodoItem } = useItemOperation();
   useEffect(() => {
@@ -29,9 +45,8 @@ function DailyCard(props: DailyPropsType) {
         endTime: dayjs().subtract(1, 'day').endOf('day').valueOf()
       };
       const { list: delayList } = await apiGetTodoList(data);
-      console.log('delayList === ', delayList);
 
-      return delayList;
+      setDelayListDataMap(classifyTodoList(delayList));
     }
 
     getYesterdayDelayTodoList();
@@ -50,7 +65,7 @@ function DailyCard(props: DailyPropsType) {
               <div className="title-icon">{moduleId}</div>
               <div>{title}</div>
             </Styled_Title>
-            <EachModuleContent moduleId={moduleId} listData={listData} delayListData={[]} />
+            <EachModuleContent moduleId={moduleId} listData={listData} delayListData={delayListDataMap?.[moduleId]} />
           </Styled_EachCardContainer>
         );
       })}
