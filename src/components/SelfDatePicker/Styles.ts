@@ -14,6 +14,9 @@ export const Styled_SelfDatePicker = styled.div<{ completed: boolean }>`
     font-size: 12px;
     cursor: pointer;
     color: ${(props) => (props.completed ? mainColor.mainGray : mainColor.mainBlue)};
+    .title-delay {
+      color: #ff4d4f;
+    }
   }
 `;
 

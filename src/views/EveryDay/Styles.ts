@@ -30,6 +30,19 @@ export const Styled_ListBox = styled.div`
 
 /** eachModule 内容区中的 过期区*/
 export const Styled_DelayListBox = styled.div`
-  height: 150px;
-  background: #ccc;
+  padding: 0px 2px;
+  .ant-collapse {
+    margin-bottom: 6px;
+    // 折叠头部
+    .ant-collapse-header {
+      padding: 4px 12px;
+      .ant-collapse-extra .ant-btn-sm {
+        font-size: 12px;
+      }
+    }
+    // 折叠内容区
+    .ant-collapse-content {
+      border-top: 0px;
+    }
+  }
 `;

@@ -1,7 +1,7 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { DropResult } from 'react-beautiful-dnd';
+import dayjs from 'dayjs';
 
-import api from '@/utils/httpRequest';
 import { apiAddNewTodoItem, apiDeleteTodoItem, apiUpdateTodoItem, apiGetTodoList, apiUpdateTodoOrderAfterDrag } from '@/apis/todoItem';
 import { apiAddTodoItemData, apiUpdateTodoItemData, apiGetTodoListData } from '@/apis/todoItem.type';
 import { useAppDispatch, AuthContext, useAppSelector } from '@/app/hooks';
@@ -14,6 +14,11 @@ type DropResultSelf = DropResult & {
   destination: { droppableId: ModuleFields };
 };
 
+// list 的 { A: [], B: [], C: [], D: []}
+type ListDataMapType = {
+  [property in ModuleFields]: TodoListItemType[];
+};
+
 /** 调整拖拽后的 todoItemList */
 function reorderList(list: TodoListItemType[], startIndex: number, endIndex: number) {
   const result = Array.from(list);
@@ -23,8 +28,20 @@ function reorderList(list: TodoListItemType[], startIndex: number, endIndex: num
   return result;
 }
 
+/** 根据对应模块分类 */
+function classifyTodoList(list: TodoListItemType[]) {
+  const obj: ListDataMapType = {} as any;
+  list.forEach((todo) => {
+    obj[todo.moduleId] ? obj[todo.moduleId].push(todo) : (obj[todo.moduleId] = [todo]);
+  });
+  return obj;
+}
+
 /** 操作 item的 hooks */
 export default function useItemOperation() {
+  // 过期数据
+  const [delayListDataMap, setDelayListDataMap] = useState<ListDataMapType>();
+
   const { isLogin, openLoginModal } = useContext(AuthContext);
   const todoState = useAppSelector((store) => store.todo);
   const dispatch = useAppDispatch();
@@ -73,6 +90,20 @@ export default function useItemOperation() {
       dispatch(setTodoEntireModule({ list }));
       return list;
     }
+  };
+
+  /** 获取 delayTodoList 数据 */
+  const getDelayTodoList = async () => {
+    const data = {
+      completed: 0,
+      startTime: dayjs().subtract(1, 'day').startOf('day').valueOf(),
+      endTime: dayjs().subtract(1, 'day').endOf('day').valueOf()
+    };
+    const { list: delayList } = await apiGetTodoList(data);
+    console.log('delayList', delayList);
+
+    // 赋值过期数据
+    setDelayListDataMap(classifyTodoList(delayList));
   };
 
   /** 拖拽 todoItem前触发 */
@@ -135,5 +166,5 @@ export default function useItemOperation() {
     }
   };
 
-  return { addNewTodoItem, deleteTodoItem, updateTodoItem, getTodoList, onBeforeDragStart, onDragEnd };
+  return { delayListDataMap, addNewTodoItem, deleteTodoItem, updateTodoItem, getTodoList, getDelayTodoList, onBeforeDragStart, onDragEnd };
 }

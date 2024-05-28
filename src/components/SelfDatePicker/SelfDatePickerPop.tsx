@@ -18,8 +18,9 @@ type SelfDatePickerPopProps = {
 export const SelfDatePickerPop = (props: SelfDatePickerPopProps) => {
   const { todoId, startTime, endTime, coordinate, changeVisible } = props;
 
-  const { getTodoList, updateTodoItem } = useItemOperation();
+  const { getTodoList, updateTodoItem, getDelayTodoList } = useItemOperation();
 
+  // TODO: 这里应处理为 非受控
   const [pickStartTime, setPickStartTime] = useState(dayjs(startTime));
   const [pickEndTime, setPickEndTime] = useState(dayjs(endTime));
   const datePickerPopRef = useRef<HTMLDivElement>(null);
@@ -52,7 +53,8 @@ export const SelfDatePickerPop = (props: SelfDatePickerPopProps) => {
 
     // 先关掉弹窗一段时间，再刷新数据
     setTimeout(() => {
-      getTodoList({});
+      getTodoList();
+      getDelayTodoList();
     }, 200);
   };
 

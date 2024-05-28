@@ -27,7 +27,10 @@ export const SelfDatePicker = (props: SelfDatePickerProps) => {
 
     if (ds_startTime.isSame(ds_endTime, 'day') && ds_startTime.isSame(dayjs(), 'day')) {
       // 是同一天 显示 今天
-      return '今天';
+      return <span>今天</span>;
+    } else if (ds_endTime.isBefore(dayjs())) {
+      // 过期处理
+      return <span className="title-delay">{ds_endTime.format('MM-DD')}</span>;
     } else {
       // 其余之间显示时间段 MM-DD ~ MM-DD
       return `${ds_startTime.format('MM-DD')} ~ ${ds_endTime.format('MM-DD')}`;
