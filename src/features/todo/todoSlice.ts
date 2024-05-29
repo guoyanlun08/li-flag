@@ -1,9 +1,18 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { RootState } from '@/app/store';
-import { TodoListItemType } from '@/types/todoType';
+import { TodoListItemType, ListDataMapType } from '@/types/todoType';
 
 import { initialState } from './constants';
+
+/** 根据对应模块分类 */
+function classifyTodoList(list: TodoListItemType[]) {
+  const obj: ListDataMapType = {} as any;
+  list.forEach((todo) => {
+    obj[todo.moduleId] ? obj[todo.moduleId].push(todo) : (obj[todo.moduleId] = [todo]);
+  });
+  return obj;
+}
 
 export const todoSlice = createSlice({
   name: 'todo',
@@ -53,12 +62,18 @@ export const todoSlice = createSlice({
       const item = state.eachModule[moduleId].listData[itemIndex];
 
       item.completed = Number(!item.completed);
+    },
+    // 设置 delayListDataMap值
+    setDelayListDataMap: (state, action: PayloadAction<{ delayList: TodoListItemType[] }>) => {
+      const { delayList } = action.payload;
+      state.delayListDataMap = classifyTodoList(delayList);
     }
   }
 });
 
 // 导出 分发动作
-export const { setTodoEntireModule, setTodoModule, setItemTodoValue, setSelectedId, toggleItemCompletedStatus } = todoSlice.actions;
+export const { setTodoEntireModule, setTodoModule, setItemTodoValue, setSelectedId, toggleItemCompletedStatus, setDelayListDataMap } =
+  todoSlice.actions;
 
 export { ModuleFields, MODULE_CONFIG_MAP, initialState } from './constants';
 

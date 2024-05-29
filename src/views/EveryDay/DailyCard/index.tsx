@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import useItemOperation from '@/components/ListItem/useItemOperation';
+import { useAppSelector } from '@/app/hooks';
 
 import { ModuleFields } from '@/features/todo/todoSlice';
 import { Styled_CardModuleBox, Styled_EachCardContainer, Styled_Title, Styled_CoordinateSystem } from './Styles';
@@ -16,13 +17,15 @@ const MODULE_ORDER = [
 ];
 
 function DailyCard(props: DailyPropsType) {
-  const { delayListDataMap, getDelayTodoList } = useItemOperation();
+  const { delayListDataMap } = useAppSelector((store) => store.todo);
+  const { getDelayTodoList } = useItemOperation();
 
   useEffect(() => {
     // 初始化delayListDataMap
     async function initDelayListDataMap() {
       await getDelayTodoList();
     }
+
     initDelayListDataMap();
   }, []);
 

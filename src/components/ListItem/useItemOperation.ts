@@ -5,18 +5,13 @@ import dayjs from 'dayjs';
 import { apiAddNewTodoItem, apiDeleteTodoItem, apiUpdateTodoItem, apiGetTodoList, apiUpdateTodoOrderAfterDrag } from '@/apis/todoItem';
 import { apiAddTodoItemData, apiUpdateTodoItemData, apiGetTodoListData } from '@/apis/todoItem.type';
 import { useAppDispatch, AuthContext, useAppSelector } from '@/app/hooks';
-import { setTodoModule, setTodoEntireModule, setSelectedId, ModuleFields } from '@/features/todo/todoSlice';
+import { setTodoModule, setTodoEntireModule, setSelectedId, ModuleFields, setDelayListDataMap } from '@/features/todo/todoSlice';
 
 import { EachModuleType, TodoListItemType } from '@/types/todoType';
 
 type DropResultSelf = DropResult & {
   source: { droppableId: ModuleFields };
   destination: { droppableId: ModuleFields };
-};
-
-// list 的 { A: [], B: [], C: [], D: []}
-type ListDataMapType = {
-  [property in ModuleFields]: TodoListItemType[];
 };
 
 /** 调整拖拽后的 todoItemList */
@@ -28,20 +23,8 @@ function reorderList(list: TodoListItemType[], startIndex: number, endIndex: num
   return result;
 }
 
-/** 根据对应模块分类 */
-function classifyTodoList(list: TodoListItemType[]) {
-  const obj: ListDataMapType = {} as any;
-  list.forEach((todo) => {
-    obj[todo.moduleId] ? obj[todo.moduleId].push(todo) : (obj[todo.moduleId] = [todo]);
-  });
-  return obj;
-}
-
 /** 操作 item的 hooks */
 export default function useItemOperation() {
-  // 过期数据
-  const [delayListDataMap, setDelayListDataMap] = useState<ListDataMapType>();
-
   const { isLogin, openLoginModal } = useContext(AuthContext);
   const todoState = useAppSelector((store) => store.todo);
   const dispatch = useAppDispatch();
@@ -101,9 +84,8 @@ export default function useItemOperation() {
     };
     const { list: delayList } = await apiGetTodoList(data);
     console.log('delayList', delayList);
-
     // 赋值过期数据
-    setDelayListDataMap(classifyTodoList(delayList));
+    dispatch(setDelayListDataMap({ delayList }));
   };
 
   /** 拖拽 todoItem前触发 */
@@ -166,5 +148,5 @@ export default function useItemOperation() {
     }
   };
 
-  return { delayListDataMap, addNewTodoItem, deleteTodoItem, updateTodoItem, getTodoList, getDelayTodoList, onBeforeDragStart, onDragEnd };
+  return { addNewTodoItem, deleteTodoItem, updateTodoItem, getTodoList, getDelayTodoList, onBeforeDragStart, onDragEnd };
 }

@@ -1,7 +1,7 @@
 import { TodoStateType } from '@/types/todoType';
 import dayjs from 'dayjs';
 
-// 每日模块 —— moduleId 枚举
+/** 每日模块 —— moduleId 枚举 */
 export enum ModuleFields {
   IMPORTANT_URGENT = 'A',
   IMPORTANT_NOT_URGENT = 'B',
@@ -9,6 +9,7 @@ export enum ModuleFields {
   NOT_IMPORTANT_NOT_URGENT = 'D'
 }
 
+/** 每个模块的配置 */
 export const MODULE_CONFIG_MAP = {
   [ModuleFields.IMPORTANT_URGENT]: {
     color: '#ff4d4f',
@@ -28,7 +29,7 @@ export const MODULE_CONFIG_MAP = {
   }
 };
 
-// 初始化数据
+/** todo 初始化数据 */
 export const initialState: TodoStateType = {
   eachModule: {
     A: {
@@ -187,6 +188,12 @@ export const initialState: TodoStateType = {
         }
       ]
     }
+  },
+  delayListDataMap: {
+    [ModuleFields.IMPORTANT_URGENT]: [],
+    [ModuleFields.IMPORTANT_NOT_URGENT]: [],
+    [ModuleFields.NOT_IMPORTANT_URGENT]: [],
+    [ModuleFields.NOT_IMPORTANT_NOT_URGENT]: []
   },
   selectedId: undefined
 };
