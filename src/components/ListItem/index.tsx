@@ -5,7 +5,7 @@ import { useContextMenu } from 'react-contexify';
 
 import { useAppSelector, useAppDispatch } from '@/app/hooks';
 import { todoAction } from '@/features/todo/todoSlice';
-import useItemOperation from './useItemOperation';
+import useItemOperation from '../../hooks/useItemOperation';
 
 import { EveryDayContext } from '@/views/EveryDay/EveryDay';
 import { TodoListItemType } from '@/types/todoType';

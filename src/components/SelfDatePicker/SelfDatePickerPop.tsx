@@ -3,7 +3,7 @@ import { Button, DatePicker, message, Tooltip } from 'antd';
 import dayjs from 'dayjs';
 
 import IconFont from '@/components/iconFont';
-import useItemOperation from '@/components/ListItem/useItemOperation';
+import useItemOperation from '@/hooks/useItemOperation';
 
 import { Styled_SelfDatePickerPop } from './Styles';
 
@@ -101,7 +101,7 @@ export const SelfDatePickerPop = (props: SelfDatePickerPopProps) => {
               style={{ fontSize: '20px' }}
               onClick={() => {
                 setPickStartTime(dayjs().startOf('day'));
-                setPickEndTime(dayjs().endOf('day').subtract(1, 's'));
+                setPickEndTime(dayjs().endOf('day'));
               }}
             />
           </Tooltip>
@@ -111,7 +111,7 @@ export const SelfDatePickerPop = (props: SelfDatePickerPopProps) => {
               style={{ fontSize: '20px' }}
               onClick={() => {
                 setPickStartTime(dayjs().add(1, 'day').startOf('day'));
-                setPickEndTime(dayjs().add(1, 'day').endOf('day').subtract(1, 's'));
+                setPickEndTime(dayjs().add(1, 'day').endOf('day'));
               }}
             />
           </Tooltip>

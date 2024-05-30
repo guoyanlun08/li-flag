@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
-import useItemOperation from '@/components/ListItem/useItemOperation';
+import useItemOperation from '@/hooks/useItemOperation';
 import { useAppSelector } from '@/app/hooks';
 
+import EachModuleContent from './EachModuleContent';
 import { ModuleFields } from '@/features/todo/todoSlice';
-import { Styled_CardModuleBox, Styled_EachCardContainer, Styled_Title, Styled_CoordinateSystem } from './Styles';
-import EachModuleContent from '../EachModuleContent';
 import { DailyPropsType } from '../EveryDay';
+import { Styled_CardModuleBox, Styled_EachCardContainer, Styled_Title, Styled_CoordinateSystem } from './Styles';
 
 // 模块顺序
 const MODULE_ORDER = [
@@ -16,6 +16,7 @@ const MODULE_ORDER = [
   ModuleFields.NOT_IMPORTANT_URGENT
 ];
 
+/** 卡片模式 */
 function DailyCard(props: DailyPropsType) {
   const { delayListDataMap } = useAppSelector((store) => store.todo);
   const { getDelayTodoList } = useItemOperation();

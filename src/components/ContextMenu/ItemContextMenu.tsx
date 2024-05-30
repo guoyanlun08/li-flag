@@ -2,7 +2,7 @@ import React from 'react';
 import { Menu, Item, ItemParams } from 'react-contexify';
 import 'react-contexify/dist/ReactContexify.css';
 
-import useItemOperation from '@/components/ListItem/useItemOperation';
+import useItemOperation from '@/hooks/useItemOperation';
 
 interface ItemContextMenuProps {
   moduleId?: string;

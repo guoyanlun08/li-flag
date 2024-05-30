@@ -11,7 +11,7 @@ export const Styled_CardModuleBox = styled.div`
   background: rgba(71, 114, 250, 0.1);
 `;
 
-// 坐标系
+/** 坐标系 */
 export const Styled_CoordinateSystem = styled.div`
   .axis {
     position: absolute;
@@ -103,5 +103,31 @@ export const Styled_Title = styled.div<{ color: string }>`
     justify-content: center;
     background: ${(props) => props.color};
     color: #fff;
+  }
+`;
+
+/** eachModule 的内容区 主容器 */
+export const Styled_EachModuleContent = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+`;
+
+/** eachModule 内容区中的 过期区*/
+export const Styled_DelayListBox = styled.div`
+  padding: 0px 2px;
+  .ant-collapse {
+    margin-bottom: 6px;
+    // 折叠头部
+    .ant-collapse-header {
+      padding: 4px 12px;
+      .ant-collapse-extra .ant-btn-sm {
+        font-size: 12px;
+      }
+    }
+    // 折叠内容区
+    .ant-collapse-content {
+      border-top: 0px;
+    }
   }
 `;

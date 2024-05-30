@@ -4,7 +4,7 @@ import { Slate, withReact } from 'slate-react'; // 导入 Slate 组件和 React 
 
 import { useDebounce } from '@/hooks/efficientHooks';
 import { useAppSelector, useAppDispatch } from '@/app/hooks';
-import useItemOperation from './useItemOperation';
+import useItemOperation from '../../hooks/useItemOperation';
 import { todoAction } from '@/features/todo/todoSlice';
 
 import { Styled_EditNode } from './Styles';
