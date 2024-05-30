@@ -12,7 +12,7 @@ import { TodoListItemType } from '@/types/todoType';
 type PropsType = {
   moduleId: ModuleFields;
   listData: TodoListItemType[];
-  delayListData?: TodoListItemType[];
+  delayListData: TodoListItemType[];
 };
 
 const EachModuleContent = (props: PropsType) => {
@@ -25,9 +25,9 @@ const EachModuleContent = (props: PropsType) => {
     {
       key: '1',
       label: '已过期',
-      children:
-        delayListData?.length &&
-        delayListData.map((delayItem, index) => <ListItem key={delayItem.id} todoItem={delayItem} editable={false} index={index} />),
+      children: delayListData.map((delayItem, index) => (
+        <ListItem key={delayItem.id} todoItem={delayItem} editable={false} index={index} />
+      )),
       extra: (
         <Button size="small" type="link">
           顺延

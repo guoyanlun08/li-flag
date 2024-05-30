@@ -101,7 +101,7 @@ export const SelfDatePickerPop = (props: SelfDatePickerPopProps) => {
               style={{ fontSize: '20px' }}
               onClick={() => {
                 setPickStartTime(dayjs().startOf('day'));
-                setPickEndTime(dayjs().endOf('day'));
+                setPickEndTime(dayjs().endOf('day').subtract(1, 's'));
               }}
             />
           </Tooltip>
@@ -111,7 +111,7 @@ export const SelfDatePickerPop = (props: SelfDatePickerPopProps) => {
               style={{ fontSize: '20px' }}
               onClick={() => {
                 setPickStartTime(dayjs().add(1, 'day').startOf('day'));
-                setPickEndTime(dayjs().add(1, 'day').endOf('day'));
+                setPickEndTime(dayjs().add(1, 'day').endOf('day').subtract(1, 's'));
               }}
             />
           </Tooltip>

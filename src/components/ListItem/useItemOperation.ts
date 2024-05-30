@@ -1,11 +1,11 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import { DropResult } from 'react-beautiful-dnd';
 import dayjs from 'dayjs';
 
 import { apiAddNewTodoItem, apiDeleteTodoItem, apiUpdateTodoItem, apiGetTodoList, apiUpdateTodoOrderAfterDrag } from '@/apis/todoItem';
 import { apiAddTodoItemData, apiUpdateTodoItemData, apiGetTodoListData } from '@/apis/todoItem.type';
 import { useAppDispatch, AuthContext, useAppSelector } from '@/app/hooks';
-import { setTodoModule, setTodoEntireModule, setSelectedId, ModuleFields, setDelayListDataMap } from '@/features/todo/todoSlice';
+import { ModuleFields, todoAction } from '@/features/todo/todoSlice';
 
 import { EachModuleType, TodoListItemType } from '@/types/todoType';
 
@@ -49,7 +49,7 @@ export default function useItemOperation() {
 
     if (hadAdd) {
       await getTodoList();
-      dispatch(setSelectedId({ id: newId }));
+      dispatch(todoAction.setSelectedId({ id: newId }));
     }
   };
 
@@ -70,12 +70,12 @@ export default function useItemOperation() {
     const { list } = await apiGetTodoList({ ...data, isDefault: 1 });
 
     if (list) {
-      dispatch(setTodoEntireModule({ list }));
+      dispatch(todoAction.setTodoEntireModule({ list }));
       return list;
     }
   };
 
-  /** 获取 delayTodoList 数据 */
+  /** 获取 delayTodoList 数据 --- 主要设置昨天 delay数据 */
   const getDelayTodoList = async () => {
     const data = {
       completed: 0,
@@ -83,9 +83,8 @@ export default function useItemOperation() {
       endTime: dayjs().subtract(1, 'day').endOf('day').valueOf()
     };
     const { list: delayList } = await apiGetTodoList(data);
-    console.log('delayList', delayList);
     // 赋值过期数据
-    dispatch(setDelayListDataMap({ delayList }));
+    dispatch(todoAction.setDelayListDataMap({ delayList }));
   };
 
   /** 拖拽 todoItem前触发 */
@@ -107,14 +106,14 @@ export default function useItemOperation() {
       const { listData: beforeDragListData } = eachModule[source.droppableId];
       const afterDragListData = reorderList(beforeDragListData, source.index, destination.index);
 
-      dispatch(setTodoModule({ moduleId: source.droppableId, list: afterDragListData }));
+      dispatch(todoAction.setTodoModule({ moduleId: source.droppableId, list: afterDragListData }));
       const resp = await apiUpdateTodoOrderAfterDrag({ sourceListData: afterDragListData });
 
       if (resp.updated) {
         await getTodoList();
       } else {
         // 拖拽失败，数据回退
-        dispatch(setTodoModule({ moduleId: source.droppableId, list: beforeDragListData }));
+        dispatch(todoAction.setTodoModule({ moduleId: source.droppableId, list: beforeDragListData }));
       }
     } else {
       /** 两个不同的模块之间的拖拽 */
@@ -132,17 +131,22 @@ export default function useItemOperation() {
       // 源头去除该拖拽 item; 终点插入 item
       sourceListData.splice(source.index, 1);
       destinationListData.splice(destination.index, 0, dragItem);
-      dispatch(setTodoModule({ moduleId: source.droppableId, list: sourceListData }));
-      dispatch(setTodoModule({ moduleId: destination.droppableId, list: destinationListData }));
+      dispatch(todoAction.setTodoModule({ moduleId: source.droppableId, list: sourceListData }));
+      dispatch(todoAction.setTodoModule({ moduleId: destination.droppableId, list: destinationListData }));
 
       const resp = await apiUpdateTodoOrderAfterDrag({ sourceListData, destinationListData, dragItem });
       if (resp.updated) {
         await getTodoList();
       } else {
         // 拖拽失败，数据回退
-        dispatch(setTodoModule({ moduleId: eachModule[source.droppableId].moduleId, list: eachModule[source.droppableId].listData }));
         dispatch(
-          setTodoModule({ moduleId: eachModule[destination.droppableId].moduleId, list: eachModule[destination.droppableId].listData })
+          todoAction.setTodoModule({ moduleId: eachModule[source.droppableId].moduleId, list: eachModule[source.droppableId].listData })
+        );
+        dispatch(
+          todoAction.setTodoModule({
+            moduleId: eachModule[destination.droppableId].moduleId,
+            list: eachModule[destination.droppableId].listData
+          })
         );
       }
     }

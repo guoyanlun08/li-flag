@@ -4,7 +4,7 @@ import { MenuOutlined } from '@ant-design/icons';
 import { useContextMenu } from 'react-contexify';
 
 import { useAppSelector, useAppDispatch } from '@/app/hooks';
-import { toggleItemCompletedStatus, setSelectedId } from '@/features/todo/todoSlice';
+import { todoAction } from '@/features/todo/todoSlice';
 import useItemOperation from './useItemOperation';
 
 import { EveryDayContext } from '@/views/EveryDay/EveryDay';
@@ -23,7 +23,7 @@ interface PropsType {
 
 export function ListItem(props: PropsType) {
   const { editable, index, dragHandle, todoItem } = props;
-  const { moduleId, id, todoValue, completed } = todoItem;
+  const { moduleId, id, completed } = todoItem;
 
   const context = useContext(EveryDayContext);
   const dispatch = useAppDispatch();
@@ -58,7 +58,7 @@ export function ListItem(props: PropsType) {
 
   /** 选中 item 触发 */
   const selectItemFn = () => {
-    dispatch(setSelectedId({ id }));
+    dispatch(todoAction.setSelectedId({ id }));
   };
 
   /** 鼠标移入 hover */
@@ -73,11 +73,6 @@ export function ListItem(props: PropsType) {
     setIsHover(false);
   };
 
-  /** todoValue 显示于界面文本转化 */
-  const todoValueFormat = (value: string) => {
-    return JSON.parse(value)[0].children[0].text;
-  };
-
   return (
     <Styled_Item
       selected={isSelected}
@@ -87,18 +82,14 @@ export function ListItem(props: PropsType) {
       onMouseLeave={mouseLeaveItemFn}
       onContextMenu={onContextMenu}
       onDoubleClick={(e) => e.stopPropagation()}>
-      <MenuOutlined
-        style={{ display: editable && isHover ? 'block' : 'none' }}
-        className="drag-handle"
-        {...dragHandle}
-      />
+      <MenuOutlined style={{ display: editable && isHover ? 'block' : 'none' }} className="drag-handle" {...dragHandle} />
       <Checkbox
         checked={Boolean(completed)}
         disabled={!editable}
         onChange={async () => {
           const hadUpdated = await updateTodoItem({ id, completed: Number(!completed) });
           if (hadUpdated) {
-            dispatch(toggleItemCompletedStatus({ moduleId, itemIndex: index }));
+            dispatch(todoAction.toggleItemCompletedStatus({ moduleId, itemIndex: index }));
           }
         }}
       />

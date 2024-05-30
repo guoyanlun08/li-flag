@@ -5,7 +5,7 @@ import { Slate, withReact } from 'slate-react'; // 导入 Slate 组件和 React 
 import { useDebounce } from '@/hooks/efficientHooks';
 import { useAppSelector, useAppDispatch } from '@/app/hooks';
 import useItemOperation from './useItemOperation';
-import { setItemTodoValue } from '@/features/todo/todoSlice';
+import { todoAction } from '@/features/todo/todoSlice';
 
 import { Styled_EditNode } from './Styles';
 import { Toolbar, DefaultElement, Leaf } from './slate';
@@ -77,7 +77,7 @@ export function EditNode(props: PropsType) {
       const hadUpdated = await updateTodoItem({ id, todoValue });
 
       if (hadUpdated) {
-        dispatch(setItemTodoValue({ id, moduleId, todoValue }));
+        dispatch(todoAction.setItemTodoValue({ id, moduleId, todoValue }));
       }
     }
   };
@@ -103,9 +103,7 @@ export function EditNode(props: PropsType) {
             inputDebounce(realTextChange, 1000, JSON.stringify(value));
           }
         }}>
-        <div
-          ref={editableContainer}
-          style={{ position: 'relative', display: 'flex', alignItems: 'center', height: '100%' }}>
+        <div ref={editableContainer} style={{ position: 'relative', display: 'flex', alignItems: 'center', height: '100%' }}>
           <Toolbar visible={toolbarOptions.visible} left={toolbarOptions.left} top={toolbarOptions.top} />
           <Styled_EditNode
             readOnly={readOnly}

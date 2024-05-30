@@ -42,7 +42,7 @@ function DailyCard(props: DailyPropsType) {
               <div className="title-icon">{moduleId}</div>
               <div>{title}</div>
             </Styled_Title>
-            <EachModuleContent moduleId={moduleId} listData={listData} delayListData={delayListDataMap?.[moduleId]} />
+            <EachModuleContent moduleId={moduleId} listData={listData} delayListData={delayListDataMap[moduleId]} />
           </Styled_EachCardContainer>
         );
       })}
