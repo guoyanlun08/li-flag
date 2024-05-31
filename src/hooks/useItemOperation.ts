@@ -82,8 +82,12 @@ export default function useItemOperation() {
       endTime: dayjs().subtract(1, 'day').endOf('day').valueOf()
     };
     const { list: delayList } = await apiGetTodoList(data);
-    // 赋值过期数据
-    dispatch(todoAction.setDelayListDataMap({ delayList }));
+
+    if (delayList) {
+      // 赋值过期数据
+      dispatch(todoAction.setDelayListDataMap({ delayList }));
+      return delayList;
+    }
   };
 
   /** 拖拽 todoItem前触发 */

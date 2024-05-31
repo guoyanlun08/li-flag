@@ -23,7 +23,7 @@ export default function LoginModal(props: LoginProps) {
       const { data: res } = await api.post('/user/login', { ...values });
 
       if (res.token) {
-        handleLogin(res);
+        await handleLogin(res);
         props.onLoginFinish(false);
       } else {
         message.error('登陆失败');

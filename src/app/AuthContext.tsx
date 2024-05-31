@@ -11,7 +11,7 @@ import LoginModal from '@/components/Login';
 type AuthContextType = {
   isLogin: boolean;
   openLoginModal: () => void;
-  handleLogin: (token: string) => void;
+  handleLogin: (token: string) => Promise<void>;
 };
 
 export const AuthContext = createContext<AuthContextType>({
@@ -19,7 +19,7 @@ export const AuthContext = createContext<AuthContextType>({
   openLoginModal: function (): void {
     throw new Error('Function not implemented.');
   },
-  handleLogin: function (): void {
+  handleLogin: function (): Promise<void> {
     throw new Error('Function not implemented.');
   }
 });
@@ -29,22 +29,20 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isLogin, setLogin] = useState(false);
   const [loginVisible, setLoginVisible] = useState(false);
 
-  // XXX: 目前自行清除 localStorage 无法改变 isLogin 状态
-  useEffect(() => {
-    const loginInitInfo = async () => {
+  // 设置登录用户信息
+  const loginInitInfo = async () => {
+    const { userInfo } = await getUserInfo();
+    if (userInfo) {
+      dispatch(setUserInfo({ userInfo }));
       setLogin(true);
-      const { userInfo } = await getUserInfo();
-      if (userInfo) {
-        dispatch(setUserInfo({ userInfo }));
-      }
-    };
+    }
+  };
 
+  useEffect(() => {
     if (getToken()) {
       loginInitInfo();
-    } else {
-      setLogin(false);
     }
-  }, [isLogin]);
+  }, []);
 
   /** 打开登录弹窗 */
   const openLoginModal = () => {
@@ -53,9 +51,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   /** 登录操作 */
-  const handleLogin = (res: any) => {
+  const handleLogin = async (res: any) => {
     setToken(res.token);
-    setLogin(true);
+    await loginInitInfo();
   };
 
   return (

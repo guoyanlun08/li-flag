@@ -7,13 +7,17 @@ import { apiAddTodoItemData, apiUpdateTodoItemData, apiGetTodoListData, apiUpdat
  * @returns
  */
 export async function apiAddNewTodoItem(data: apiAddTodoItemData) {
-  const resp = await api.post('/todoItem/addTodoItem', { ...data });
+  try {
+    const resp = await api.post('/todoItem/addTodoItem', { ...data });
 
-  if (resp?.code) {
-    console.error('apiAddNewTodoItem 新增失败');
+    if (resp?.code) {
+      throw new Error('apiAddNewTodoItem 新增失败');
+    }
+    return resp.data;
+  } catch (err) {
+    console.error(err);
+    return false;
   }
-
-  return resp.data;
 }
 
 /**
@@ -22,13 +26,17 @@ export async function apiAddNewTodoItem(data: apiAddTodoItemData) {
  * @returns
  */
 export async function apiDeleteTodoItem(id: number) {
-  const resp = await api.delete('/todoItem/deleteTodoItemById', { id });
+  try {
+    const resp = await api.delete('/todoItem/deleteTodoItemById', { id });
 
-  if (resp.code) {
-    console.error('apiDeleteTodoItem 删除失败');
+    if (resp?.code) {
+      throw new Error('apiDeleteTodoItem 删除失败');
+    }
+    return resp.data;
+  } catch (err) {
+    console.error(err);
+    return false;
   }
-
-  return resp.data;
 }
 
 /**
@@ -37,13 +45,17 @@ export async function apiDeleteTodoItem(id: number) {
  * @returns
  */
 export async function apiUpdateTodoItem(data: apiUpdateTodoItemData) {
-  const resp = await api.put('/todoItem/updateTodoItem', { ...data });
+  try {
+    const resp = await api.put('/todoItem/updateTodoItem', { ...data });
 
-  if (resp?.code) {
-    console.error('apiUpdateTodoItem 更新失败');
+    if (resp?.code) {
+      throw new Error('apiUpdateTodoItem 更新失败');
+    }
+    return true;
+  } catch (err) {
+    console.error(err);
     return false;
   }
-  return true;
 }
 
 /**
@@ -52,13 +64,17 @@ export async function apiUpdateTodoItem(data: apiUpdateTodoItemData) {
  * @returns
  */
 export async function apiGetTodoList(data?: apiGetTodoListData) {
-  const resp = await api.get('/todoItem/getTodoList', { ...data });
+  try {
+    const resp = await api.get('/todoItem/getTodoList', { ...data });
 
-  if (resp?.code) {
-    console.error('apiGetTodoList 获取失败');
+    if (resp?.code) {
+      throw new Error('apiGetTodoList 获取失败');
+    }
+    return resp.data;
+  } catch (err) {
+    console.error(err);
+    return false;
   }
-
-  return resp.data;
 }
 
 /**
@@ -67,12 +83,16 @@ export async function apiGetTodoList(data?: apiGetTodoListData) {
  * @returns
  */
 export async function apiUpdateTodoOrderAfterDrag(data: apiUpdateTodoOrderAfterDragData) {
-  const { sourceListData, destinationListData, dragItem } = data;
-  const resp = await api.put('/todoItem/updateTodoOrderAfterDrag', { sourceListData, destinationListData, dragItem });
+  try {
+    const { sourceListData, destinationListData, dragItem } = data;
+    const resp = await api.put('/todoItem/updateTodoOrderAfterDrag', { sourceListData, destinationListData, dragItem });
 
-  if (resp?.code) {
-    console.error('更新失败');
+    if (resp?.code) {
+      throw new Error('更新失败');
+    }
+    return resp.data;
+  } catch (err) {
+    console.error(err);
+    return false;
   }
-
-  return resp.data;
 }
