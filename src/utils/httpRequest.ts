@@ -5,19 +5,16 @@ import { getToken, removeToken } from '@/utils/localStorage';
 
 import { HttpCode, HTTP_STATUS_TEXT } from '@/constants/httpCode';
 
-// 返回res.data的interface
+/** 返回res的interface */
 export interface IResponse {
   code: number | string;
   data: any;
-  msg: string;
+  msg?: string;
 }
 
 export const authorizationHeader = () => ({
   Authorization: getToken() ?? ''
 });
-
-// 请求api 函数签名
-type ReqFunction = (method: string, url: string, variables?: {}, options?: {}) => Promise<any>;
 
 // axios 默认配置项
 const defaults = {
@@ -36,7 +33,7 @@ const defaults = {
 };
 
 /** 请求api, 需要额外的 header 通过 options参数传递，再进行处理*/
-const api: ReqFunction = (method, url, variables, options) => {
+function api<T>(method: string, url: string, variables?: T, options?: {}): Promise<IResponse> {
   return new Promise((resolve, reject) => {
     axios({
       url: `${defaults.baseURL}${url}`,
@@ -64,11 +61,11 @@ const api: ReqFunction = (method, url, variables, options) => {
       }
     );
   });
-};
+}
 
 export default {
-  get: (...args: [string, object?, object?]) => api('get', ...args),
-  post: (...args: [string, object?, object?]) => api('post', ...args),
-  put: (...args: [string, object?, object?]) => api('put', ...args),
-  delete: (...args: [string, object?, object?]) => api('delete', ...args)
+  get: <T>(...args: [string, T?, object?]) => api<T>('get', ...args),
+  post: <T>(...args: [string, T?, object?]) => api<T>('post', ...args),
+  put: <T>(...args: [string, T?, object?]) => api<T>('put', ...args),
+  delete: <T>(...args: [string, T?, object?]) => api<T>('delete', ...args)
 };
