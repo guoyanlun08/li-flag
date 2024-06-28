@@ -3,8 +3,8 @@ import React, { ReactNode, createContext, useEffect, useState } from 'react';
 
 import { useAppDispatch } from './hooks';
 import { getUserInfo } from '@/apis/user';
-import { setUserInfo } from '@/features/user/userSlice';
-import { getToken, setToken } from '@/utils/localStorage';
+import { setUserInfo, initUserInfo } from '@/features/user/userSlice';
+import { getToken, setToken, removeToken } from '@/utils/localStorage';
 
 import LoginModal from '@/components/Login';
 
@@ -12,6 +12,7 @@ type AuthContextType = {
   isLogin: boolean;
   openLoginModal: () => void;
   handleLogin: (token: string) => Promise<void>;
+  handleLogOut: () => void;
 };
 
 export const AuthContext = createContext<AuthContextType>({
@@ -20,6 +21,9 @@ export const AuthContext = createContext<AuthContextType>({
     throw new Error('Function not implemented.');
   },
   handleLogin: function (): Promise<void> {
+    throw new Error('Function not implemented.');
+  },
+  handleLogOut: function (): Promise<void> {
     throw new Error('Function not implemented.');
   }
 });
@@ -56,8 +60,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     await loginInitInfo();
   };
 
+  /** 登出操作 */
+  const handleLogOut = () => {
+    dispatch(initUserInfo());
+    setLogin(false);
+    removeToken();
+  };
+
   return (
-    <AuthContext.Provider value={{ isLogin, openLoginModal, handleLogin }}>
+    <AuthContext.Provider value={{ isLogin, openLoginModal, handleLogin, handleLogOut }}>
       {children}
       <LoginModal
         open={loginVisible}

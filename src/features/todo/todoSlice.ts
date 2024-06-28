@@ -64,7 +64,14 @@ export const todoSlice = createSlice({
     setDelayListDataMap: (state, action: PayloadAction<{ delayList: TodoListItemType[] }>) => {
       const { delayList } = action.payload;
       state.delayListDataMap = classifyTodoList(delayList);
-    }
+    },
+
+    /** 初始化 todoState 数据 */
+    initTodoSate: (state, action: PayloadAction) => {
+      state = initialState;
+
+      return state;
+    },
   }
 });
 

@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Modal, Form, Input, Button, Space, FormProps } from 'antd';
 
-import { useAppSelector, useAppDispatch } from '@/app/hooks';
+import { useAppSelector, useAppDispatch, AuthContext } from '@/app/hooks';
 import { setUserInfo } from '@/features/user/userSlice';
 import { updateUserInfo } from '@/apis/user';
 
@@ -25,6 +25,7 @@ const PersonalSettingsModal = (props: PersonalSettingsProps) => {
 
   const userState = useAppSelector((store) => store.user);
   const dispatch = useAppDispatch();
+  const { handleLogOut } = useContext(AuthContext);
 
   const { avatarPath, userId, nickName, lastOnlineTime } = userState;
   const [editStatus, setEditStatus] = useState(false);
@@ -54,18 +55,21 @@ const PersonalSettingsModal = (props: PersonalSettingsProps) => {
     form.setFieldValue('avatarPath', imgUrl);
   };
 
+  const handleCancelModal = () => {
+    setEditStatus(false);
+    setOpen(false);
+  };
+
   return (
     <>
       <Modal
         title="个人中心"
         open={visible}
-        okText="确认修改"
-        cancelText="取消"
         width={700}
-        styles={{ footer: { display: editStatus ? 'block' : 'none' } }}
+        styles={{ footer: { display: 'none' } }}
         forceRender // modal中使用 useForm 需要加这个属性。modal 未渲染，antd 不知道 form 绑定在哪
         onOk={() => form.submit()}
-        onCancel={() => setOpen(false)}>
+        onCancel={handleCancelModal}>
         <Styled_ModalBody>
           <Form
             labelCol={{ span: 8 }}
@@ -83,7 +87,7 @@ const PersonalSettingsModal = (props: PersonalSettingsProps) => {
                 <Button size="small" onClick={() => setPasswordVisible(true)}>
                   修改密码
                 </Button>
-                <Button size="small" type="primary" onClick={() => setEditStatus(!editStatus)}>
+                <Button size="small" type="primary" disabled={editStatus} onClick={() => setEditStatus(!editStatus)}>
                   编 辑
                 </Button>
               </Space>
@@ -99,6 +103,36 @@ const PersonalSettingsModal = (props: PersonalSettingsProps) => {
             </Form.Item>
           </Form>
         </Styled_ModalBody>
+
+        {/* 编辑底部按钮 */}
+        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+          {editStatus ? (
+            <Space>
+              <Button size="small" onClick={() => setEditStatus(false)}>
+                取消
+              </Button>
+              <Button
+                size="small"
+                type="primary"
+                onClick={() => {
+                  form.submit();
+                  setEditStatus(false);
+                }}>
+                确认修改
+              </Button>
+            </Space>
+          ) : (
+            <Button
+              size="small"
+              type="primary"
+              onClick={() => {
+                handleLogOut();
+                setOpen(false);
+              }}>
+              登出
+            </Button>
+          )}
+        </div>
       </Modal>
       <ModifyPasswordModal userId={userId} visible={passwordVisible} setOpen={(val) => setPasswordVisible(val)} />
     </>

@@ -90,6 +90,11 @@ export default function useItemOperation() {
     }
   };
 
+  /** 初始化 todo 数据 */
+  const initTodoSateFn = () => {
+    dispatch(todoAction.initTodoSate());
+  }
+
   /** 拖拽 todoItem前触发 */
   const onBeforeDragStart = (handleSetDragStatus: (value: boolean) => void) => {
     handleSetDragStatus(true);
@@ -155,5 +160,5 @@ export default function useItemOperation() {
     }
   };
 
-  return { addNewTodoItem, deleteTodoItem, updateTodoItem, getTodoList, getDelayTodoList, onBeforeDragStart, onDragEnd };
+  return { addNewTodoItem, deleteTodoItem, updateTodoItem, getTodoList, getDelayTodoList, initTodoSateFn, onBeforeDragStart, onDragEnd };
 }

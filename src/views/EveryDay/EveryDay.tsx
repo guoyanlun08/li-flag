@@ -27,7 +27,8 @@ function EveryDay() {
   const { search } = useLocation();
   const { isLogin } = useContext(AuthContext);
   const { eachModule } = useAppSelector((state) => state.todo);
-  const { getTodoList, onBeforeDragStart, onDragEnd } = useItemOperation();
+
+  const { getTodoList, onBeforeDragStart, onDragEnd, initTodoSateFn } = useItemOperation();
 
   const [dragStatus, setDragStatus] = useState(false); // 当前拖拽状态
 
@@ -37,6 +38,8 @@ function EveryDay() {
     };
     if (isLogin) {
       fetchTodoList();
+    } else {
+      initTodoSateFn();
     }
 
     // XXX：晚上 12点都会强制刷新，目前是强制的。后期这个需求再整理。
