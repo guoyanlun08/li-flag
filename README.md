@@ -1,5 +1,7 @@
 # li-flag
 
+[http://120.79.1.39/everyday](预览页面)
+
 ## `npm install`
 
 ## `npm start`
