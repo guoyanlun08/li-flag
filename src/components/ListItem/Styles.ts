@@ -7,7 +7,6 @@ const ITEM_HEIGHT = '35px';
 
 export const Styled_Item = styled.div<{ selected: boolean; moduleId: ModuleFields }>`
   // 如果后面有主题色的需求，这里的 71,114,250 应是主题色
-  background: ${(props) => (props.selected ? 'rgba(71,114,250, 0.1)' : '')};
   position: relative;
   display: flex;
   align-items: center;
@@ -16,7 +15,8 @@ export const Styled_Item = styled.div<{ selected: boolean; moduleId: ModuleField
   border: 1px solid transparent;
   border-radius: 5px;
   margin-bottom: 2px;
-  &:hover {
+  &:hover,
+  &:focus-within {
     background: ${(props) => (props.selected ? 'rgba(71,114,250, 0.1)' : 'rgba(71,114,250, 0.08)')};
     border-color: ${(props) => MODULE_CONFIG_MAP[props.moduleId].color};
   }
