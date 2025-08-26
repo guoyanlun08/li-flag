@@ -13,16 +13,21 @@ export const Styled_Item = styled.div<{ selected: boolean; moduleId: ModuleField
   align-items: center;
   height: ${ITEM_HEIGHT};
   padding-left: 20px;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  margin-bottom: 2px;
   &:hover {
-    background: ${(props) => (props.selected ? 'rgba(71,114,250, 0.1)' : 'rgba(25, 25, 25, 0.08)')};
+    background: ${(props) => (props.selected ? 'rgba(71,114,250, 0.1)' : 'rgba(71,114,250, 0.08)')};
+    border-color: ${(props) => MODULE_CONFIG_MAP[props.moduleId].color};
   }
   .drag-handle {
     position: absolute;
-    left: 2px;
+    left: 5px;
     top: 50%;
     transform: translate(0px, -50%);
     color: #000;
     font-size: 12px;
+    cursor: move;
   }
 
   // checkbox

@@ -111,6 +111,7 @@ export const Styled_EachModuleContent = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
+  padding: 0px 5px;
 `;
 
 /** eachModule 内容区中的 过期区*/
