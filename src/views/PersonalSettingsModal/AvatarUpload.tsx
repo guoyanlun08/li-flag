@@ -30,7 +30,7 @@ const AvatarUpload = (props: PropsType) => {
         response: { data }
       } = file;
       onUploadAvatarFinish(data.filePath);
-      // XXX: 本地图片路径浏览器回显不出，看看有没有能屏蔽的
+      // XXX: 本地图片路径浏览器回显不出，本地可以转为 base64 来处理
       setImageUrl(data.filePath);
     }
   };

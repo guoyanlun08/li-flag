@@ -2,6 +2,8 @@
 
 [http://120.79.1.39/everyday](预览页面)
 
+## `node 18`
+
 ## `npm install`
 
 ## `npm start`
@@ -66,7 +68,7 @@ vscode: 下载 vscode-styled-components 这个插件有高亮提示\
 
 ## react-beautiful-dnd 拖拽库
 
-中文文档: https://github.com/chinanf-boy/react-beautiful-dnd-zh \
+中文文档: <https://github.com/chinanf-boy/react-beautiful-dnd-zh> \
 ts 项目参考：<https://github1s.com/cowienduckie/react-beautiful-dnd-sample/blob/HEAD/src/App.tsx#L14>
 
 ## redux-toolkit 文档

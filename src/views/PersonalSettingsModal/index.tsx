@@ -38,7 +38,7 @@ const PersonalSettingsModal = (props: PersonalSettingsProps) => {
       userId,
       nickName
     });
-  });
+  }, [visible]);
 
   // 表单完成触发
   const onFinish: FormProps<personalSettingsFieldType>['onFinish'] = async (values) => {
