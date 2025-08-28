@@ -46,7 +46,7 @@ const menus: menuProps[] = [
 ];
 
 function SiderMenu(props: any) {
-  const { getClose } = props;
+  const { getClose, toggleTheme } = props;
 
   const userState = useAppSelector((store) => store.user);
 
@@ -54,12 +54,21 @@ function SiderMenu(props: any) {
 
   const [personalSettingsVisible, setPersonalSettingsVisible] = useState(false); // 个人设置弹窗 visible
   const [collapsed, setCollapsed] = useState(false);
+  const [isDark, setIsDark] = useState(() => {
+    const savedTheme = localStorage.getItem('darkTheme');
+    return savedTheme ? JSON.parse(savedTheme) : false;
+  });
   const { pathname } = useLocation();
 
   // 点击 siderMenu 触发
   const handleClickSiderMenu = (): void => {
     setCollapsed(!collapsed);
     getClose(collapsed);
+  };
+  const hangdleClickTheme = (e: any): void => {
+    e.stopPropagation();
+    setIsDark(!isDark);
+    toggleTheme(isDark);
   };
 
   // 个人设置弹窗 visible 的控制
@@ -104,7 +113,15 @@ function SiderMenu(props: any) {
             })}
           </Styled_OptionsBar>
         </Styled_MenuBox>
-        <div className="side-footer">{collapsed ? <MenuOutlined /> : <MenuOutlined rotate={90} />}</div>
+        <div className="side-footer">
+          {isDark ? (
+            <IconFont name="icon-daytime-mode" onClick={(e: any) => hangdleClickTheme(e)} />
+          ) : (
+            <IconFont name="icon-night-mode" onClick={(e: any) => hangdleClickTheme(e)} />
+          )}
+
+          {collapsed ? <MenuOutlined /> : <MenuOutlined rotate={90} />}
+        </div>
       </Styled_SiderMenuContainer>
       <PersonalSettingsModal visible={personalSettingsVisible} setOpen={triggerPersonalSettingsModal} />
     </>

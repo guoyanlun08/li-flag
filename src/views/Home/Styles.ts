@@ -1,6 +1,9 @@
 import styled from 'styled-components';
+import mainColor from '@/styles/variables.module.scss';
 
 export const Styled_Home = styled.div`
+  color: ${mainColor.primaryTextColor};
+  background-color: ${mainColor.primaryBackgroundColor};
   .footer {
     display: flex;
     justify-content: center;

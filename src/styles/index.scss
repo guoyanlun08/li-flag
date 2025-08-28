@@ -8,6 +8,7 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+::view-transition-old(root), ::view-transition-new(root) { animation: none; }
 
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
@@ -18,6 +19,7 @@ body,
 #root {
     width: 100%;
     height: 100%;
+    background-color: var(--primary-bg-color);
 }
 
 body,div,dl,dt,dd,ul,ol,li,tr,td,th,

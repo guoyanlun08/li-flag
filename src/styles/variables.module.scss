@@ -1,4 +1,24 @@
 // 项目中主要的颜色
+$primaty-light-bg-color-1: #ffffff;
+$primary-light-text-color-1: #242424;
+$primary-dark-bg-color-1: #242424;
+$primary-dark-text-color-1: #ffffff;
+
+$primaty-light-bg-color-2: #fafafa;
+$primary-light-text-color-2: #242424;
+$primary-dark-bg-color-2: #242424;
+$primary-dark-text-color-2: #ffffff;
+
+:root{
+    --primary-bg-color: #{$primaty-light-bg-color-1};
+    --primary-bg-color-2: #{$primaty-light-bg-color-2};
+    --primary-text-color: #{$primary-light-text-color-1};
+}
+.dark{
+    --primary-bg-color: #{$primary-dark-bg-color-1};
+    --primary-bg-color-2: #{$primary-dark-bg-color-2};
+    --primary-text-color: #{$primary-dark-text-color-1};
+}
 
 $fl-gray: #909399;
 $f1-activeTab: #fa7547eb;
@@ -8,4 +28,7 @@ $fl-blue: #4772fa;
   mainBlue: $fl-blue;
   mainGray: $fl-gray;
   activeTab: $f1-activeTab;
+  primaryBgColor: var(--primary-bg-color);
+  primaryBgColor2: var(--primary-bg-color-2);
+  primaryTextColor: var(--primary-text-color);
 }

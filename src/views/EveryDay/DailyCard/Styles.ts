@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import mainColor from '@/styles/variables.module.scss';
 
 /** DailyCard/index 主容器 */
 export const Styled_CardModuleBox = styled.div`
@@ -70,7 +71,7 @@ export const Styled_CoordinateSystem = styled.div`
 
 /** DailyCard/EachCard 主容器 */
 export const Styled_EachCardContainer = styled.div<{ index: number }>`
-  background: #fff;
+  background: ${mainColor.primaryBgColor};
   margin-right: ${(props) => (props.index === 0 || props.index === 2 ? '2%' : '0px')};
   width: 49%;
   height: 49%;
@@ -122,6 +123,7 @@ export const Styled_DelayListBox = styled.div`
     // 折叠头部
     .ant-collapse-header {
       padding: 4px 12px;
+      color: ${mainColor.primaryTextColor};
       .ant-collapse-extra .ant-btn-sm {
         font-size: 12px;
       }

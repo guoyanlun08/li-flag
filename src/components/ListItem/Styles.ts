@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Editable } from 'slate-react';
+import mainColor from '@/styles/variables.module.scss';
 
 import { MODULE_CONFIG_MAP, ModuleFields } from '@/features/todo/todoSlice';
 
@@ -25,7 +26,7 @@ export const Styled_Item = styled.div<{ selected: boolean; moduleId: ModuleField
     left: 5px;
     top: 50%;
     transform: translate(0px, -50%);
-    color: #000;
+    color: ${mainColor.primaryTextColor};
     font-size: 12px;
     cursor: move;
   }
@@ -63,13 +64,17 @@ export const Styled_Item = styled.div<{ selected: boolean; moduleId: ModuleField
   }
 `;
 export const Styled_ItemContent = styled.div<{ selected: boolean; completed: number }>`
-  border-bottom: ${(props) => (props.selected ? '1px solid transparent' : '1px solid rgba(255, 255, 255, 0.2)')};
+  /* border-bottom: ${(props) => (props.selected ? '1px solid transparent' : '1px solid rgba(255, 255, 255, 0.2)')}; */
   padding-left: 8px;
   width: 92%;
   height: 100%;
   display: flex;
   align-items: center;
-  color: ${(props) => (props.completed ? '#909399' : 'rgba(0, 0, 0)')};
+  color: ${(props) => (props.completed ? '#909399' : mainColor.primaryTextColor)};
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  &:focus {
+    border-bottom: 1px solid transparent;
+  }
 `;
 
 export const Styled_EditNode = styled(Editable)`

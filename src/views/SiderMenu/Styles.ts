@@ -5,12 +5,17 @@ export const Styled_SiderMenuContainer = styled.div`
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background-color: white;
+  background-color: ${mainColor.primaryBgColor};
+  color: ${mainColor.primaryTextColor};
   display: flex;
   flex-direction: column;
   .side-footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
     width: 100%;
-    height: 50px;
+    height: 100px;
     padding: 10px 0;
     color: #bfbcbca8;
     text-align: center;
