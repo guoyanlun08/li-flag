@@ -7,6 +7,7 @@ import { AuthContext, useAppSelector } from '@/app/hooks';
 import PersonalSettingsModal from '@/views/PersonalSettingsModal';
 import IconFont from '@/components/iconFont';
 import { Styled_SiderMenuContainer, Styled_Header, Styled_MenuBox, Styled_Info, Styled_OptionsBar } from './Styles';
+import { THEME_KEY, ThemeMode } from '@/constants/theme';
 
 type menuProps = {
   title: string;
@@ -54,9 +55,8 @@ function SiderMenu(props: any) {
 
   const [personalSettingsVisible, setPersonalSettingsVisible] = useState(false); // 个人设置弹窗 visible
   const [collapsed, setCollapsed] = useState(false);
-  const [isDark, setIsDark] = useState(() => {
-    const savedTheme = localStorage.getItem('darkTheme');
-    return savedTheme ? JSON.parse(savedTheme) : false;
+  const [themeMode, setThemeMode] = useState(() => {
+    return localStorage.getItem(THEME_KEY) ?? ThemeMode.light;
   });
   const { pathname } = useLocation();
 
@@ -65,10 +65,10 @@ function SiderMenu(props: any) {
     setCollapsed(!collapsed);
     getClose(collapsed);
   };
-  const hangdleClickTheme = (e: any): void => {
+  const hangdleClickTheme = (e: React.MouseEvent, mode: ThemeMode): void => {
     e.stopPropagation();
-    setIsDark(!isDark);
-    toggleTheme(isDark);
+    setThemeMode(mode);
+    toggleTheme(mode);
   };
 
   // 个人设置弹窗 visible 的控制
@@ -114,10 +114,10 @@ function SiderMenu(props: any) {
           </Styled_OptionsBar>
         </Styled_MenuBox>
         <div className="side-footer">
-          {isDark ? (
-            <IconFont name="icon-daytime-mode" onClick={(e: any) => hangdleClickTheme(e)} />
+          {themeMode === ThemeMode.dark ? (
+            <IconFont name="icon-daytime-mode" onClick={(e: React.MouseEvent) => hangdleClickTheme(e, ThemeMode.light)} />
           ) : (
-            <IconFont name="icon-night-mode" onClick={(e: any) => hangdleClickTheme(e)} />
+            <IconFont name="icon-night-mode" onClick={(e: React.MouseEvent) => hangdleClickTheme(e, ThemeMode.dark)} />
           )}
 
           {collapsed ? <MenuOutlined /> : <MenuOutlined rotate={90} />}

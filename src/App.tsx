@@ -4,6 +4,7 @@ import { Layout } from 'antd';
 
 import SiderMenu from '@/views/SiderMenu';
 import mainColor from '@/styles/variables.module.scss';
+import { THEME_KEY, ThemeMode } from '@/constants/theme';
 
 const { Sider, Content } = Layout;
 function doTransition() {
@@ -11,12 +12,25 @@ function doTransition() {
     document.documentElement.classList.toggle('dark');
   });
   transition.ready.then(() => {
-    const x = 0,
-      y = 0;
-    const radius = Math.sqrt(Math.max(x, window.innerWidth - x) ** 2 + Math.max(y, window.innerHeight - y) ** 2);
     document.documentElement.animate(
-      { clipPath: [`circle(0 at ${x}px ${y}px)`, `circle(${radius}px at ${x}px ${y}px)`] },
-      { duration: 300, pseudoElement: '::view-transition-new(root)' }
+      {
+        opacity: [1, 0]
+      },
+      {
+        duration: 300,
+        pseudoElement: '::view-transition-old(root)',
+        easing: 'ease-out'
+      }
+    );
+    document.documentElement.animate(
+      {
+        opacity: [0, 1]
+      },
+      {
+        duration: 300,
+        pseudoElement: '::view-transition-new(root)',
+        easing: 'ease-in'
+      }
     );
   });
 }
@@ -28,18 +42,15 @@ function App() {
   };
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem('darkTheme');
-    let darkTheme = savedTheme ? JSON.parse(savedTheme) : false;
-    if (darkTheme) {
-      document.documentElement.classList.add('dark');
+    const savedTheme = localStorage.getItem(THEME_KEY) ?? ThemeMode.light;
+    if (savedTheme === ThemeMode.dark) {
+      document.documentElement.classList.add(ThemeMode.dark);
     } else {
-      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.remove(ThemeMode.dark);
     }
   }, []);
-  const toggleDarkTheme = (isDark: boolean) => {
-    const newTheme = !isDark;
-    // setDarkTheme(newTheme);
-    localStorage.setItem('darkTheme', JSON.stringify(newTheme));
+  const toggleDarkTheme = (mode: ThemeMode) => {
+    localStorage.setItem(THEME_KEY, mode);
     doTransition();
   };
 
