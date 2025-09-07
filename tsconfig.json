@@ -16,6 +16,7 @@
     "isolatedModules": true,
     "noEmit": false,
     "jsx": "preserve",
+    "types": ["vite/client"],
   },
   "include": ["./src/**/*"],
   "extends": "./paths.json"

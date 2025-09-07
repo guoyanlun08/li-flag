@@ -52,7 +52,7 @@ const AvatarUpload = (props: PropsType) => {
     <Styled_AvatarContainer>
       <Upload
         disabled={disabled}
-        action={`${process.env.REACT_APP_BASE_URL}/upload/uploadAvatar`}
+        action={`${import.meta.env.VITE_APP_BASE_URL}/upload/uploadAvatar`}
         headers={{
           ...authorizationHeader()
         }}

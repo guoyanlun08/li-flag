@@ -18,7 +18,7 @@ export const authorizationHeader = () => ({
 
 // axios 默认配置项
 const defaults = {
-  baseURL: process.env.REACT_APP_BASE_URL || 'http://localhost:3000/api',
+  baseURL: import.meta.env.VITE_APP_BASE_URL || 'http://localhost:3000/api',
   headers: () => ({
     ...authorizationHeader(),
     Accept: 'application/json',
