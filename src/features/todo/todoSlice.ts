@@ -9,7 +9,8 @@ function classifyTodoList(list: TodoListItemType[]) {
     A: [],
     B: [],
     C: [],
-    D: []
+    D: [],
+    TEAM: []
   };
   list.forEach((todo) => obj[todo.moduleId].push(todo));
   return obj;
@@ -71,7 +72,7 @@ export const todoSlice = createSlice({
       state = initialState;
 
       return state;
-    },
+    }
   }
 });
 

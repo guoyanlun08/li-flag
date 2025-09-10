@@ -6,7 +6,8 @@ export enum ModuleFields {
   IMPORTANT_URGENT = 'A',
   IMPORTANT_NOT_URGENT = 'B',
   NOT_IMPORTANT_URGENT = 'C',
-  NOT_IMPORTANT_NOT_URGENT = 'D'
+  NOT_IMPORTANT_NOT_URGENT = 'D',
+  TEAM_FLAG_MODULE = 'TEAM'
 }
 
 /** 每个模块的配置 */
@@ -26,6 +27,10 @@ export const MODULE_CONFIG_MAP = {
   [ModuleFields.NOT_IMPORTANT_NOT_URGENT]: {
     color: '#31c27c',
     name: '不重要不紧急'
+  },
+  [ModuleFields.TEAM_FLAG_MODULE]: {
+    color: '#ccc',
+    name: 'TEAM'
   }
 };
 
@@ -187,13 +192,37 @@ export const initialState: TodoStateType = {
           endTime: dayjs().valueOf()
         }
       ]
+    },
+    TEAM: {
+      moduleId: ModuleFields.TEAM_FLAG_MODULE,
+      title: MODULE_CONFIG_MAP[ModuleFields.TEAM_FLAG_MODULE].name,
+      color: MODULE_CONFIG_MAP[ModuleFields.TEAM_FLAG_MODULE].color,
+      listData: [
+        {
+          id: -9,
+          moduleId: ModuleFields.TEAM_FLAG_MODULE,
+          todoValue: JSON.stringify([
+            {
+              type: 'paragraph',
+              children: [{ text: '这是团队的flag' }]
+            }
+          ]),
+          completed: 0,
+          order: 1,
+          createTime: dayjs().valueOf(),
+          updateTime: dayjs().valueOf(),
+          startTime: dayjs().valueOf(),
+          endTime: dayjs().valueOf()
+        }
+      ]
     }
   },
   delayListDataMap: {
     [ModuleFields.IMPORTANT_URGENT]: [],
     [ModuleFields.IMPORTANT_NOT_URGENT]: [],
     [ModuleFields.NOT_IMPORTANT_URGENT]: [],
-    [ModuleFields.NOT_IMPORTANT_NOT_URGENT]: []
+    [ModuleFields.NOT_IMPORTANT_NOT_URGENT]: [],
+    [ModuleFields.TEAM_FLAG_MODULE]: []
   },
   selectedId: undefined
 };

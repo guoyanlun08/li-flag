@@ -44,6 +44,11 @@ const menus: menuProps[] = [
     title: '每日模块',
     icon: 'icon-a-009_wodedaiban',
     path: '/everyday'
+  },
+  {
+    title: '团队模块',
+    icon: 'icon-a-009_wodetuandui',
+    path: '/teamFlag'
   }
 ];
 
