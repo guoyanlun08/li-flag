@@ -9,7 +9,7 @@
 /coverage
 
 # production
-/build
+/dist
 
 # 打包分析文件
 stats.html
