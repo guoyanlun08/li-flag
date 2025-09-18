@@ -45,3 +45,31 @@ export async function deleteTeamFlag(data: { teamFlagId: number }) {
 
   return resp;
 }
+
+/**
+ * 通过 teanFlagId 获取团队 Flag 所有详情（关联 user, todo 表）
+ * @returns
+ */
+export async function getTeamFlagAllInfoById(data: { teamFlagId: number }) {
+  const resp = await api.get('/teamFlag/getTeamFlagAllInfoById', data);
+
+  if (resp?.code) {
+    throw new Error('getTeamFlagAllInfoById 获取失败');
+  }
+
+  return resp.data?.teamFlagInfo || {};
+}
+
+/**
+ * 通过 teanFlagId 获取团队 Flag 详情（无关联）
+ * @returns
+ */
+export async function getTeamFlagInfoById(data: { teamFlagId: number }) {
+  const resp = await api.get('/teamFlag/getTeamFlagInfoById', data);
+
+  if (resp?.code) {
+    throw new Error('getTeamFlagInfoById 获取失败');
+  }
+
+  return resp.data?.teamFlagInfo || {};
+}

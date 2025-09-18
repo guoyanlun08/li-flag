@@ -19,16 +19,6 @@ const MODULE_ORDER = [
 /** 卡片模式 */
 function DailyCard(props: DailyPropsType) {
   const { delayListDataMap } = useAppSelector((store) => store.todo);
-  const { getDelayTodoList } = useItemOperation();
-
-  useEffect(() => {
-    // 初始化delayListDataMap
-    async function initDelayListDataMap() {
-      await getDelayTodoList();
-    }
-
-    initDelayListDataMap();
-  }, []);
 
   return (
     <Styled_CardModuleBox>

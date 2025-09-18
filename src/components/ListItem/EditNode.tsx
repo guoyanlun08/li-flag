@@ -1,11 +1,9 @@
-import React, { useState, useCallback, useRef, useEffect } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import { createEditor } from 'slate'; // 导入 Slate 编辑器工厂。
 import { Slate, withReact } from 'slate-react'; // 导入 Slate 组件和 React 插件。
 
 import { useDebounce } from '@/hooks/efficientHooks';
-import { useAppSelector, useAppDispatch } from '@/app/hooks';
 import useItemOperation from '../../hooks/useItemOperation';
-import { todoAction } from '@/features/todo/todoSlice';
 
 import { Styled_EditNode } from './Styles';
 import { Toolbar, DefaultElement, Leaf } from './slate';
@@ -16,14 +14,13 @@ interface PropsType {
   todoItem: TodoListItemType;
   index: number;
   readOnly: boolean;
+  afterTextChangeHook: () => void;
 }
 
 export function EditNode(props: PropsType) {
-  const { selected, todoItem, index, readOnly } = props;
-  const { moduleId, todoValue } = todoItem;
+  const { selected, todoItem, index, readOnly, afterTextChangeHook } = props;
+  const { moduleId = '', todoValue } = todoItem;
 
-  const todoState = useAppSelector((store) => store.todo);
-  const dispatch = useAppDispatch();
   const { addNewTodoItem, updateTodoItem } = useItemOperation();
   const inputDebounce = useDebounce();
   const selectDebounce = useDebounce();
@@ -72,12 +69,13 @@ export function EditNode(props: PropsType) {
 
   // 实际 触发 slate text的保存文本变化
   const realTextChange = async (todoValue: string) => {
-    if (todoState.selectedId) {
-      const id = todoState.selectedId;
+    const { id } = todoItem;
+
+    if (id) {
       const hadUpdated = await updateTodoItem({ id, todoValue });
 
       if (hadUpdated) {
-        dispatch(todoAction.setItemTodoValue({ id, moduleId, todoValue }));
+        afterTextChangeHook();
       }
     }
   };
@@ -117,7 +115,8 @@ export function EditNode(props: PropsType) {
               // 不给换行
               if (event.key === 'Enter') {
                 event.preventDefault();
-                if (todoState.selectedId) {
+                const { id } = todoItem;
+                if (id) {
                   await addNewTodoItem(moduleId, 'insert', index + 1);
                 }
               }

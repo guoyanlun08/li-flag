@@ -10,7 +10,7 @@ import EveryDayOutlet from '@/views/EveryDay';
 import EveryDay from '@/views/EveryDay/EveryDay';
 import TeamFlag from '@/views/TeamFlag';
 import TeamFlagCard from '@/views/TeamFlag/components/TeamFlagCard';
-import TeamFlagDetail from '@/views/TeamFlag/components/TeamFlagDeatail';
+import TeamFlagDetail from '@/views/TeamFlag/TeamFlagDetail';
 
 const router = createBrowserRouter([
   {
@@ -40,7 +40,7 @@ const router = createBrowserRouter([
             element: <TeamFlagCard />
           },
           {
-            path: '/teamFlag/:id',
+            path: '/teamFlag/:teamFlagId',
             element: <TeamFlagDetail />
           }
         ]

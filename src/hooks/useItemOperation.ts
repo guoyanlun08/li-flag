@@ -47,8 +47,7 @@ export default function useItemOperation() {
     const { hadAdd, newId } = await apiAddNewTodoItem({ moduleId, order, type });
 
     if (hadAdd) {
-      await getTodoList();
-      dispatch(todoAction.setSelectedId({ id: newId }));
+      await getEveryDayTodoList();
     }
   };
 
@@ -65,35 +64,22 @@ export default function useItemOperation() {
   };
 
   /** 获取 todoList 数据 */
-  const getTodoList = async (data?: apiGetTodoListData) => {
-    const { list } = await apiGetTodoList({ ...data, isDefault: 1 });
+  const getEveryDayTodoList = async () => {
+    const { list } = await apiGetTodoList({
+      startTime: dayjs().subtract(1, 'day').startOf('day').valueOf(),
+      endTime: dayjs().endOf('day').valueOf()
+    });
 
     if (list) {
-      dispatch(todoAction.setTodoEntireModule({ list }));
+      dispatch(todoAction.setTodayAndDelayTodo({ list }));
       return list;
-    }
-  };
-
-  /** 获取 delayTodoList 数据 --- 主要设置昨天 delay数据 */
-  const getDelayTodoList = async () => {
-    const data = {
-      completed: 0,
-      startTime: dayjs().subtract(1, 'day').startOf('day').valueOf(),
-      endTime: dayjs().subtract(1, 'day').endOf('day').valueOf()
-    };
-    const { list: delayList } = await apiGetTodoList(data);
-
-    if (delayList) {
-      // 赋值过期数据
-      dispatch(todoAction.setDelayListDataMap({ delayList }));
-      return delayList;
     }
   };
 
   /** 初始化 todo 数据 */
   const initTodoSateFn = () => {
     dispatch(todoAction.initTodoSate());
-  }
+  };
 
   /** 拖拽 todoItem前触发 */
   const onBeforeDragStart = (handleSetDragStatus: (value: boolean) => void) => {
@@ -118,7 +104,7 @@ export default function useItemOperation() {
       const resp = await apiUpdateTodoOrderAfterDrag({ sourceListData: afterDragListData });
 
       if (resp.updated) {
-        await getTodoList();
+        await getEveryDayTodoList();
       } else {
         // 拖拽失败，数据回退
         dispatch(todoAction.setTodoModule({ moduleId: source.droppableId, list: beforeDragListData }));
@@ -144,7 +130,7 @@ export default function useItemOperation() {
 
       const resp = await apiUpdateTodoOrderAfterDrag({ sourceListData, destinationListData, dragItem });
       if (resp.updated) {
-        await getTodoList();
+        await getEveryDayTodoList();
       } else {
         // 拖拽失败，数据回退
         dispatch(
@@ -160,5 +146,13 @@ export default function useItemOperation() {
     }
   };
 
-  return { addNewTodoItem, deleteTodoItem, updateTodoItem, getTodoList, getDelayTodoList, initTodoSateFn, onBeforeDragStart, onDragEnd };
+  return {
+    addNewTodoItem,
+    deleteTodoItem,
+    updateTodoItem,
+    getEveryDayTodoList,
+    initTodoSateFn,
+    onBeforeDragStart,
+    onDragEnd
+  };
 }

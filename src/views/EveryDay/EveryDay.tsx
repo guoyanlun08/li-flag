@@ -28,13 +28,13 @@ function EveryDay() {
   const { isLogin } = useContext(AuthContext);
   const { eachModule } = useAppSelector((state) => state.todo);
 
-  const { getTodoList, onBeforeDragStart, onDragEnd, initTodoSateFn } = useItemOperation();
+  const { getEveryDayTodoList, onBeforeDragStart, onDragEnd, initTodoSateFn } = useItemOperation();
 
   const [dragStatus, setDragStatus] = useState(false); // 当前拖拽状态
 
   useEffect(() => {
     const fetchTodoList = async () => {
-      await getTodoList();
+      await getEveryDayTodoList();
     };
     if (isLogin) {
       fetchTodoList();

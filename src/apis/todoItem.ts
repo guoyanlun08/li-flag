@@ -1,5 +1,11 @@
 import api from '@/utils/httpRequest';
-import { apiAddTodoItemData, apiUpdateTodoItemData, apiGetTodoListData, apiUpdateTodoOrderAfterDragData } from './todoItem.type';
+import {
+  apiAddTodoItemData,
+  apiUpdateTodoItemData,
+  apiGetTodoListData,
+  apiUpdateTodoOrderAfterDragData,
+  apiUpdateTodoOrderData
+} from './todoItem.type';
 
 /**
  * 新增 todoItem 接口
@@ -93,6 +99,37 @@ export async function apiUpdateTodoOrderAfterDrag(data: apiUpdateTodoOrderAfterD
 
     if (resp?.code) {
       throw new Error('更新失败');
+    }
+    return resp.data;
+  } catch (err) {
+    console.error(err);
+    return false;
+  }
+}
+
+/**
+ * 通过 teanFlagId 获取团队 Flag 详情（无关联）
+ * @returns
+ */
+export async function updateTodoOrder(data: apiUpdateTodoOrderData) {
+  const resp = await api.put('/todoItem/updateTodoOrder', data);
+
+  if (resp?.code) {
+    throw new Error('updateTodoOrder 获取失败');
+  }
+
+  return resp.data;
+}
+
+/**
+ * 获取 teamFlag 下的 todoItem 列表
+ */
+export async function apiGetTodoItemsForTeamFlags(data?: { teamFlagids: number | number[] }) {
+  try {
+    const resp = await api.get('/todoItem/getTodoItemsForTeamFlags', { ...data });
+
+    if (resp?.code) {
+      throw new Error('apiGetTodoItemsForTeamFlags 获取失败');
     }
     return resp.data;
   } catch (err) {

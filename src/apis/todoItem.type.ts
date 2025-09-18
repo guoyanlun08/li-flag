@@ -14,6 +14,9 @@ export type apiUpdateTodoItemData = {
   todoValue?: string;
   startTime?: number;
   endTime?: number;
+  processor?: string;
+  priority?: string;
+  processingStatus?: number;
 };
 
 /** 获取 todoItem 数据参数  */
@@ -31,4 +34,9 @@ export type apiUpdateTodoOrderAfterDragData = {
   sourceListData: any;
   destinationListData?: any;
   dragItem?: TodoListItemType;
+};
+
+/** 更改 todoItem order 接口参数 */
+export type apiUpdateTodoOrderData = {
+  todoList: TodoListItemType[];
 };

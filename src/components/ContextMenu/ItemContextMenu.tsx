@@ -10,14 +10,14 @@ interface ItemContextMenuProps {
 }
 
 function ItemContextMenu(contextMenuProps: ItemContextMenuProps) {
-  const { deleteTodoItem, getTodoList } = useItemOperation();
+  const { deleteTodoItem, getEveryDayTodoList } = useItemOperation();
 
   const deleteItemClick = async ({ event, props, triggerEvent, data }: ItemParams) => {
     const { id, moduleId } = props;
 
     await deleteTodoItem(id);
 
-    await getTodoList();
+    await getEveryDayTodoList();
   };
 
   return (

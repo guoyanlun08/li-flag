@@ -30,3 +30,18 @@ export async function updateUserInfo(data: UserStateType & { password?: string; 
 
   return resp.data;
 }
+
+/**
+ * 搜索用户
+ * @param data
+ * @returns
+ */
+export async function searchUsers(data: { userId: string }) {
+  const resp = await api.get('/user/searchUsers', data);
+
+  if (resp?.code) {
+    console.error('searchUsers 搜索用户有误');
+  }
+
+  return resp.data;
+}

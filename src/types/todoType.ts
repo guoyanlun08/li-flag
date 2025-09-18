@@ -32,4 +32,9 @@ export interface TodoListItemType {
   updateTime: number;
   startTime: number;
   endTime: number;
+  completedTime?: string | null;
+  priority?: string;
+  proposer?: string;
+  processor?: string;
+  processingStatus?: number;
 }
