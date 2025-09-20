@@ -21,7 +21,7 @@ export function EditNode(props: PropsType) {
   const { selected, todoItem, index, readOnly, afterTextChangeHook } = props;
   const { moduleId = '', todoValue } = todoItem;
 
-  const { addNewTodoItem, updateTodoItem } = useItemOperation();
+  const { updateTodoItem } = useItemOperation();
   const inputDebounce = useDebounce();
   const selectDebounce = useDebounce();
 
@@ -117,7 +117,6 @@ export function EditNode(props: PropsType) {
                 event.preventDefault();
                 const { id } = todoItem;
                 if (id) {
-                  await addNewTodoItem(moduleId, 'insert', index + 1);
                 }
               }
             }}

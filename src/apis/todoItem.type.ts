@@ -1,10 +1,12 @@
 import { TodoListItemType } from '@/types/todoType';
 
-/** 新增 todoItem 参数 */
-export type apiAddTodoItemData = {
+/** 每日模块新增 todoItem 参数 */
+export type apiAddEveryDayTodoItemData = {
   moduleId: string;
-  order: number;
-  type: 'tail' | 'insert';
+};
+
+export type apiAddTeamFlagTodoItemData = {
+  teamFlagId: number;
 };
 
 /** 更新 todoItem 参数 */
@@ -26,7 +28,6 @@ export type apiGetTodoListData = {
   startTime?: number;
   endTime?: number;
   isSkip?: boolean;
-  isDefault?: number;
 };
 
 /** 更改 todoItem order 接口参数 */

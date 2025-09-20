@@ -6,6 +6,7 @@ export type teamFlagInfo = {};
 export type TeamTodoTableProps = {
   todoList: TodoListItemType[];
   dragChangeTeamTodoList: (newOrderVal: TodoListItemType[], oldOrderVal: TodoListItemType[]) => Promise<void>;
+  /** 刷新 todo 列表 */
   refreshTeamTodoList?: () => Promise<void>;
 };
 

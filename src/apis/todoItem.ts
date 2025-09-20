@@ -1,6 +1,7 @@
 import api from '@/utils/httpRequest';
 import {
-  apiAddTodoItemData,
+  apiAddEveryDayTodoItemData,
+  apiAddTeamFlagTodoItemData,
   apiUpdateTodoItemData,
   apiGetTodoListData,
   apiUpdateTodoOrderAfterDragData,
@@ -8,16 +9,35 @@ import {
 } from './todoItem.type';
 
 /**
- * 新增 todoItem 接口
+ * 每日模块 - 新增 todoItem 接口
  * @param data 接口参数
- * @returns
+ * @returnsA
  */
-export async function apiAddNewTodoItem(data: apiAddTodoItemData) {
+export async function apiAddEveryDayTodoItem(data: apiAddEveryDayTodoItemData) {
   try {
-    const resp = await api.post<apiAddTodoItemData>('/todoItem/addTodoItem', { ...data });
+    const resp = await api.post<apiAddEveryDayTodoItemData>('/todoItem/addEveryDayTodoItem', { ...data });
 
     if (resp?.code) {
-      throw new Error('apiAddNewTodoItem 新增失败');
+      throw new Error('apiAddEveryDayTodoItem 新增失败');
+    }
+    return resp.data;
+  } catch (err) {
+    console.error(err);
+    return false;
+  }
+}
+
+/**
+ * 团队模块 - 新增 todoItem 接口
+ * @param data 接口参数
+ * @returnsA
+ */
+export async function apiAddTeamFlagTodoItem(data: apiAddTeamFlagTodoItemData) {
+  try {
+    const resp = await api.post<apiAddTeamFlagTodoItemData>('/todoItem/addTeamFlagTodoItem', { ...data });
+
+    if (resp?.code) {
+      throw new Error('apiAddTeamFlagTodoItem 新增失败');
     }
     return resp.data;
   } catch (err) {

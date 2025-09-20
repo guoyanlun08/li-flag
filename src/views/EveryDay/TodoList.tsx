@@ -19,12 +19,15 @@ function TodoList(props: PropsType) {
 
   const context = useContext(EveryDayContext);
 
-  const { addNewTodoItem, getEveryDayTodoList } = useItemOperation();
+  const { addEveryDayTodoItem, getEveryDayTodoList } = useItemOperation();
 
   // 双击新增 todoItem
-  const handleDoubleClick = (e: React.MouseEvent, moduleId: string) => {
+  const handleDoubleClick = async (e: React.MouseEvent, moduleId: string) => {
     e.stopPropagation();
-    addNewTodoItem(moduleId);
+    const newRes = await addEveryDayTodoItem(moduleId);
+    if (newRes.hadAdd) {
+      getEveryDayTodoList();
+    }
   };
 
   return (

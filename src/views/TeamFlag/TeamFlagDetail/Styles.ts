@@ -16,9 +16,15 @@ export const Styled_TeamFlagDetail = styled.div`
       margin: 10px 10px;
       border-radius: 5px;
       height: calc(100% - 20px);
-      .filter-form,
+      padding: 20px 20px;
+
+      .filter-form {
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: space-between;
+      }
+
       .flag-item-table {
-        padding: 10px 20px;
       }
     }
   }

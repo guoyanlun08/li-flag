@@ -3,7 +3,7 @@ import { useParams } from 'react-router';
 
 import { getTeamFlagAllInfoById } from '@/apis/teamFlag';
 import { updateTodoOrder, apiGetTodoItemsForTeamFlags } from '@/apis/todoItem';
-import { TeamFlagFilter, TeamFlagOperation, TeamTodoTable } from './components';
+import { TeamFlagFilter, TeamFlagOperation, TeamTodoTable, AddTodoBtn } from './components';
 import { Styled_TeamFlagDetail } from './Styles';
 import { TodoListItemType } from '@/types/todoType';
 import { teamFlagInfo } from '../types';
@@ -58,6 +58,7 @@ function TeamFlagDeatail() {
         <div className="page-content">
           <div className="page-content-body">
             <div className="filter-form">
+              <AddTodoBtn teamFlagId={teamFlagId} refreshTeamTodoList={refreshTeamTodoList} />
               <TeamFlagFilter />
             </div>
             <div className="flag-item-table">

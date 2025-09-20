@@ -2,8 +2,8 @@ import { useContext } from 'react';
 import { DropResult } from 'react-beautiful-dnd';
 import dayjs from 'dayjs';
 
-import { apiAddNewTodoItem, apiDeleteTodoItem, apiUpdateTodoItem, apiGetTodoList, apiUpdateTodoOrderAfterDrag } from '@/apis/todoItem';
-import { apiAddTodoItemData, apiUpdateTodoItemData, apiGetTodoListData } from '@/apis/todoItem.type';
+import { apiAddEveryDayTodoItem, apiDeleteTodoItem, apiUpdateTodoItem, apiGetTodoList, apiUpdateTodoOrderAfterDrag } from '@/apis/todoItem';
+import { apiUpdateTodoItemData } from '@/apis/todoItem.type';
 import { useAppDispatch, AuthContext, useAppSelector } from '@/app/hooks';
 import { ModuleFields, todoAction } from '@/features/todo/todoSlice';
 import { EachModuleType, TodoListItemType } from '@/types/todoType';
@@ -29,26 +29,14 @@ export default function useItemOperation() {
   const dispatch = useAppDispatch();
 
   /** 新增 todoItem */
-  const addNewTodoItem = async (moduleId: string, type: 'tail' | 'insert' = 'tail', insertIndex?: number) => {
-    const [...listData] = todoState.eachModule[moduleId].listData;
-
-    // tail 直接插入末尾
-    let order = listData.length;
+  const addEveryDayTodoItem = async (moduleId: string) => {
     if (!isLogin) {
       openLoginModal();
       return;
     }
 
-    // 从中插入
-    if (type === 'insert') {
-      order = insertIndex ?? order;
-    }
-
-    const { hadAdd, newId } = await apiAddNewTodoItem({ moduleId, order, type });
-
-    if (hadAdd) {
-      await getEveryDayTodoList();
-    }
+    const resp = await apiAddEveryDayTodoItem({ moduleId });
+    return resp;
   };
 
   /** 删除 todoItem */
@@ -147,7 +135,7 @@ export default function useItemOperation() {
   };
 
   return {
-    addNewTodoItem,
+    addEveryDayTodoItem,
     deleteTodoItem,
     updateTodoItem,
     getEveryDayTodoList,

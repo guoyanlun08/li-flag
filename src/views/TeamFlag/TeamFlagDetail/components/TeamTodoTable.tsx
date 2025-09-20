@@ -82,7 +82,6 @@ function TeamTodoTable(props: TeamTodoTableProps) {
     {
       title: '处理人',
       dataIndex: 'processor',
-      width: 200,
       render: (value: string, record, index: number) => {
         return (
           <Select
