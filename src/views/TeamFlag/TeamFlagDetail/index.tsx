@@ -1,9 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 
-import { getTeamFlagAllInfoById } from '@/apis/teamFlag';
+import { apiGetTeamFlagAllInfoById, apiGetTeamFlagInfoById } from '@/apis/teamFlag';
 import { updateTodoOrder, apiGetTodoItemsForTeamFlags } from '@/apis/todoItem';
+import { usePolling } from '@/hooks';
 import { TeamFlagFilter, TeamFlagOperation, TeamTodoTable, AddTodoBtn } from './components';
+import { TEAM_FLAG_INFO_POLLING_TIME } from './constants';
 import { Styled_TeamFlagDetail } from './Styles';
 import { TodoListItemType } from '@/types/todoType';
 import { teamFlagInfo } from '../types';
@@ -23,13 +25,19 @@ function TeamFlagDeatail() {
   const [teamFlagInfo, setTeamFlagInfo] = useState<teamFlagInfo>({});
   const [teamTodoList, setTeamTodoList] = useState<TodoListItemType[]>([]);
 
+  const fetchTeamFlagInfo = useCallback(() => {
+    return apiGetTeamFlagInfoById({ teamFlagId });
+  }, [teamFlagId]);
+
+  const { pollingData } = usePolling(fetchTeamFlagInfo, TEAM_FLAG_INFO_POLLING_TIME);
+
   useEffect(() => {
     const fetchTeamFlagInfo = async () => {
       try {
-        const { todoList, ...teamFlagInfo } = await getTeamFlagAllInfoById({ teamFlagId });
+        const { todoList, ...teamFlagInfo } = await apiGetTeamFlagAllInfoById({ teamFlagId });
 
         setTeamFlagInfo(teamFlagInfo);
-        setTeamTodoList(todoList);
+        setTeamTodoList(todoList || []);
       } catch (error) {
         console.error('[TeamFlagDetail] 获取团队Flag信息失败:', error);
       }
@@ -37,6 +45,10 @@ function TeamFlagDeatail() {
 
     fetchTeamFlagInfo();
   }, [teamFlagId]);
+
+  useEffect(() => {
+    console.log('[TeamFlagDetail] pollingData', pollingData);
+  }, [pollingData]);
 
   const dragChangeTeamTodoList = async (newVal: TodoListItemType[], oldVal: TodoListItemType[]) => {
     setTeamTodoList(newVal);

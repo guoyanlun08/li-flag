@@ -22,7 +22,10 @@ export async function getUserInfo() {
  * @returns
  */
 export async function updateUserInfo(data: UserStateType & { password?: string; repeatPassword?: string }) {
-  const resp = await api.put<UserStateType & { password?: string; repeatPassword?: string }>('/user/updateUserInfo', data);
+  const resp = await api.put<UserStateType & { password?: string; repeatPassword?: string }, { userId: string; hadUpdated: boolean }>(
+    '/user/updateUserInfo',
+    data
+  );
 
   if (resp?.code) {
     console.error('updateUserInfo 更新有误');

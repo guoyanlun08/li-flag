@@ -6,8 +6,8 @@ import { PlusOutlined } from '@ant-design/icons';
 import { Styled_TeamFlagOutlet } from '../Styles';
 import CardHeader from './CardHeader';
 import CardFooter from './CardFooter';
-import { TeamFlagItem, CreateTeamFlagReqData } from '@/features/teamFlag/type';
-import { getTeamFlagInfoByUser, createTeamFlag, deleteTeamFlag } from '@/apis/teamFlag';
+import { ApiCreateTeamFlagReqData, teamFlagInfo } from '@/apis/teamFlag.type';
+import { apiGetTeamFlagInfoByUser, apiCreateTeamFlag, apiDeleteTeamFlag } from '@/apis/teamFlag';
 
 const { TextArea } = Input;
 const normFile = (e: any) => {
@@ -18,7 +18,7 @@ const normFile = (e: any) => {
 };
 
 function TeamFlagCard() {
-  const [teamFlagsData, setTeamFlagsData] = useState<TeamFlagItem[]>([]);
+  const [teamFlagsData, setTeamFlagsData] = useState<teamFlagInfo[]>([]);
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -30,7 +30,7 @@ function TeamFlagCard() {
   const handleCardDelete = async (teamFlagId: number, e: React.MouseEvent<HTMLElement, MouseEvent> | React.KeyboardEvent<HTMLElement>) => {
     e.stopPropagation && e.stopPropagation();
     try {
-      const res = await deleteTeamFlag({ teamFlagId });
+      const res = await apiDeleteTeamFlag({ teamFlagId });
       if (!res.code) {
         message.success('删除成功');
         getTeamFlags(); // 刷新列表
@@ -41,9 +41,9 @@ function TeamFlagCard() {
       message.error(`删除失败: ${err.msg}`);
     }
   };
-  const onFinish = async (formData: CreateTeamFlagReqData) => {
+  const onFinish = async (formData: ApiCreateTeamFlagReqData) => {
     try {
-      const res = await createTeamFlag({ ...formData });
+      const res = await apiCreateTeamFlag({ ...formData });
       if (!res.code) {
         message.success('创建成功');
         addForm.resetFields();
@@ -63,7 +63,7 @@ function TeamFlagCard() {
   };
   const getTeamFlags = async () => {
     try {
-      const res = await getTeamFlagInfoByUser();
+      const res = await apiGetTeamFlagInfoByUser();
       setTeamFlagsData(res);
     } catch (err: any) {
       message.error(`获取失败: ${err.msg}`);

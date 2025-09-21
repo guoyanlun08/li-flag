@@ -12,7 +12,7 @@ import { apiUpdateTodoItem } from '@/apis/todoItem';
 import { TodoListItemType } from '@/types/todoType';
 import Row, { DragHandle } from './TableRow';
 import { TeamTodoTableProps } from '../../types';
-import { prioritydefaultOptions, processingStatusOptions } from '../constants';
+import { PRIORITY_DEFAULT_OPTIONS, PROCESSING_STATUS_OPTIONS } from '../constants';
 
 /** 团队 todoList table */
 function TeamTodoTable(props: TeamTodoTableProps) {
@@ -60,12 +60,12 @@ function TeamTodoTable(props: TeamTodoTableProps) {
           placeholder="请选择"
           style={{ width: 100 }}
           labelRender={(option) => {
-            const { color } = prioritydefaultOptions.find((item) => item.value === option.value) || {};
+            const { color } = PRIORITY_DEFAULT_OPTIONS.find((item) => item.value === option.value) || {};
             return <Tag color={color}>{option.label}</Tag>;
           }}
           value={value}
           onChange={(value) => updateTodoItemField<string>('priority', value, record)}
-          options={prioritydefaultOptions}
+          options={PRIORITY_DEFAULT_OPTIONS}
           optionRender={(option) => (
             <div>
               <Tag color={option.data.color}>{option.label}</Tag>
@@ -109,12 +109,12 @@ function TeamTodoTable(props: TeamTodoTableProps) {
             placeholder="请选择"
             style={{ width: 120 }}
             labelRender={(option) => {
-              const { color } = processingStatusOptions.find((item) => item.value === option.value) || {};
+              const { color } = PROCESSING_STATUS_OPTIONS.find((item) => item.value === option.value) || {};
               return <Tag color={color}>{option.label}</Tag>;
             }}
             value={value}
             onChange={(value) => updateTodoItemField<number>('processingStatus', value, record)}
-            options={processingStatusOptions}
+            options={PROCESSING_STATUS_OPTIONS}
             optionRender={(option) => (
               <div>
                 <Tag color={option.data.color}>{option.label}</Tag>

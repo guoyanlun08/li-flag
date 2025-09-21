@@ -3,8 +3,15 @@ import { Dropdown, Avatar } from 'antd';
 
 import { DeleteOutlined, EllipsisOutlined } from '@ant-design/icons';
 
-import { CardHeaderProps } from '@/features/teamFlag/type';
 import { Styled_CardHeaderContainer } from '../Styles';
+
+type CardHeaderProps = {
+  id: number;
+  title: string;
+  description: string | null;
+  deadline: string | null;
+  groupIcon: string;
+};
 
 export default function CardHeader(
   cardHeaderProps: CardHeaderProps & {

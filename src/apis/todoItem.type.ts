@@ -1,16 +1,16 @@
 import { TodoListItemType } from '@/types/todoType';
 
 /** 每日模块新增 todoItem 参数 */
-export type apiAddEveryDayTodoItemData = {
+export type ApiAddEveryDayTodoItemReq = {
   moduleId: string;
 };
 
-export type apiAddTeamFlagTodoItemData = {
+export type ApiAddTeamFlagTodoItemReq = {
   teamFlagId: number;
 };
 
 /** 更新 todoItem 参数 */
-export type apiUpdateTodoItemData = {
+export type ApiUpdateTodoItemReq = {
   id: number;
   completed?: number;
   todoValue?: string;
@@ -22,7 +22,7 @@ export type apiUpdateTodoItemData = {
 };
 
 /** 获取 todoItem 数据参数  */
-export type apiGetTodoListData = {
+export type ApiGetTodoListReq = {
   moduleId?: string;
   completed?: number;
   startTime?: number;
@@ -31,7 +31,7 @@ export type apiGetTodoListData = {
 };
 
 /** 更改 todoItem order 接口参数 */
-export type apiUpdateTodoOrderAfterDragData = {
+export type ApiUpdateTodoOrderAfterDragReq = {
   sourceListData: any;
   destinationListData?: any;
   dragItem?: TodoListItemType;
@@ -40,4 +40,16 @@ export type apiUpdateTodoOrderAfterDragData = {
 /** 更改 todoItem order 接口参数 */
 export type apiUpdateTodoOrderData = {
   todoList: TodoListItemType[];
+};
+
+/** 团队Flag todo列表和统计信息的类型 */
+type TeamTodoSection = {
+  todoList: TodoListItemType[];
+  completedTotal: number;
+  todoItemTotal: number;
+};
+
+/** apiGetTodoItemsForTeamFlags 返回类型 */
+export type ApiGetTodoItemsForTeamFlagsResp = {
+  [key: string]: TeamTodoSection;
 };

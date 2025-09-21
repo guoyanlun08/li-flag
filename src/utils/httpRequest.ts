@@ -6,9 +6,9 @@ import { getToken, removeToken } from '@/utils/localStorage';
 import { HttpCode, HTTP_STATUS_TEXT } from '@/constants/httpCode';
 
 /** 返回res的interface */
-export interface IResponse {
+export interface IResponse<U> {
   code: number | string;
-  data: any;
+  data: U;
   msg?: string;
 }
 
@@ -33,7 +33,7 @@ const defaults = {
 };
 
 /** 请求api, 需要额外的 header 通过 options参数传递，再进行处理*/
-function api<T>(method: string, url: string, variables?: T, options?: {}): Promise<IResponse> {
+function api<T, U>(method: string, url: string, variables?: T, options?: {}): Promise<IResponse<U>> {
   return new Promise((resolve, reject) => {
     axios({
       url: `${defaults.baseURL}${url}`,
@@ -63,9 +63,11 @@ function api<T>(method: string, url: string, variables?: T, options?: {}): Promi
   });
 }
 
-export default {
-  get: <T>(...args: [string, T?, object?]) => api<T>('get', ...args),
-  post: <T>(...args: [string, T?, object?]) => api<T>('post', ...args),
-  put: <T>(...args: [string, T?, object?]) => api<T>('put', ...args),
-  delete: <T>(...args: [string, T?, object?]) => api<T>('delete', ...args)
+const httpRequest = {
+  get: <T, U>(...args: [string, T?, object?]) => api<T, U>('get', ...args),
+  post: <T, U>(...args: [string, T?, object?]) => api<T, U>('post', ...args),
+  put: <T, U>(...args: [string, T?, object?]) => api<T, U>('put', ...args),
+  delete: <T, U>(...args: [string, T?, object?]) => api<T, U>('delete', ...args)
 };
+
+export default httpRequest;

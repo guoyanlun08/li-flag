@@ -3,7 +3,7 @@ import { DropResult } from 'react-beautiful-dnd';
 import dayjs from 'dayjs';
 
 import { apiAddEveryDayTodoItem, apiDeleteTodoItem, apiUpdateTodoItem, apiGetTodoList, apiUpdateTodoOrderAfterDrag } from '@/apis/todoItem';
-import { apiUpdateTodoItemData } from '@/apis/todoItem.type';
+import { ApiUpdateTodoItemReq } from '@/apis/todoItem.type';
 import { useAppDispatch, AuthContext, useAppSelector } from '@/app/hooks';
 import { ModuleFields, todoAction } from '@/features/todo/todoSlice';
 import { EachModuleType, TodoListItemType } from '@/types/todoType';
@@ -45,7 +45,7 @@ export function useItemOperation() {
   };
 
   /** 更改 todoItem */
-  const updateTodoItem = async (data: apiUpdateTodoItemData) => {
+  const updateTodoItem = async (data: ApiUpdateTodoItemReq) => {
     const resp = await apiUpdateTodoItem(data);
 
     return resp;

@@ -1,7 +1,12 @@
 import { Styled_CardFooterContainer } from '../Styles';
 import { CheckCircleOutlined, UnorderedListOutlined } from '@ant-design/icons';
 import { Avatar } from 'antd';
-import { CardFooterProps } from '@/features/teamFlag/type';
+
+type CardFooterProps = {
+  finished: number;
+  total: number;
+  memberAvatar: string[];
+};
 
 export default function CardFooter(props: CardFooterProps) {
   return (

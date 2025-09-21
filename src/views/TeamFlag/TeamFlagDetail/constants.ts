@@ -1,7 +1,7 @@
 /** 优先级默认选项
  * TODO: 今后可以设计标签表来自定义
  */
-export const prioritydefaultOptions = [
+export const PRIORITY_DEFAULT_OPTIONS = [
   {
     label: 'p0',
     value: '0',
@@ -30,7 +30,7 @@ export const prioritydefaultOptions = [
 ];
 
 /** 处理状态默认选项 */
-export const processingStatusOptions = [
+export const PROCESSING_STATUS_OPTIONS = [
   {
     label: '待处理',
     value: 1,
@@ -47,3 +47,5 @@ export const processingStatusOptions = [
     color: 'green'
   }
 ];
+
+export const TEAM_FLAG_INFO_POLLING_TIME = 20000;
