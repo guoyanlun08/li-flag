@@ -23,7 +23,7 @@ function reorderList(list: TodoListItemType[], startIndex: number, endIndex: num
 }
 
 /** 操作 item的 hooks */
-export default function useItemOperation() {
+export function useItemOperation() {
   const { isLogin, openLoginModal } = useContext(AuthContext);
   const todoState = useAppSelector((store) => store.todo);
   const dispatch = useAppDispatch();

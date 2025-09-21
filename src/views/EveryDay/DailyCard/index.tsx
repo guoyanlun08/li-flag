@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
-import useItemOperation from '@/hooks/useItemOperation';
 import { useAppSelector } from '@/app/hooks';
 
 import EachModuleContent from './EachModuleContent';

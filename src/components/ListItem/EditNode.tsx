@@ -2,8 +2,7 @@ import React, { useState, useCallback, useRef } from 'react';
 import { createEditor } from 'slate'; // 导入 Slate 编辑器工厂。
 import { Slate, withReact } from 'slate-react'; // 导入 Slate 组件和 React 插件。
 
-import { useDebounce } from '@/hooks/efficientHooks';
-import useItemOperation from '../../hooks/useItemOperation';
+import { useDebounce, useItemOperation } from '@/hooks';
 
 import { Styled_EditNode } from './Styles';
 import { Toolbar, DefaultElement, Leaf } from './slate';

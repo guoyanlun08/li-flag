@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 
-import useItemOperation from '@/hooks/useItemOperation';
+import { useItemOperation } from '@/hooks';
 
 import { TodoListItemType } from '@/types/todoType';
 import { ModuleFields } from '@/features/todo/todoSlice';

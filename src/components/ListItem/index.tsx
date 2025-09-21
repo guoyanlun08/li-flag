@@ -3,7 +3,7 @@ import { Checkbox } from 'antd';
 import { MenuOutlined } from '@ant-design/icons';
 import { useContextMenu } from 'react-contexify';
 
-import useItemOperation from '../../hooks/useItemOperation';
+import { useItemOperation } from '@/hooks';
 
 import { TodoListItemType } from '@/types/todoType';
 import { Styled_Item, Styled_ItemContent } from './Styles';
