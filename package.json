@@ -15,7 +15,7 @@
     "@types/node": "^20.0.0",
     "@types/react-dom": "^18.0.10",
     "@types/slate": "^0.47.15",
-    "antd": "^5.15.3",
+    "antd": "^5.27.4",
     "axios": "^1.6.7",
     "dayjs": "^1.11.10",
     "query-string": "^9.0.0",

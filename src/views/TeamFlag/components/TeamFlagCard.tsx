@@ -6,7 +6,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import { Styled_TeamFlagOutlet } from '../Styles';
 import CardHeader from './CardHeader';
 import CardFooter from './CardFooter';
-import { ApiCreateTeamFlagReqData, teamFlagInfo } from '@/apis/teamFlag.type';
+import { ApiCreateTeamFlagReqData, TeamFlagInfo } from '@/apis/teamFlag.type';
 import { apiGetTeamFlagInfoByUser, apiCreateTeamFlag, apiDeleteTeamFlag } from '@/apis/teamFlag';
 
 const { TextArea } = Input;
@@ -18,7 +18,7 @@ const normFile = (e: any) => {
 };
 
 function TeamFlagCard() {
-  const [teamFlagsData, setTeamFlagsData] = useState<teamFlagInfo[]>([]);
+  const [teamFlagsData, setTeamFlagsData] = useState<TeamFlagInfo[]>([]);
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const { pathname } = useLocation();

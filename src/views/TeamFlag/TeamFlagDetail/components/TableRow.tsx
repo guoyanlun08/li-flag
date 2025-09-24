@@ -8,9 +8,19 @@ import { RowContextProps, RowProps } from '../../types';
 
 const RowContext = React.createContext<RowContextProps>({});
 
-export const DragHandle: React.FC = () => {
+export const DragHandle: React.FC<{ isLock: boolean }> = ({ isLock }) => {
   const { setActivatorNodeRef, listeners } = useContext(RowContext);
-  return <Button type="text" size="small" icon={<HolderOutlined />} style={{ cursor: 'move' }} ref={setActivatorNodeRef} {...listeners} />;
+
+  return (
+    <Button
+      type="text"
+      size="small"
+      icon={<HolderOutlined />}
+      style={{ cursor: isLock ? 'not-allowed' : 'move' }}
+      ref={setActivatorNodeRef}
+      {...(isLock ? {} : listeners)}
+    />
+  );
 };
 
 const Row: React.FC<RowProps> = (props) => {

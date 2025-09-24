@@ -4,7 +4,9 @@ import {
   ApiGetTeamFlagAllInfoByIdResp,
   ApiGetTeamFlagInfoByIdResp,
   ApiGetTeamFlagInfoByUserResp,
-  ApiCreateTeamFlagReqData
+  ApiCreateTeamFlagReqData,
+  ApiUpdateTeamFlagInfoReqData,
+  ApiUpdateTeamFlagInfoResp
 } from '@/apis/teamFlag.type';
 
 /**
@@ -59,7 +61,7 @@ export async function apiGetTeamFlagAllInfoById(data: { teamFlagId: number }) {
   const resp = await api.get<{ teamFlagId: number }, ApiGetTeamFlagAllInfoByIdResp>('/teamFlag/getTeamFlagAllInfoById', data);
 
   if (resp?.code) {
-    throw new Error('getTeamFlagAllInfoById 获取失败');
+    throw new Error('apiGetTeamFlagAllInfoById 获取失败');
   }
 
   return resp.data?.teamFlagInfo || {};
@@ -73,8 +75,22 @@ export async function apiGetTeamFlagInfoById(data: { teamFlagId: number }) {
   const resp = await api.get<{ teamFlagId: number }, ApiGetTeamFlagInfoByIdResp>('/teamFlag/getTeamFlagInfoById', data);
 
   if (resp?.code) {
-    throw new Error('getTeamFlagInfoById 获取失败');
+    throw new Error('apiGetTeamFlagInfoById 获取失败');
   }
 
   return resp.data?.teamFlagInfo || {};
+}
+
+/**
+ * 更新 teamFlag
+ * @returns
+ */
+export async function apiUpdateTeamFlagInfo(data: ApiUpdateTeamFlagInfoReqData) {
+  const resp = await api.put<ApiUpdateTeamFlagInfoReqData, ApiUpdateTeamFlagInfoResp>('/teamFlag/updateTeamFlagInfo', data);
+
+  if (resp?.code) {
+    throw new Error('apiUpdateTeamFlagInfo 获取失败');
+  }
+
+  return resp.data || {};
 }

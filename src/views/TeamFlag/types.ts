@@ -1,13 +1,15 @@
 import { TodoListItemType } from '@/types/todoType';
 import type { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities';
 
-export type teamFlagInfo = {};
-
 export type TeamTodoTableProps = {
+  /** 是否锁定 */
+  isLock: boolean;
   todoList: TodoListItemType[];
   dragChangeTeamTodoList: (newOrderVal: TodoListItemType[], oldOrderVal: TodoListItemType[]) => Promise<void>;
   /** 刷新 todo 列表 */
   refreshTeamTodoList?: () => Promise<void>;
+  /** 锁定团队Flag的回调函数 */
+  onLockTeamFlag: () => Promise<void>;
 };
 
 /** table Row 组件上下文 */

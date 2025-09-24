@@ -48,4 +48,26 @@ export const PROCESSING_STATUS_OPTIONS = [
   }
 ];
 
+/** 获取 teamFlag 信息轮询时间 */
 export const TEAM_FLAG_INFO_POLLING_TIME = 20000;
+
+export enum LockStatus {
+  Unlocked = 0,
+  SelfLocked = 1,
+  OtherLocked = 2
+}
+
+export const LOCK_BTN_CONFIG = {
+  [LockStatus.Unlocked]: {
+    text: '锁定',
+    disabled: false
+  },
+  [LockStatus.SelfLocked]: {
+    text: '解锁',
+    disabled: false
+  },
+  [LockStatus.OtherLocked]: {
+    text: '他人锁定中',
+    disabled: true
+  }
+};

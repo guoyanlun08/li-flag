@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import { Table, Select, Tag } from 'antd';
 import type { TableProps } from 'antd';
 import { DndContext } from '@dnd-kit/core';
@@ -15,8 +15,8 @@ import { TeamTodoTableProps } from '../../types';
 import { PRIORITY_DEFAULT_OPTIONS, PROCESSING_STATUS_OPTIONS } from '../constants';
 
 /** 团队 todoList table */
-function TeamTodoTable(props: TeamTodoTableProps) {
-  const { todoList, dragChangeTeamTodoList, refreshTeamTodoList = () => {} } = props;
+const TeamTodoTable = memo((props: TeamTodoTableProps) => {
+  const { isLock, todoList, dragChangeTeamTodoList, refreshTeamTodoList = () => {}, onLockTeamFlag } = props;
   const [userSearchKey, setUserSearchKey] = useState('');
 
   const { userList } = useUserList(userSearchKey);
@@ -34,12 +34,12 @@ function TeamTodoTable(props: TeamTodoTableProps) {
       [field]: value
     });
     if (updateResp) {
-      refreshTeamTodoList();
+      Promise.all([refreshTeamTodoList(), onLockTeamFlag()]);
     }
   };
 
   const columns: TableProps<TodoListItemType>['columns'] = [
-    { key: 'sort', align: 'center', width: 80, render: () => <DragHandle /> },
+    { key: 'sort', align: 'center', width: 80, render: () => <DragHandle isLock={isLock} /> },
     {
       title: 'Todo列表',
       dataIndex: 'todoValue',
@@ -47,7 +47,16 @@ function TeamTodoTable(props: TeamTodoTableProps) {
       render: (value, todoItem, index) => {
         return (
           <div>
-            <ListItem todoItem={todoItem} editable={true} index={index} showMenuOutlined={false} showCheckbox={false} />
+            <ListItem
+              todoItem={todoItem}
+              editable={!isLock}
+              index={index}
+              showMenuOutlined={false}
+              showCheckbox={false}
+              afterTextChangeHook={() => {
+                onLockTeamFlag();
+              }}
+            />
           </div>
         );
       }
@@ -59,11 +68,12 @@ function TeamTodoTable(props: TeamTodoTableProps) {
         <Select
           placeholder="请选择"
           style={{ width: 100 }}
+          value={value}
+          disabled={isLock}
           labelRender={(option) => {
             const { color } = PRIORITY_DEFAULT_OPTIONS.find((item) => item.value === option.value) || {};
             return <Tag color={color}>{option.label}</Tag>;
           }}
-          value={value}
           onChange={(value) => updateTodoItemField<string>('priority', value, record)}
           options={PRIORITY_DEFAULT_OPTIONS}
           optionRender={(option) => (
@@ -89,6 +99,7 @@ function TeamTodoTable(props: TeamTodoTableProps) {
             placeholder="请选择"
             style={{ width: 100 }}
             value={value}
+            disabled={isLock}
             onSearch={(value) => searchDebounce(handleSearch, 500, value)}
             onChange={(value) => updateTodoItemField<string>('processor', value, record)}
             options={(userList || []).map((d) => ({
@@ -108,11 +119,12 @@ function TeamTodoTable(props: TeamTodoTableProps) {
             allowClear
             placeholder="请选择"
             style={{ width: 120 }}
+            value={value}
+            disabled={isLock}
             labelRender={(option) => {
               const { color } = PROCESSING_STATUS_OPTIONS.find((item) => item.value === option.value) || {};
               return <Tag color={color}>{option.label}</Tag>;
             }}
-            value={value}
             onChange={(value) => updateTodoItemField<number>('processingStatus', value, record)}
             options={PROCESSING_STATUS_OPTIONS}
             optionRender={(option) => (
@@ -132,7 +144,7 @@ function TeamTodoTable(props: TeamTodoTableProps) {
       const activeIndex = todoList.findIndex((record) => record.id === active?.id);
       const overIndex = todoList.findIndex((record) => record.id === over?.id);
 
-      dragChangeTeamTodoList(arrayMove(todoList, activeIndex, overIndex), todoList);
+      Promise.all([dragChangeTeamTodoList(arrayMove(todoList, activeIndex, overIndex), todoList), onLockTeamFlag()]);
     }
   };
 
@@ -143,6 +155,6 @@ function TeamTodoTable(props: TeamTodoTableProps) {
       </SortableContext>
     </DndContext>
   );
-}
+});
 
 export default TeamTodoTable;

@@ -1,15 +1,14 @@
 import { TodoListItemType } from '@/types/todoType';
 
-export type teamFlagInfo = {
+export type TeamFlagInfo = {
   teamFlagId: number;
   teamFlagTitle: string;
   teamFlagDesc: string | null;
   teamFlagIcon: string;
   teamLeader: string;
   teamMembers: string | null;
-  isLock: number;
-  locker: string;
-  lastLockTime: string | null;
+  locker: string | null;
+  lockTime: string | null;
   isDone: number;
   teamDeadline: string | null;
   createTime: string;
@@ -28,12 +27,12 @@ export type ApiCreateTeamFlagReqData = {
 };
 
 export type ApiGetTeamFlagInfoByUserResp = {
-  teamFlagInfo: teamFlagInfo[];
+  teamFlagInfo: TeamFlagInfo[];
 };
 
 /** apiGetTeamFlagAllInfoById 返回类型 */
 export type ApiGetTeamFlagAllInfoByIdResp = {
-  teamFlagInfo: teamFlagInfo;
+  teamFlagInfo: TeamFlagInfo;
 };
 
 /** apiGetTeamFlagAllInfoById 请求数据类型 */
@@ -43,5 +42,15 @@ export type ApiGetTeamFlagAllInfoByIdReqData = {
 
 /** apiGetTeamFlagInfoById 返回类型 */
 export type ApiGetTeamFlagInfoByIdResp = {
-  teamFlagInfo: teamFlagInfo;
+  teamFlagInfo: TeamFlagInfo;
+};
+
+/** apiUpdateTeamFlagInfo 请求数据类型 */
+export type ApiUpdateTeamFlagInfoReqData = {
+  teamFlagId: number;
+} & Partial<TeamFlagInfo>;
+
+/** apiUpdateTeamFlagInfo 返回类型 */
+export type ApiUpdateTeamFlagInfoResp = {
+  updateTeamFlagId: number;
 };
