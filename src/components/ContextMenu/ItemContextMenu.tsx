@@ -7,17 +7,22 @@ import { useItemOperation } from '@/hooks';
 interface ItemContextMenuProps {
   moduleId?: string;
   id?: number;
+  /** 删除后的钩子 */
+  afterDeleteHook?: () => Promise<void>;
 }
 
 function ItemContextMenu(contextMenuProps: ItemContextMenuProps) {
-  const { deleteTodoItem, getEveryDayTodoList } = useItemOperation();
+  const { afterDeleteHook } = contextMenuProps;
+  const { deleteTodoItem } = useItemOperation();
 
   const deleteItemClick = async ({ event, props, triggerEvent, data }: ItemParams) => {
     const { id, moduleId } = props;
 
     await deleteTodoItem(id);
 
-    await getEveryDayTodoList();
+    if (afterDeleteHook) {
+      await afterDeleteHook();
+    }
   };
 
   return (

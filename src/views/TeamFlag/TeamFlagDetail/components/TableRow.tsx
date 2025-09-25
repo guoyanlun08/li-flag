@@ -3,7 +3,9 @@ import { Button } from 'antd';
 import { HolderOutlined } from '@ant-design/icons';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
+import { useContextMenu } from 'react-contexify';
 
+import { ITEM_MENU_ID } from '@/components/ContextMenu';
 import { RowContextProps, RowProps } from '../../types';
 
 const RowContext = React.createContext<RowContextProps>({});
@@ -24,6 +26,15 @@ export const DragHandle: React.FC<{ isLock: boolean }> = ({ isLock }) => {
 };
 
 const Row: React.FC<RowProps> = (props) => {
+  // 右键菜单 hook
+  const { show: showItemContextMenu } = useContextMenu({
+    id: ITEM_MENU_ID,
+    props: {
+      id: props['data-row-key']
+    }
+  });
+
+  // 拖拽相关的 hook
   const { attributes, listeners, setNodeRef, setActivatorNodeRef, transform, transition, isDragging } = useSortable({
     id: props['data-row-key']
   });
@@ -39,7 +50,15 @@ const Row: React.FC<RowProps> = (props) => {
 
   return (
     <RowContext.Provider value={contextValue}>
-      <tr {...props} ref={setNodeRef} style={style} {...attributes} />
+      <tr
+        {...props}
+        ref={setNodeRef}
+        style={style}
+        {...attributes}
+        onContextMenu={(e: React.MouseEvent) => {
+          showItemContextMenu({ event: e });
+        }}
+      />
     </RowContext.Provider>
   );
 };

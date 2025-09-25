@@ -70,7 +70,7 @@ function EveryDay() {
         onDragEnd={async (result: any) => await onDragEnd(result, handleSetDragStatus, eachModule)}>
         {qs.parse(search).listMode ? <DailyList {...dailyProps} /> : <DailyCard {...dailyProps} />}
       </DragDropContext>
-      <ItemContextMenu />
+      <ItemContextMenu afterDeleteHook={getEveryDayTodoList} />
     </EveryDayContext.Provider>
   );
 }

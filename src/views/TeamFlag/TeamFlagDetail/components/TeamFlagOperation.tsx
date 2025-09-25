@@ -11,6 +11,10 @@ import { LockStatus, LOCK_BTN_CONFIG } from '../constants';
 type PropsType = {
   /** 团队模块 Id */
   teamFlagId: number;
+  /** teamFlag 标题 */
+  teamFlagTitle: string;
+  /** 锁定者 */
+  locker?: string | null;
   /** 锁定状态 */
   lockStatus: LockStatus;
   /** 用户 Id */
@@ -21,7 +25,7 @@ type PropsType = {
 
 /** 团队 flag 筛选 */
 function TeamFlagOperation(props: PropsType) {
-  const { lockStatus, teamFlagId, userId, refreshTeamFlagInfo } = props;
+  const { lockStatus, teamFlagId, teamFlagTitle = 'TeamFlag', userId, refreshTeamFlagInfo, locker } = props;
 
   const [messageApi, contextHolder] = message.useMessage();
   const navigate = useNavigate();
@@ -54,7 +58,7 @@ function TeamFlagOperation(props: PropsType) {
         <div className="backIcon" onClick={() => navigate(-1)}>
           <RollbackOutlined />
         </div>
-        <div className="title">Team Flag</div>
+        <div className="title">{teamFlagTitle}</div>
         <div className="operate">
           {/* 锁定按钮 */}
           <Button
@@ -62,7 +66,7 @@ function TeamFlagOperation(props: PropsType) {
             variant="solid"
             disabled={lockBtnConfig.disabled}
             onClick={handleLockClick}>
-            {lockBtnConfig.text}
+            {lockBtnConfig.text(locker)}
           </Button>
           <Button color="primary" variant="solid">
             编辑

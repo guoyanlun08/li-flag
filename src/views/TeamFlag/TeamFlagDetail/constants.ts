@@ -51,23 +51,27 @@ export const PROCESSING_STATUS_OPTIONS = [
 /** 获取 teamFlag 信息轮询时间 */
 export const TEAM_FLAG_INFO_POLLING_TIME = 20000;
 
+/** 锁定超时时间，单位：分钟 */
+export const LOCK_TIMEOUT_MINUTES = 3;
+
 export enum LockStatus {
   Unlocked = 0,
   SelfLocked = 1,
   OtherLocked = 2
 }
 
+/** 锁定按钮配置 */
 export const LOCK_BTN_CONFIG = {
   [LockStatus.Unlocked]: {
-    text: '锁定',
+    text: () => '锁定',
     disabled: false
   },
   [LockStatus.SelfLocked]: {
-    text: '解锁',
+    text: () => '解锁',
     disabled: false
   },
   [LockStatus.OtherLocked]: {
-    text: '他人锁定中',
+    text: (locker?: string | null) => `已被 ${locker || '他人'} 锁定中`,
     disabled: true
   }
 };
