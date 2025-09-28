@@ -7,7 +7,6 @@ import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
 import { arrayMove, SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 
 import { ListItem } from '@/components/ListItem';
-import { useUserList, useDebounce } from '@/hooks';
 import { apiUpdateTodoItem } from '@/apis/todoItem';
 import { TodoListItemType } from '@/types/todoType';
 import Row, { DragHandle } from './TableRow';
@@ -16,16 +15,7 @@ import { PRIORITY_DEFAULT_OPTIONS, PROCESSING_STATUS_OPTIONS } from '../constant
 
 /** 团队 todoList table */
 const TeamTodoTable = memo((props: TeamTodoTableProps) => {
-  const { isLock, todoList, dragChangeTeamTodoList, refreshTeamTodoList = () => {}, onLockTeamFlag } = props;
-  const [userSearchKey, setUserSearchKey] = useState('');
-
-  const { userList } = useUserList(userSearchKey);
-  const searchDebounce = useDebounce();
-
-  /** 处理人选择器搜索 */
-  const handleSearch = (value: string) => {
-    setUserSearchKey(value);
-  };
+  const { isLock, todoList, dragChangeTeamTodoList, refreshTeamTodoList = () => {}, onLockTeamFlag, teamUserList } = props;
 
   /** todoItem 字段更新 - 优先级、处理人、处理状态 */
   const updateTodoItemField = async <T extends unknown>(field: string, value: T, record: TodoListItemType) => {
@@ -94,17 +84,16 @@ const TeamTodoTable = memo((props: TeamTodoTableProps) => {
       render: (value: string, record, index: number) => {
         return (
           <Select
-            showSearch
+            // showSearch
             allowClear
             placeholder="请选择"
             style={{ width: 100 }}
             value={value}
             disabled={isLock}
-            onSearch={(value) => searchDebounce(handleSearch, 500, value)}
             onChange={(value) => updateTodoItemField<string>('processor', value, record)}
-            options={(userList || []).map((d) => ({
-              value: d.userId,
-              label: d.userId
+            options={teamUserList.map((userId) => ({
+              label: userId,
+              value: userId
             }))}
           />
         );
@@ -151,7 +140,13 @@ const TeamTodoTable = memo((props: TeamTodoTableProps) => {
   return (
     <DndContext modifiers={[restrictToVerticalAxis]} onDragEnd={onDragEnd}>
       <SortableContext items={todoList.map((i) => i.id)} strategy={verticalListSortingStrategy}>
-        <Table<TodoListItemType> rowKey="id" components={{ body: { row: Row } }} columns={columns} dataSource={todoList} />
+        <Table<TodoListItemType>
+          rowKey="id"
+          components={{ body: { row: Row } }}
+          columns={columns}
+          dataSource={todoList}
+          pagination={false}
+        />
       </SortableContext>
     </DndContext>
   );

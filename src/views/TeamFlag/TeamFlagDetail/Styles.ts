@@ -3,7 +3,6 @@ import mainColor from '@/styles/variables.module.scss';
 
 export const Styled_TeamFlagDetail = styled.div`
   display: flex;
-  height: 100%;
   justify-content: center;
   align-items: center;
   flex-direction: column;
@@ -39,6 +38,9 @@ export const Styled_TeamFlagOperation = styled.div`
   padding: 0 20px;
   background-color: ${mainColor.primaryBgColor};
   display: flex;
+  position: sticky;
+  top: 0;
+  z-index: 1;
   .backIcon {
     cursor: pointer;
     width: 30px;

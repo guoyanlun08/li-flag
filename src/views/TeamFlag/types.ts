@@ -10,6 +10,8 @@ export type TeamTodoTableProps = {
   refreshTeamTodoList?: () => Promise<void>;
   /** 锁定团队Flag的回调函数 */
   onLockTeamFlag: () => Promise<void>;
+  /** 团队用户列表 */
+  teamUserList: string[];
 };
 
 /** table Row 组件上下文 */

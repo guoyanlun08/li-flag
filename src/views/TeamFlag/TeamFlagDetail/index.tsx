@@ -12,7 +12,7 @@ import { Styled_TeamFlagDetail } from './Styles';
 import { TodoListItemType } from '@/types/todoType';
 import { useAppSelector, AuthContext } from '@/app/hooks';
 import { TeamFlagInfo } from '@/apis/teamFlag.type';
-import { LockStatus, LOCK_TIMEOUT_MINUTES, TEAM_FLAG_INFO_POLLING_TIME } from './constants';
+import { LockStatus, LOCK_TIMEOUT_MINUTES, TEAM_FLAG_INFO_POLLING_TIME, TodoListFilterParams } from './constants';
 
 /** 获取 teamFlag 对应的 todoList */
 async function getTeamFlagTodoList(teamFlagId: number) {
@@ -50,6 +50,23 @@ function TeamFlagDeatail() {
 
   const [teamFlagInfo, setTeamFlagInfo] = useState<TeamFlagInfo | {}>({});
   const [teamTodoList, setTeamTodoList] = useState<TodoListItemType[]>([]);
+  const [filterParams, setFilterParams] = useState<{
+    [TodoListFilterParams.Processor]: string;
+    [TodoListFilterParams.Priority]: string;
+  }>({
+    processor: '',
+    priority: ''
+  });
+
+  // 团队用户列表 - 队长和成员
+  const teamUserList = useMemo(() => {
+    const userList: string[] = [];
+    const { teamLeader, teamMembers } = teamFlagInfo as TeamFlagInfo;
+    userList.push(teamLeader);
+    teamMembers && userList.push(...teamMembers.split(','));
+
+    return userList;
+  }, [teamFlagInfo]);
 
   // 锁定状态判断
   const lockStatus = useMemo(() => {
@@ -124,9 +141,35 @@ function TeamFlagDeatail() {
     }
   }, [lockStatus, teamFlagId, userId, fetchAndUpdateTeamFlagInfo, messageApi]);
 
+  /** 删除后刷新数据 */
   const refreshAndLockAfterDelete = useCallback(async () => {
     await Promise.all([refreshTeamTodoList(), autoLockTeamFlag()]);
   }, [autoLockTeamFlag, refreshTeamTodoList]);
+
+  /** 过滤参数改变回调 */
+  const filterParamsChange = useCallback(<T extends unknown>(field: string, value: T) => {
+    setFilterParams((preVal) => {
+      return {
+        ...preVal,
+        [field]: value
+      };
+    });
+  }, []);
+
+  const filteredTodoList = useMemo(
+    () =>
+      teamTodoList.filter((todo) => {
+        // 遍历 filterParams 的所有键，自动检查每个过滤条件
+        return Object.entries(filterParams).every(([key, value]) => {
+          // 如果过滤值为空（未设置过滤条件），则跳过
+          if (!value) return true;
+
+          // 检查当前 todo 是否匹配过滤条件
+          return todo[key as keyof TodoListItemType] === value;
+        });
+      }),
+    [teamTodoList, filterParams]
+  );
 
   return (
     <>
@@ -150,15 +193,16 @@ function TeamFlagDeatail() {
                 refreshTeamFlagInfo={fetchAndUpdateTeamFlagInfo}
                 onLockTeamFlag={autoLockTeamFlag}
               />
-              <TeamFlagFilter />
+              <TeamFlagFilter teamUserList={teamUserList} onFilterParamsChange={filterParamsChange} />
             </div>
             <div className="flag-item-table">
               <TeamTodoTable
                 isLock={lockStatus === LockStatus.OtherLocked}
-                todoList={teamTodoList}
+                todoList={filteredTodoList}
                 dragChangeTeamTodoList={dragChangeTeamTodoList}
                 refreshTeamTodoList={refreshTeamTodoList}
                 onLockTeamFlag={autoLockTeamFlag}
+                teamUserList={teamUserList}
               />
             </div>
           </div>

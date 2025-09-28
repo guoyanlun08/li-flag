@@ -52,7 +52,7 @@ export const PROCESSING_STATUS_OPTIONS = [
 export const TEAM_FLAG_INFO_POLLING_TIME = 20000;
 
 /** 锁定超时时间，单位：分钟 */
-export const LOCK_TIMEOUT_MINUTES = 3;
+export const LOCK_TIMEOUT_MINUTES = 5;
 
 export enum LockStatus {
   Unlocked = 0,
@@ -75,3 +75,11 @@ export const LOCK_BTN_CONFIG = {
     disabled: true
   }
 };
+
+/** todoList 过滤参数 */
+export enum TodoListFilterParams {
+  /** 处理人 */
+  Processor = 'processor',
+  /** 优先级 */
+  Priority = 'priority'
+}

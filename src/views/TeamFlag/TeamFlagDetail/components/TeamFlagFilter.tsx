@@ -1,22 +1,50 @@
-import { Form, Select,  } from 'antd';
+import { Form, Select, Tag } from 'antd';
+
+import { PRIORITY_DEFAULT_OPTIONS, TodoListFilterParams } from '../constants';
+
+type PropsType = {
+  /** 团队用户列表 */
+  teamUserList: string[];
+  /** 筛选 todoList 过滤参数 */
+  onFilterParamsChange: <T>(filed: string, value: T) => void;
+};
 
 /** 团队 flag 筛选 */
-function TeamFlagFilter() {
+function TeamFlagFilter(props: PropsType) {
+  const { teamUserList, onFilterParamsChange } = props;
   return (
     <Form layout="inline">
-      <Form.Item label="成员">
-        <Select style={{ width: 120 }}>
-          <Select.Option value="1">USER 1</Select.Option>
-          <Select.Option value="2">USER 2</Select.Option>
-          <Select.Option value="3">USER 3</Select.Option>
-        </Select>
+      <Form.Item label="处理人">
+        <Select
+          allowClear
+          style={{ width: 120 }}
+          options={teamUserList.map((userId) => ({
+            label: userId,
+            value: userId
+          }))}
+          onChange={(value) => {
+            onFilterParamsChange<string>(TodoListFilterParams.Processor, value);
+          }}
+        />
       </Form.Item>
       <Form.Item label="优先级">
-        <Select style={{ width: 120 }}>
-          <Select.Option value="P0">P0</Select.Option>
-          <Select.Option value="P1">P1</Select.Option>
-          <Select.Option value="P2">P2</Select.Option>
-        </Select>
+        <Select
+          allowClear
+          style={{ width: 120 }}
+          labelRender={(option) => {
+            const { color } = PRIORITY_DEFAULT_OPTIONS.find((item) => item.value === option.value) || {};
+            return <Tag color={color}>{option.label}</Tag>;
+          }}
+          options={PRIORITY_DEFAULT_OPTIONS}
+          optionRender={(option) => (
+            <div>
+              <Tag color={option.data.color}>{option.label}</Tag>
+            </div>
+          )}
+          onChange={(value) => {
+            onFilterParamsChange<string>(TodoListFilterParams.Priority, value);
+          }}
+        />
       </Form.Item>
     </Form>
   );
