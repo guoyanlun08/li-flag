@@ -9,7 +9,7 @@ import Home from '@/views/Home';
 import EveryDayOutlet from '@/views/EveryDay';
 import EveryDay from '@/views/EveryDay/EveryDay';
 import TeamFlag from '@/views/TeamFlag';
-import TeamFlagCard from '@/views/TeamFlag/components/TeamFlagCard';
+import TeamFlagCard from '@/views/TeamFlag/TeamFlagCards';
 import TeamFlagDetail from '@/views/TeamFlag/TeamFlagDetail';
 
 const router = createBrowserRouter([

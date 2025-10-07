@@ -4,8 +4,10 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { Card, Button, Modal, DatePicker, Form, Input, message, Space } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { Styled_TeamFlagOutlet } from '../Styles';
-import CardHeader from './CardHeader';
-import CardFooter from './CardFooter';
+import CardHeader from './components/CardHeader';
+import CardFooter from './components/CardFooter';
+import TeamFalagDialog from '@/components/TeamFlagDialog';
+import { useTeamFlagDialog } from '@/components/TeamFlagDialog';
 import { ApiCreateTeamFlagReqData, TeamFlagInfo } from '@/apis/teamFlag.type';
 import { apiGetTeamFlagInfoByUser, apiCreateTeamFlag, apiDeleteTeamFlag } from '@/apis/teamFlag';
 
@@ -41,26 +43,27 @@ function TeamFlagCard() {
       message.error(`删除失败: ${err.msg}`);
     }
   };
-  const onFinish = async (formData: ApiCreateTeamFlagReqData) => {
-    try {
-      const res = await apiCreateTeamFlag({ ...formData });
-      if (!res.code) {
-        message.success('创建成功');
-        addForm.resetFields();
-        setOpen(false);
-        getTeamFlags();
-      }
-    } catch (err: any) {
-      message.error(`失败: ${err.msg}`);
-    }
-  };
+  // const onFinish = async (formData: ApiCreateTeamFlagReqData) => {
+  //   try {
+  //     const res = await apiCreateTeamFlag({ ...formData });
+  //     if (!res.code) {
+  //       message.success('创建成功');
+  //       addForm.resetFields();
+  //       setOpen(false);
+  //       getTeamFlags();
+  //     }
+  //   } catch (err: any) {
+  //     message.error(`失败: ${err.msg}`);
+  //   }
+  // };
   const showModal = () => {
-    setOpen(true);
+    // setOpen(true);
+    tfd.show();
   };
-  const handleCancel = () => {
-    addForm.resetFields();
-    setOpen(false);
-  };
+  // const handleCancel = () => {
+  //   addForm.resetFields();
+  //   setOpen(false);
+  // };
   const getTeamFlags = async () => {
     try {
       const res = await apiGetTeamFlagInfoByUser();
@@ -69,6 +72,14 @@ function TeamFlagCard() {
       message.error(`获取失败: ${err.msg}`);
     }
   };
+
+  const tfd = useTeamFlagDialog({
+    mode: 'add',
+    onFinishAdd: () => {
+      getTeamFlags();
+    }
+  });
+
   useEffect(() => {
     // 获取团队flag数据
     getTeamFlags();
@@ -98,64 +109,15 @@ function TeamFlagCard() {
                 />
               }
               headStyle={{ borderBottom: 'none' }}
-              bodyStyle={{ padding: '10px 24px' }}
+              bodyStyle={{ padding: '24px 24px' }}
               style={{ width: '60%', margin: 10 }}>
-              <CardFooter finished={0} total={0} memberAvatar={[]} />
+              <CardFooter finished={item.completedCount} total={item.todoItemCount} memberAvatar={[]} />
             </Card>
           );
         })}
       </div>
-      <Modal title="团队Flag" open={open} maskClosable={false} footer={false} onCancel={handleCancel}>
-        <Form
-          form={addForm}
-          labelCol={{ span: 4 }}
-          wrapperCol={{ span: 14 }}
-          layout="horizontal"
-          style={{ maxWidth: 600 }}
-          autoComplete="off"
-          onFinish={onFinish}>
-          <Form.Item label="标题" name="teamFlagTitle" rules={[{ required: true, message: '请输入标题' }]}>
-            <Input />
-          </Form.Item>
-          <Form.Item label="描述" name="teamFlagDesc">
-            <TextArea rows={2} />
-          </Form.Item>
-          {/* <Form.Item label="Select">
-            <Select>
-              <Select.Option value="demo">Demo</Select.Option>
-            </Select>
-          </Form.Item> */}
 
-          <Form.Item label="Deadline" name="teamDeadline" rules={[{ required: true, message: '请输入截止时间!' }]}>
-            <DatePicker />
-          </Form.Item>
-          <Form.Item label="Leader" name="teamLeader">
-            <Input />
-          </Form.Item>
-          <Form.Item label="成员" name="teamMembers">
-            <Input />
-          </Form.Item>
-
-          {/* <Form.Item label="Upload" valuePropName="fileList" getValueFromEvent={normFile}>
-            <Upload action="/upload.do" listType="picture-card">
-              <button style={{ color: 'inherit', cursor: 'inherit', border: 0, background: 'none' }} type="button">
-                <PlusOutlined />
-                <div style={{ marginTop: 8 }}>Upload</div>
-              </button>
-            </Upload>
-          </Form.Item> */}
-          <Form.Item wrapperCol={{ offset: 4, span: 14 }} style={{ marginTop: 24 }}>
-            <Space>
-              <Button type="primary" htmlType="submit" className="saveAdd">
-                保存
-              </Button>
-              <Button type="default" htmlType="button" onClick={handleCancel}>
-                取消
-              </Button>
-            </Space>
-          </Form.Item>
-        </Form>
-      </Modal>
+      <TeamFalagDialog open={tfd.open} onHide={tfd.hide} mode={tfd.mode} onFinishAdd={tfd.onFinishAdd}></TeamFalagDialog>
     </Styled_TeamFlagOutlet>
   );
 }

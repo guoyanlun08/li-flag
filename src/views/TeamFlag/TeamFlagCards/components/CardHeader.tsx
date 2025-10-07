@@ -3,7 +3,7 @@ import { Dropdown, Avatar } from 'antd';
 
 import { DeleteOutlined, EllipsisOutlined } from '@ant-design/icons';
 
-import { Styled_CardHeaderContainer } from '../Styles';
+import { Styled_CardHeaderContainer } from '../../Styles';
 
 type CardHeaderProps = {
   id: number;
@@ -27,7 +27,6 @@ export default function CardHeader(
       label: '删除',
       icon: <DeleteOutlined style={{ color: 'red' }} />,
       onClick: (Item) => {
-        console.log(Item);
         cardHeaderProps.handleCardDelete(cardHeaderProps.id, Item.domEvent);
       }
     }

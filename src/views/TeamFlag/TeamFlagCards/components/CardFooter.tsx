@@ -1,5 +1,5 @@
-import { Styled_CardFooterContainer } from '../Styles';
-import { CheckCircleOutlined, UnorderedListOutlined } from '@ant-design/icons';
+import { Styled_CardFooterContainer } from '../../Styles';
+import { CheckCircleTwoTone, UnorderedListOutlined } from '@ant-design/icons';
 import { Avatar } from 'antd';
 
 type CardFooterProps = {
@@ -13,7 +13,7 @@ export default function CardFooter(props: CardFooterProps) {
     <Styled_CardFooterContainer>
       <div className="flag-record">
         <div className="finish-record">
-          <CheckCircleOutlined />
+          <CheckCircleTwoTone twoToneColor="#52c41a" />
           <span>{props.finished}</span>
         </div>
         <div className="total-record">

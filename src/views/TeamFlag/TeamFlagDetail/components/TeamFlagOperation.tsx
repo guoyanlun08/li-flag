@@ -8,6 +8,8 @@ import { TeamFlagInfo } from '@/apis/teamFlag.type';
 import { Styled_TeamFlagOperation } from '../Styles';
 import { LockStatus, LOCK_BTN_CONFIG } from '../constants';
 
+import TeamFlagDialog, { useTeamFlagDialog } from '@/components/TeamFlagDialog';
+
 type PropsType = {
   /** 团队模块 Id */
   teamFlagId: number;
@@ -33,6 +35,12 @@ function TeamFlagOperation(props: PropsType) {
     return LOCK_BTN_CONFIG[lockStatus] || LOCK_BTN_CONFIG[LockStatus.Unlocked];
   }, [lockStatus]);
 
+  /** 编辑对话框 */
+  const editDialog = useTeamFlagDialog({
+    mode: 'edit',
+    onFinishAdd: refreshTeamFlagInfo
+  });
+
   /** 点击锁定按钮 */
   const handleLockClick = async () => {
     if (lockStatus === LockStatus.OtherLocked) {
@@ -49,6 +57,15 @@ function TeamFlagOperation(props: PropsType) {
       messageApi.success('已解锁');
       refreshTeamFlagInfo();
     }
+  };
+
+  /** 点击编辑按钮 */
+  const handleEditClick = () => {
+    if (lockStatus === LockStatus.OtherLocked) {
+      messageApi.warning('当前Flag被他人锁定，无法编辑');
+      return;
+    }
+    editDialog.show();
   };
 
   return (
@@ -68,11 +85,14 @@ function TeamFlagOperation(props: PropsType) {
             onClick={handleLockClick}>
             {lockBtnConfig.text(locker)}
           </Button>
-          <Button color="primary" variant="solid">
+          <Button color="primary" variant="solid" onClick={handleEditClick} disabled={lockStatus === LockStatus.OtherLocked}>
             编辑
           </Button>
         </div>
       </Styled_TeamFlagOperation>
+
+      {/* 编辑对话框 */}
+      <TeamFlagDialog open={editDialog.open} onHide={editDialog.hide} mode={editDialog.mode} onFinishAdd={editDialog.onFinishAdd} />
     </>
   );
 }
