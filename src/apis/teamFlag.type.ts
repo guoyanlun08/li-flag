@@ -14,13 +14,15 @@ export type TeamFlagInfo = {
   createTime: string;
   updateTime: string;
   todoList?: TodoListItemType[];
+  completedCount: number;
+  todoItemCount: number;
 };
 
 /** 创建团队 Flag 请求数据类型 */
 export type ApiCreateTeamFlagReqData = {
   teamFlagTitle: string;
   teamLeader?: string;
-  teamMembers?: string;
+  teamMembers?: string | string[];
   teamFlagDesc?: string;
   teamFlagIcon?: string;
   teamDeadline?: Date;

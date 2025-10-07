@@ -29,6 +29,9 @@ export const Styled_TeamFlagOutlet = styled.div`
     flex: 1;
     min-height: 0;
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 `;
 
@@ -84,7 +87,11 @@ export const Styled_CardFooterContainer = styled.div`
     display: flex;
     justify-content: flex-start;
     column-gap: 20px;
-    .finish-record {
+    .finish-record,
+    .total-record {
+      span:first-child {
+        margin-right: 5px;
+      }
     }
   }
   .team-menber {
