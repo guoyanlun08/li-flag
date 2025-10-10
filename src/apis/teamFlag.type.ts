@@ -1,4 +1,5 @@
 import { TodoListItemType } from '@/types/todoType';
+import { Dayjs } from 'dayjs';
 
 export type TeamFlagInfo = {
   teamFlagId: number;
@@ -10,7 +11,7 @@ export type TeamFlagInfo = {
   locker: string | null;
   lockTime: string | null;
   isDone: number;
-  teamDeadline: string | null;
+  teamDeadline: number | null | Dayjs;
   createTime: string;
   updateTime: string;
   todoList?: TodoListItemType[];
@@ -22,10 +23,10 @@ export type TeamFlagInfo = {
 export type ApiCreateTeamFlagReqData = {
   teamFlagTitle: string;
   teamLeader?: string;
-  teamMembers?: string | string[];
+  teamMembers?: string | null;
   teamFlagDesc?: string;
   teamFlagIcon?: string;
-  teamDeadline?: Date;
+  teamDeadline?: number | null;
 };
 
 export type ApiGetTeamFlagInfoByUserResp = {

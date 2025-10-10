@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import dayjs from 'dayjs';
 
 import { Card, Button, Modal, DatePicker, Form, Input, message, Space } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
@@ -104,7 +105,7 @@ function TeamFlagCard() {
                   groupIcon={item.teamFlagIcon}
                   title={item.teamFlagTitle}
                   description={item.teamFlagDesc}
-                  deadline={item.teamDeadline}
+                  deadline={item.teamDeadline ? dayjs(item.teamDeadline).format('YYYY-MM-DD') : null}
                   handleCardDelete={handleCardDelete}
                 />
               }

@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { ApiCreateTeamFlagReqData } from '@/apis/teamFlag.type';
-import { Button, Modal, DatePicker, Form, Input, message, Space } from 'antd';
+import dayjs from 'dayjs';
+import { ApiCreateTeamFlagReqData, TeamFlagInfo } from '@/apis/teamFlag.type';
+import { Button, Modal, DatePicker, Form, Input, message, Space, FormInstance } from 'antd';
 import RemoteSearchSelect from '@/components/RemoteSearchSelect';
 import { apiUpdateTeamFlagInfo, apiCreateTeamFlag } from '@/apis/teamFlag';
 import { searchUsers } from '@/apis/user';
@@ -14,7 +15,8 @@ interface TeamFalagDialogProps {
   onHide: () => void;
   mode?: Mode | string;
   onFinishAdd?: () => void;
-  initialData?: ApiCreateTeamFlagReqData;
+  initialData?: TeamFlagInfo;
+  form?: FormInstance;
 }
 interface usersInfo {
   avatarPath?: string;
@@ -39,7 +41,7 @@ export const useTeamFlagDialog = (
   props: {
     mode?: Mode | string;
     onFinishAdd?: () => void;
-    initialData?: ApiCreateTeamFlagReqData;
+    initialData?: TeamFlagInfo | {};
   } = {}
 ) => {
   const { mode = Mode.add, onFinishAdd, initialData } = props;
@@ -56,14 +58,14 @@ export const useTeamFlagDialog = (
   }, [form]);
 
   useEffect(() => {
-    if (mode === Mode.edit && initialData) {
+    if (mode === Mode.edit && initialData && 'teamMembers' in initialData) {
       const formData = {
         ...initialData,
         teamMembers: typeof initialData.teamMembers === 'string' ? initialData.teamMembers.split(',') : initialData.teamMembers || []
       };
       form.setFieldsValue(formData);
     }
-  }, [mode, form, props.initialData]);
+  }, [mode, form, initialData]);
 
   return {
     open,
@@ -77,8 +79,9 @@ export const useTeamFlagDialog = (
 };
 
 function TeamFalagDialog(props: TeamFalagDialogProps) {
-  const { open, onHide, mode = Mode.add, onFinishAdd, initialData } = props;
-  const [addForm] = Form.useForm();
+  const { open, onHide, mode = Mode.add, onFinishAdd, initialData, form: propsForm } = props;
+  // 使用传入的表单实例或创建新实例
+  const formInstance = propsForm || Form.useForm()[0];
 
   // 处理初始数据
   useEffect(() => {
@@ -87,22 +90,28 @@ function TeamFalagDialog(props: TeamFalagDialogProps) {
         ...initialData,
         teamMembers: typeof initialData.teamMembers === 'string' ? initialData.teamMembers.split(',') : initialData.teamMembers || []
       };
-      addForm.setFieldsValue(formData);
+      formInstance.setFieldsValue(formData);
     }
-  }, [initialData, mode, addForm]);
+  }, [initialData, mode, formInstance, open]);
 
   const handleCancel = () => {
-    addForm.resetFields();
+    formInstance.resetFields();
     onHide();
   };
   /* 新增表单请求 */
   const requestAdd = async (formData: ApiCreateTeamFlagReqData) => {
+    console.log('formData', formData);
+    console.log(dayjs(formData.teamDeadline).unix());
     try {
       const transferTeamMember = Array.isArray(formData.teamMembers) ? formData.teamMembers.join(',') : formData.teamMembers;
-      const res = await apiCreateTeamFlag({ ...formData, teamMembers: transferTeamMember });
+      const res = await apiCreateTeamFlag({
+        ...formData,
+        teamMembers: transferTeamMember,
+        teamDeadline: formData.teamDeadline ? dayjs(formData.teamDeadline).valueOf() : null
+      });
       if (!res.code) {
         message.success('创建成功');
-        addForm.resetFields();
+        formInstance.resetFields();
         onHide();
         onFinishAdd?.();
       }
@@ -111,21 +120,43 @@ function TeamFalagDialog(props: TeamFalagDialogProps) {
     }
   };
   const onFinish = async (formData: ApiCreateTeamFlagReqData) => {
-    const transferTeamMember = Array.isArray(formData.teamMembers) ? formData.teamMembers.join(',') : formData.teamMembers;
+    const transferTeamMember = Array.isArray(formData.teamMembers) ? formData.teamMembers.join(',') : formData.teamMembers || null;
 
     const submitData = {
       ...formData,
-      teamMembers: transferTeamMember
+      teamMembers: transferTeamMember,
+      teamDeadline: formData.teamDeadline ? dayjs(formData.teamDeadline).valueOf() : null
     };
+
     if (mode === Mode.add) {
       await requestAdd(formData);
+    } else if (mode === Mode.edit && initialData && 'teamFlagId' in initialData) {
+      try {
+        const updateData = {
+          teamFlagId: initialData.teamFlagId,
+          teamFlagDesc: submitData.teamFlagDesc,
+          teamDeadline: submitData.teamDeadline,
+          teamLeader: submitData.teamLeader,
+          teamMembers: submitData.teamMembers
+        };
+
+        const res = await apiUpdateTeamFlagInfo(updateData);
+        if (res && res.updateTeamFlagId) {
+          message.success('更新成功');
+          formInstance.resetFields();
+          onHide();
+          onFinishAdd?.();
+        }
+      } catch (err: any) {
+        message.error(`更新失败: ${err.msg || '未知错误'}`);
+      }
     }
   };
   return (
     <>
-      <Modal title="团队Flag" open={open} maskClosable={false} footer={false} onCancel={handleCancel}>
+      <Modal title="团队Flag" open={open} maskClosable={false} footer={false} onCancel={handleCancel} zIndex={1000}>
         <Form
-          form={addForm}
+          form={formInstance}
           labelCol={{ span: 4 }}
           wrapperCol={{ span: 14 }}
           layout="horizontal"

@@ -48,7 +48,7 @@ function TeamFlagDeatail() {
   const userState = useAppSelector((store) => store.user);
   const { userId } = userState;
 
-  const [teamFlagInfo, setTeamFlagInfo] = useState<TeamFlagInfo | {}>({});
+  const [teamFlagInfo, setTeamFlagInfo] = useState<Partial<TeamFlagInfo>>({});
   const [teamTodoList, setTeamTodoList] = useState<TodoListItemType[]>([]);
   const [filterParams, setFilterParams] = useState<{
     [TodoListFilterParams.Processor]: string;
@@ -177,11 +177,10 @@ function TeamFlagDeatail() {
       <Styled_TeamFlagDetail>
         <TeamFlagOperation
           teamFlagId={teamFlagId}
-          teamFlagTitle={(teamFlagInfo as TeamFlagInfo)?.teamFlagTitle}
-          locker={(teamFlagInfo as TeamFlagInfo)?.locker}
           lockStatus={lockStatus}
           userId={userId}
           refreshTeamFlagInfo={fetchAndUpdateTeamFlagInfo}
+          teamFlagInfo={{ ...teamFlagInfo, teamDeadline: teamFlagInfo.teamDeadline ? dayjs(teamFlagInfo.teamDeadline) : null }}
         />
         <div className="page-content">
           <div className="page-content-body">
