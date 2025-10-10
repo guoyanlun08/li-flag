@@ -44,7 +44,7 @@ export default function CardHeader(
       </div>
       <div className="flag-status">
         <div className="dead-line">
-          <span>Deadline:</span>
+          <span>截止日期:</span>
           <span>{cardHeaderProps.deadline}</span>
         </div>
         <div className="card-operation">

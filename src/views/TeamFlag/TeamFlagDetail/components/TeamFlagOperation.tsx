@@ -19,11 +19,13 @@ type PropsType = {
   userId: string;
   /** 刷新团队 flag 信息 */
   refreshTeamFlagInfo: () => Promise<TeamFlagInfo>;
+  /** 团队flag信息 */
+  teamFlagInfo: Partial<TeamFlagInfo>;
 };
 
 /** 团队 flag 筛选 */
 function TeamFlagOperation(props: PropsType) {
-  const { lockStatus, teamFlagId, userId, refreshTeamFlagInfo } = props;
+  const { lockStatus, teamFlagId, userId, refreshTeamFlagInfo, teamFlagInfo } = props;
 
   const [messageApi, contextHolder] = message.useMessage();
   const navigate = useNavigate();
@@ -34,7 +36,8 @@ function TeamFlagOperation(props: PropsType) {
   /** 编辑对话框 */
   const editDialog = useTeamFlagDialog({
     mode: 'edit',
-    onFinishAdd: refreshTeamFlagInfo
+    onFinishAdd: refreshTeamFlagInfo,
+    initialData: teamFlagInfo as TeamFlagInfo
   });
 
   /** 点击锁定按钮 */
@@ -71,7 +74,7 @@ function TeamFlagOperation(props: PropsType) {
         <div className="backIcon" onClick={() => navigate(-1)}>
           <RollbackOutlined />
         </div>
-        <div className="title">Team Flag</div>
+        <div className="title">{teamFlagInfo?.teamFlagTitle || 'Team Flag'}</div>
         <div className="operate">
           {/* 锁定按钮 */}
           <Button
@@ -88,7 +91,14 @@ function TeamFlagOperation(props: PropsType) {
       </Styled_TeamFlagOperation>
 
       {/* 编辑对话框 */}
-      <TeamFlagDialog open={editDialog.open} onHide={editDialog.hide} mode={editDialog.mode} onFinishAdd={editDialog.onFinishAdd} />
+      <TeamFlagDialog
+        open={editDialog.open}
+        onHide={editDialog.hide}
+        mode={editDialog.mode}
+        onFinishAdd={editDialog.onFinishAdd}
+        initialData={editDialog.initialData as TeamFlagInfo}
+        form={editDialog.form}
+      />
     </>
   );
 }
