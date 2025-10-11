@@ -26,24 +26,25 @@ export const DragHandle: React.FC<{ isLock: boolean }> = ({ isLock }) => {
 };
 
 const Row: React.FC<RowProps> = (props) => {
+  const id = props['data-row-key'];
   // 右键菜单 hook
   const { show: showItemContextMenu } = useContextMenu({
     id: ITEM_MENU_ID,
     props: {
-      id: props['data-row-key']
+      id
     }
   });
 
   // 拖拽相关的 hook
   const { attributes, listeners, setNodeRef, setActivatorNodeRef, transform, transition, isDragging } = useSortable({
-    id: props['data-row-key']
+    id
   });
 
   const style: React.CSSProperties = {
     ...props.style,
     transform: CSS.Translate.toString(transform),
     transition,
-    ...(isDragging ? { position: 'relative', zIndex: 9999 } : {})
+    ...(isDragging && id ? { position: 'relative', zIndex: 9999 } : {})
   };
 
   const contextValue = useMemo<RowContextProps>(() => ({ setActivatorNodeRef, listeners }), [setActivatorNodeRef, listeners]);

@@ -154,7 +154,7 @@ function TeamFalagDialog(props: TeamFalagDialogProps) {
   };
   return (
     <>
-      <Modal title="团队Flag" open={open} maskClosable={false} footer={false} onCancel={handleCancel} zIndex={1000}>
+      <Modal title="团队Flag" open={open} maskClosable={false} footer={false} onCancel={handleCancel}>
         <Form
           form={formInstance}
           labelCol={{ span: 4 }}
