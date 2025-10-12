@@ -29,7 +29,6 @@ import { Checkbox } from 'antd';
 import { MenuOutlined } from '@ant-design/icons';
 
 import { useAppDispatch } from '@/app/hooks';
-import { toggleItemCompletedStatus } from '@/features/todo/todoSlice';
 import { EveryDayContext } from '@/views/EveryDay';
 
 import { Item, ItemContent } from './Styles';

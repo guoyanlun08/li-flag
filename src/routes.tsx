@@ -8,6 +8,9 @@ import Home from '@/views/Home';
 // 每日模块
 import EveryDayOutlet from '@/views/EveryDay';
 import EveryDay from '@/views/EveryDay/EveryDay';
+import TeamFlag from '@/views/TeamFlag';
+import TeamFlagCard from '@/views/TeamFlag/TeamFlagCards';
+import TeamFlagDetail from '@/views/TeamFlag/TeamFlagDetail';
 
 const router = createBrowserRouter([
   {
@@ -25,6 +28,20 @@ const router = createBrowserRouter([
           {
             path: '',
             element: <EveryDay />
+          }
+        ]
+      },
+      {
+        path: '/teamFlag',
+        element: <TeamFlag />,
+        children: [
+          {
+            path: '',
+            element: <TeamFlagCard />
+          },
+          {
+            path: '/teamFlag/:teamFlagId',
+            element: <TeamFlagDetail />
           }
         ]
       }

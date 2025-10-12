@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 
-import useItemOperation from '@/hooks/useItemOperation';
+import { useItemOperation } from '@/hooks';
 
 import { TodoListItemType } from '@/types/todoType';
 import { ModuleFields } from '@/features/todo/todoSlice';
+import { EveryDayContext } from '@/views/EveryDay/EveryDay';
 import { ListItem } from '@/components/ListItem';
 import { Styled_ListBox } from './Styles';
 
@@ -16,12 +17,17 @@ interface PropsType {
 function TodoList(props: PropsType) {
   const { listData, moduleId } = props;
 
-  const { addNewTodoItem } = useItemOperation();
+  const context = useContext(EveryDayContext);
+
+  const { addEveryDayTodoItem, getEveryDayTodoList } = useItemOperation();
 
   // 双击新增 todoItem
-  const handleDoubleClick = (e: React.MouseEvent, moduleId: string) => {
+  const handleDoubleClick = async (e: React.MouseEvent, moduleId: string) => {
     e.stopPropagation();
-    addNewTodoItem(moduleId);
+    const newRes = await addEveryDayTodoItem(moduleId);
+    if (newRes.hadAdd) {
+      getEveryDayTodoList();
+    }
   };
 
   return (
@@ -32,7 +38,19 @@ function TodoList(props: PropsType) {
             <Draggable key={item.id} draggableId={item.id.toString()} index={index}>
               {(provided: any) => (
                 <div ref={provided.innerRef} {...provided.draggableProps}>
-                  <ListItem todoItem={item} editable={true} dragHandle={provided.dragHandleProps} index={index} />
+                  <ListItem
+                    todoItem={item}
+                    editable={true}
+                    dragHandle={provided.dragHandleProps}
+                    index={index}
+                    dragStatus={context.dragStatus}
+                    afterCheckBoxChange={() => {
+                      getEveryDayTodoList();
+                    }}
+                    afterTextChangeHook={() => {
+                      getEveryDayTodoList();
+                    }}
+                  />
                 </div>
               )}
             </Draggable>

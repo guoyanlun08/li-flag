@@ -1,13 +1,10 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Checkbox } from 'antd';
 import { MenuOutlined } from '@ant-design/icons';
 import { useContextMenu } from 'react-contexify';
 
-import { useAppSelector, useAppDispatch } from '@/app/hooks';
-import { todoAction } from '@/features/todo/todoSlice';
-import useItemOperation from '../../hooks/useItemOperation';
+import { useItemOperation } from '@/hooks';
 
-import { EveryDayContext } from '@/views/EveryDay/EveryDay';
 import { TodoListItemType } from '@/types/todoType';
 import { Styled_Item, Styled_ItemContent } from './Styles';
 import { EditNode } from './EditNode';
@@ -19,15 +16,29 @@ interface PropsType {
   editable: boolean;
   dragHandle?: any;
   todoItem: TodoListItemType;
+  dragStatus?: boolean;
+  showMenuOutlined?: boolean;
+  showCheckbox?: boolean;
+  afterCheckBoxChange?: () => void;
+  afterTextChangeHook?: () => void;
 }
 
 export function ListItem(props: PropsType) {
-  const { editable, index, dragHandle, todoItem } = props;
+  const {
+    editable,
+    index,
+    dragHandle,
+    todoItem,
+    dragStatus = false,
+    showMenuOutlined = true,
+    showCheckbox = true,
+    afterCheckBoxChange = () => {},
+    afterTextChangeHook = () => {}
+  } = props;
   const { moduleId, id, completed } = todoItem;
 
-  const context = useContext(EveryDayContext);
-  const dispatch = useAppDispatch();
-  const todoState = useAppSelector((store) => store.todo);
+  // TODO: 考虑放上层组件，新增 todo 需要
+  const [selectedId, setSelectedId] = useState(-1);
   const { updateTodoItem } = useItemOperation();
 
   // item右键菜单
@@ -42,34 +53,33 @@ export function ListItem(props: PropsType) {
   const [isHover, setIsHover] = useState(false);
 
   useEffect(() => {
-    if (!context.dragStatus) {
+    if (!dragStatus) {
+      // 拖拽结束，去除 hover 状态
       setIsHover(false);
     }
-  }, [context.dragStatus]);
+  }, [dragStatus]);
 
-  const isSelected = todoState.selectedId === id;
+  const isSelected = selectedId === id;
 
   // 打开右键菜单
   const onContextMenu = (e: React.MouseEvent) => {
-    if (isSelected) {
-      showItemContextMenu({ event: e });
-    }
+    showItemContextMenu({ event: e });
   };
 
   /** 选中 item 触发 */
   const selectItemFn = () => {
-    dispatch(todoAction.setSelectedId({ id }));
+    setSelectedId(id);
   };
 
   /** 鼠标移入 hover */
   const mouseEnterItemFn = () => {
-    if (context.dragStatus) return;
+    if (dragStatus) return;
     setIsHover(true);
   };
 
   /** 鼠标移出 取消hover */
   const mouseLeaveItemFn = () => {
-    if (context.dragStatus) return;
+    if (dragStatus) return;
     setIsHover(false);
   };
 
@@ -82,20 +92,28 @@ export function ListItem(props: PropsType) {
       onMouseLeave={mouseLeaveItemFn}
       onContextMenu={onContextMenu}
       onDoubleClick={(e) => e.stopPropagation()}>
-      <MenuOutlined style={{ display: editable && isHover ? 'block' : 'none' }} className="drag-handle" {...dragHandle} />
-      <Checkbox
-        checked={Boolean(completed)}
-        disabled={!editable}
-        onChange={async () => {
-          const hadUpdated = await updateTodoItem({ id, completed: Number(!completed) });
-          if (hadUpdated) {
-            dispatch(todoAction.toggleItemCompletedStatus({ moduleId, itemIndex: index }));
-          }
-        }}
-      />
+      {showMenuOutlined && <MenuOutlined style={{ opacity: editable && isHover ? 1 : 0 }} className="drag-handle" {...dragHandle} />}
+      {showCheckbox && (
+        <Checkbox
+          checked={Boolean(completed)}
+          disabled={!editable}
+          onChange={async () => {
+            const hadUpdated = await updateTodoItem({ id, completed: Number(!completed) });
+            if (hadUpdated) {
+              afterCheckBoxChange();
+            }
+          }}
+        />
+      )}
       <div className="item-content-date">
         <Styled_ItemContent completed={completed} selected={isSelected}>
-          <EditNode todoItem={todoItem} index={index} selected={isSelected} readOnly={!editable} />
+          <EditNode
+            todoItem={todoItem}
+            index={index}
+            selected={isSelected}
+            readOnly={!editable}
+            afterTextChangeHook={afterTextChangeHook}
+          />
         </Styled_ItemContent>
         <SelfDatePicker todoItem={todoItem} completed={Boolean(completed)} />
       </div>

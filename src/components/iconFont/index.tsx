@@ -2,7 +2,7 @@ import React from 'react';
 import { createFromIconfontCN } from '@ant-design/icons';
 import { Space } from 'antd';
 // iconfont图标的js在线链接
-const iconUrl = ['//at.alicdn.com/t/c/font_4429243_sjzru3is22.js'];
+const iconUrl = ['//at.alicdn.com/t/c/font_4429243_yu7he8sr9p8.js'];
 const CreateIcon = createFromIconfontCN({
   scriptUrl: iconUrl
 });

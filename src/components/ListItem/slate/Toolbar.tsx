@@ -4,7 +4,7 @@ import { useSlate } from 'slate-react';
 import { Tooltip } from 'antd';
 import { BoldOutlined, ItalicOutlined, CopyOutlined } from '@ant-design/icons';
 
-import useClipboard from '@/hooks/useClipboard';
+import { useClipboard } from '@/hooks';
 
 import { Styled_ToolBar } from './Styles';
 

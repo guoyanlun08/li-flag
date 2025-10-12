@@ -12,20 +12,20 @@ export const Styled_Item = styled.div<{ selected: boolean; moduleId: ModuleField
   display: flex;
   align-items: center;
   height: ${ITEM_HEIGHT};
-  padding-left: 20px;
   border: 1px solid transparent;
   border-radius: 5px;
   margin-bottom: 2px;
-  &:hover,
-  &:focus-within {
+  &:hover {
     background: ${(props) => (props.selected ? 'rgba(71,114,250, 0.1)' : 'rgba(71,114,250, 0.08)')};
-    border-color: ${(props) => MODULE_CONFIG_MAP[props.moduleId].color};
+    border-color: ${(props) => MODULE_CONFIG_MAP[props.moduleId]?.color};
   }
+  &:focus-within {
+    background: ${(props) => (props.selected ? 'rgba(71, 150, 250, 0.1)' : 'rgba(71,114,250, 0.08)')};
+    border-color: ${(props) => MODULE_CONFIG_MAP[props.moduleId]?.color};
+  }
+
   .drag-handle {
-    position: absolute;
-    left: 5px;
-    top: 50%;
-    transform: translate(0px, -50%);
+    margin: 0 4px;
     color: ${mainColor.primaryTextColor};
     font-size: 12px;
     cursor: move;
@@ -34,12 +34,12 @@ export const Styled_Item = styled.div<{ selected: boolean; moduleId: ModuleField
   // checkbox
   .ant-checkbox-wrapper {
     .ant-checkbox-inner {
-      border: 1px solid ${(props) => MODULE_CONFIG_MAP[props.moduleId].color};
+      border: 1px solid ${(props) => MODULE_CONFIG_MAP[props.moduleId]?.color};
     }
     &:hover {
       .ant-checkbox-inner {
-        border: 1px solid ${(props) => MODULE_CONFIG_MAP[props.moduleId].color};
-        background: ${(props) => MODULE_CONFIG_MAP[props.moduleId].color};
+        border: 1px solid ${(props) => MODULE_CONFIG_MAP[props.moduleId]?.color};
+        background: ${(props) => MODULE_CONFIG_MAP[props.moduleId]?.color};
         opacity: 0.3;
       }
     }

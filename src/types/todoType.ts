@@ -32,4 +32,13 @@ export interface TodoListItemType {
   updateTime: number;
   startTime: number;
   endTime: number;
+  completedTime?: string | null;
+  /** 优先级 */
+  priority?: string;
+  /** 提出 todo 的人 */
+  proposer?: string;
+  /** 处理 todo 的人 */
+  processor?: string;
+  /** 处理状态 */
+  processingStatus?: number;
 }

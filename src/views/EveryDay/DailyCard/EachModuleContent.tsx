@@ -2,7 +2,7 @@ import React from 'react';
 import { Collapse, Button } from 'antd';
 import dayjs from 'dayjs';
 
-import useItemOperation from '@/hooks/useItemOperation';
+import { useItemOperation } from '@/hooks';
 
 import TodoList from '../TodoList';
 import { ListItem } from '@/components/ListItem';
@@ -18,7 +18,7 @@ type PropsType = {
 
 /** Collapse 右上角组件 */
 const RightExtra = (delayListData: TodoListItemType[]) => {
-  const { updateTodoItem, getTodoList, getDelayTodoList } = useItemOperation();
+  const { updateTodoItem, getEveryDayTodoList } = useItemOperation();
 
   // 顺延 delay数据
   const postponeDelayData = async (e: React.MouseEvent) => {
@@ -37,8 +37,7 @@ const RightExtra = (delayListData: TodoListItemType[]) => {
     );
 
     setTimeout(() => {
-      getTodoList();
-      getDelayTodoList();
+      getEveryDayTodoList();
     }, 200);
   };
 

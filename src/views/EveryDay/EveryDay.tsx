@@ -5,7 +5,7 @@ import { DragDropContext } from 'react-beautiful-dnd';
 import dayjs from 'dayjs';
 
 import { useAppSelector, AuthContext } from '@/app/hooks';
-import useItemOperation from '@/hooks/useItemOperation';
+import { useItemOperation } from '@/hooks';
 
 import DailyCard from './DailyCard';
 import DailyList from './DailyList';
@@ -28,13 +28,13 @@ function EveryDay() {
   const { isLogin } = useContext(AuthContext);
   const { eachModule } = useAppSelector((state) => state.todo);
 
-  const { getTodoList, onBeforeDragStart, onDragEnd, initTodoSateFn } = useItemOperation();
+  const { getEveryDayTodoList, onBeforeDragStart, onDragEnd, initTodoSateFn } = useItemOperation();
 
   const [dragStatus, setDragStatus] = useState(false); // 当前拖拽状态
 
   useEffect(() => {
     const fetchTodoList = async () => {
-      await getTodoList();
+      await getEveryDayTodoList();
     };
     if (isLogin) {
       fetchTodoList();
@@ -70,7 +70,7 @@ function EveryDay() {
         onDragEnd={async (result: any) => await onDragEnd(result, handleSetDragStatus, eachModule)}>
         {qs.parse(search).listMode ? <DailyList {...dailyProps} /> : <DailyCard {...dailyProps} />}
       </DragDropContext>
-      <ItemContextMenu />
+      <ItemContextMenu afterDeleteHook={getEveryDayTodoList} />
     </EveryDayContext.Provider>
   );
 }

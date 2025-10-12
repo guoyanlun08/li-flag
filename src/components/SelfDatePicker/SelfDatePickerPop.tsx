@@ -3,7 +3,7 @@ import { Button, DatePicker, message, Tooltip } from 'antd';
 import dayjs from 'dayjs';
 
 import IconFont from '@/components/iconFont';
-import useItemOperation from '@/hooks/useItemOperation';
+import { useItemOperation } from '@/hooks';
 
 import { Styled_SelfDatePickerPop } from './Styles';
 
@@ -18,7 +18,7 @@ type SelfDatePickerPopProps = {
 export const SelfDatePickerPop = (props: SelfDatePickerPopProps) => {
   const { todoId, startTime, endTime, coordinate, changeVisible } = props;
 
-  const { getTodoList, updateTodoItem, getDelayTodoList } = useItemOperation();
+  const { getEveryDayTodoList, updateTodoItem } = useItemOperation();
 
   // TODO: 这里应处理为 非受控
   const [pickStartTime, setPickStartTime] = useState(dayjs(startTime));
@@ -53,8 +53,7 @@ export const SelfDatePickerPop = (props: SelfDatePickerPopProps) => {
 
     // 先关掉弹窗一段时间，再刷新数据
     setTimeout(() => {
-      getTodoList();
-      getDelayTodoList();
+      getEveryDayTodoList();
     }, 200);
   };
 
