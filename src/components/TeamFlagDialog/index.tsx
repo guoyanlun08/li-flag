@@ -40,11 +40,11 @@ export const useTeamFlagDialog = (
   }, [form]);
 
   useEffect(() => {
-    const { teamMembers } = initialData as TeamFlagInfo;
+    const { teamMembers } = (initialData || {}) as TeamFlagInfo;
     if (mode === Mode.edit && teamMembers) {
       const formData = {
         ...initialData,
-        teamMembers: !!teamMembers && typeof teamMembers === 'string' ? teamMembers.split(',') : []
+        teamMembers: typeof teamMembers === 'string' ? teamMembers.split(',') : []
       };
       form.setFieldsValue(formData);
     }
