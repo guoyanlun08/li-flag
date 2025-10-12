@@ -2,9 +2,9 @@ import React, { useState, useCallback, useEffect } from 'react';
 import dayjs from 'dayjs';
 import { ApiCreateTeamFlagReqData, TeamFlagInfo } from '@/apis/teamFlag.type';
 import { Button, Modal, DatePicker, Form, Input, message, Space, FormInstance } from 'antd';
-import RemoteSearchSelect from '@/components/RemoteSearchSelect';
+import UsersSearchSelect from '@/components/UsersSearchSelect';
 import { apiUpdateTeamFlagInfo, apiCreateTeamFlag } from '@/apis/teamFlag';
-import { searchUsers } from '@/apis/user';
+
 const { TextArea } = Input;
 enum Mode {
   add = 'add',
@@ -18,24 +18,6 @@ interface TeamFalagDialogProps {
   initialData?: TeamFlagInfo;
   form?: FormInstance;
 }
-interface usersInfo {
-  avatarPath?: string;
-  nickName: string;
-  userId: string;
-}
-/* 远程搜索用户 */
-const searchUserRequest = async (search: string) => {
-  try {
-    const res = (await searchUsers({ userId: search })) as usersInfo[];
-    return res.map((user) => ({
-      label: user.nickName,
-      value: user.userId
-    }));
-  } catch (error) {
-    message.error('搜索用户失败');
-    return [];
-  }
-};
 
 export const useTeamFlagDialog = (
   props: {
@@ -58,10 +40,11 @@ export const useTeamFlagDialog = (
   }, [form]);
 
   useEffect(() => {
-    if (mode === Mode.edit && initialData && 'teamMembers' in initialData) {
+    const { teamMembers } = initialData as TeamFlagInfo;
+    if (mode === Mode.edit && teamMembers) {
       const formData = {
         ...initialData,
-        teamMembers: typeof initialData.teamMembers === 'string' ? initialData.teamMembers.split(',') : initialData.teamMembers || []
+        teamMembers: !!teamMembers && typeof teamMembers === 'string' ? teamMembers.split(',') : []
       };
       form.setFieldsValue(formData);
     }
@@ -88,7 +71,10 @@ function TeamFalagDialog(props: TeamFalagDialogProps) {
     if (mode === Mode.edit && initialData) {
       const formData = {
         ...initialData,
-        teamMembers: typeof initialData.teamMembers === 'string' ? initialData.teamMembers.split(',') : initialData.teamMembers || []
+        teamMembers:
+          initialData.teamMembers && typeof initialData.teamMembers === 'string'
+            ? initialData.teamMembers.split(',')
+            : initialData.teamMembers || []
       };
       formInstance.setFieldsValue(formData);
     }
@@ -174,10 +160,10 @@ function TeamFalagDialog(props: TeamFalagDialogProps) {
             <DatePicker />
           </Form.Item>
           <Form.Item label="Leader" name="teamLeader">
-            <RemoteSearchSelect fetchOptions={searchUserRequest} />
+            <UsersSearchSelect />
           </Form.Item>
           <Form.Item label="成员" name="teamMembers">
-            <RemoteSearchSelect mode="multiple" fetchOptions={searchUserRequest} />
+            <UsersSearchSelect mode="multiple" />
           </Form.Item>
 
           <Form.Item wrapperCol={{ offset: 4, span: 14 }} style={{ marginTop: 24 }}>

@@ -2,30 +2,20 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import dayjs from 'dayjs';
 
-import { Card, Button, Modal, DatePicker, Form, Input, message, Space } from 'antd';
+import { Card, Button, message } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { Styled_TeamFlagOutlet } from '../Styles';
 import CardHeader from './components/CardHeader';
 import CardFooter from './components/CardFooter';
 import TeamFalagDialog from '@/components/TeamFlagDialog';
 import { useTeamFlagDialog } from '@/components/TeamFlagDialog';
-import { ApiCreateTeamFlagReqData, TeamFlagInfo } from '@/apis/teamFlag.type';
-import { apiGetTeamFlagInfoByUser, apiCreateTeamFlag, apiDeleteTeamFlag } from '@/apis/teamFlag';
-
-const { TextArea } = Input;
-const normFile = (e: any) => {
-  if (Array.isArray(e)) {
-    return e;
-  }
-  return e?.fileList;
-};
+import { TeamFlagInfo } from '@/apis/teamFlag.type';
+import { apiGetTeamFlagInfoByUser, apiDeleteTeamFlag } from '@/apis/teamFlag';
 
 function TeamFlagCard() {
   const [teamFlagsData, setTeamFlagsData] = useState<TeamFlagInfo[]>([]);
-  const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const [addForm] = Form.useForm();
 
   const handleCardaClick = (teamFlagId: number) => {
     navigate(`${pathname}/${teamFlagId}`);
@@ -44,27 +34,11 @@ function TeamFlagCard() {
       message.error(`删除失败: ${err.msg}`);
     }
   };
-  // const onFinish = async (formData: ApiCreateTeamFlagReqData) => {
-  //   try {
-  //     const res = await apiCreateTeamFlag({ ...formData });
-  //     if (!res.code) {
-  //       message.success('创建成功');
-  //       addForm.resetFields();
-  //       setOpen(false);
-  //       getTeamFlags();
-  //     }
-  //   } catch (err: any) {
-  //     message.error(`失败: ${err.msg}`);
-  //   }
-  // };
+
   const showModal = () => {
-    // setOpen(true);
     tfd.show();
   };
-  // const handleCancel = () => {
-  //   addForm.resetFields();
-  //   setOpen(false);
-  // };
+
   const getTeamFlags = async () => {
     try {
       const res = await apiGetTeamFlagInfoByUser();

@@ -1,5 +1,12 @@
 import { useEffect, useState } from 'react';
 
+/**
+ * 轮询 hook
+ * @param fetchData 轮询执行的异步函数
+ * @param interval 轮询间隔时间，默认 5000 毫秒
+ * @param immediate 是否立即执行一次，默认 true
+ * @returns 轮询数据
+ */
 export const usePolling = <T>(fetchData: () => Promise<T>, interval = 5000, immediate = true) => {
   const [pollingData, setPollingData] = useState<T>();
 

@@ -1,6 +1,7 @@
 import api from '@/utils/httpRequest';
 
 import { UserStateType } from '@/features/user/type';
+import { SearchUsersResp } from '@/apis/user.type';
 
 /**
  * 获取用户信息 接口
@@ -40,7 +41,7 @@ export async function updateUserInfo(data: UserStateType & { password?: string; 
  * @returns
  */
 export async function searchUsers(data: { userId: string }) {
-  const resp = await api.get('/user/searchUsers', data);
+  const resp = await api.get<{ userId: string }, SearchUsersResp[]>('/user/searchUsers', data);
 
   if (resp?.code) {
     console.error('searchUsers 搜索用户有误');
